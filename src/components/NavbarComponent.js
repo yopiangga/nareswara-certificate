@@ -1,8 +1,11 @@
 import React, { useContext, useState } from "react";
 import { FiBell } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 
 export function NavbarUploaderComponent() {
+  const { user, setUser } = useContext(UserContext);
+
   return (
     <div className="fixed md:w-full md:top-0 md:z-20 flex flex-row flex-wrap items-center bg-white h-20 w-full px-6 shadow-sm">
       <div className="flex-none w-56 flex flex-row items-center">
@@ -38,7 +41,7 @@ export function NavbarUploaderComponent() {
           className="flex items-center hover:text-gray-600"
           href="#"
         >
-          <span className="mr-2">Alfian Prisma Yopiangga</span>
+          <span className="mr-2">{user}</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6 hover:text-gray-600"

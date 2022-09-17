@@ -3,7 +3,7 @@ import { createContext, useState } from "react";
 export const UserContext = createContext();
 
 export const UserProvider = (props) => {
-  const [user, setUser] = useState("Alfian Prisma Yopiangga");
+  const [user, setUser] = useState("Kementrian Ristek");
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

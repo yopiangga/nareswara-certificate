@@ -1,12 +1,13 @@
 import "./App.css";
 import app from "./config/Firebase";
 import { AppContextProvider } from "./context/AppContextProvider";
-import UploaderPage from "./pages/UploaderPage";
+import { UserContext } from "./context/UserContext";
+import UploaderRouterPage from "./pages/uploader/UploaderRouterPage";
 
 function App() {
   return (
     <AppContextProvider>
-      <UploaderPage />
+      {true ? <UploaderRouterPage /> : <h1>Belum Login</h1>}
     </AppContextProvider>
   );
 }
