@@ -5,6 +5,7 @@ import {
   FiBox,
   FiCheckSquare,
   FiGift,
+  FiCalendar,
   FiHome,
   FiPlusSquare,
   FiUser,
@@ -27,8 +28,8 @@ export function SidebarUploaderComponent() {
     {
       id: "list-event",
       link: "/acara",
-      title: "Semua Acara",
-      icon: FiHome,
+      title: "Acara",
+      icon: FiCalendar,
       group: "Sertifikat",
     },
     {
