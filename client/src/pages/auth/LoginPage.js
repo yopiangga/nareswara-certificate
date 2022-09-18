@@ -1,8 +1,30 @@
-import React from "react";
-
+import React, { useContext, useState } from "react";
+import app from "../../config/Firebase";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { Btn1Active } from "../../components/ButtonComponent";
+import { UserContext } from "../../context/UserContext";
+import { AuthServices } from "../../services/AuthServices";
+import { UserServices } from "../../services/UserServices";
 
 export default function LoginPage() {
+  const { user, setUser } = useContext(UserContext);
+  const [email, setEmail] = useState("ristekbempens@gmail.com");
+  const [password, setPassword] = useState("123456");
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const resAuth = await AuthServices.login(email, password);
+
+    if (resAuth?.operationType == "signIn") {
+      const resUser = await UserServices.getUser("email", resAuth.user.email);
+
+      if (resUser != false) {
+        setUser(resUser);
+      }
+    }
+  };
+
   return (
     <>
       <div className="h-screen w-screen bg-gray-50">
@@ -11,11 +33,12 @@ export default function LoginPage() {
             <h1 className="text-2xl font-bold sm:text-3xl">
               Good To See You Again
             </h1>
-            <p className="mt-4 text-gray-500">
-              
-            </p>
+            <p className="mt-4 text-gray-500"></p>
           </div>
-          <form action className="max-w-md mx-auto mt-8 mb-0 space-y-4">
+          <form
+            className="max-w-md mx-auto mt-8 mb-0 space-y-4"
+            onSubmit={handleSubmit}
+          >
             <div>
               <label htmlFor="email" className="sr-only">
                 Email
@@ -24,7 +47,9 @@ export default function LoginPage() {
                 <input
                   type="email"
                   className="w-full p-4 pr-12 text-sm border-gray-200 rounded-lg shadow-sm"
-                  placeholder="Enter email"
+                  placeholder="Email anda"
+                  value={email}
+                  onChange={(e) => setEmail(e.value)}
                 />
                 <span className="absolute inset-y-0 inline-flex items-center right-4">
                   <svg
@@ -52,7 +77,9 @@ export default function LoginPage() {
                 <input
                   type="password"
                   className="w-full p-4 pr-12 text-sm border-gray-200 rounded-lg shadow-sm"
-                  placeholder="Enter password"
+                  placeholder="Kata sandi"
+                  value={password}
+                  onChange={(e) => setPassword(e.value)}
                 />
                 <span className="absolute inset-y-0 inline-flex items-center right-4">
                   <svg
@@ -81,11 +108,11 @@ export default function LoginPage() {
             <div className="flex items-center justify-between">
               <p className="text-sm text-gray-500">
                 No account?
-                <a className="underline" href>
+                <a className="underline" href="">
                   Sign up
                 </a>
               </p>
-              <Btn1Active />
+              <Btn1Active title="Masuk" onTap={() => {}} />
             </div>
           </form>
         </div>

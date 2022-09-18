@@ -41,7 +41,7 @@ export function NavbarUploaderComponent() {
           className="flex items-center hover:text-gray-600"
           href="#"
         >
-          <span className="mr-2">{user}</span>
+          <span className="mr-2">{user.name}</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6 hover:text-gray-600"
