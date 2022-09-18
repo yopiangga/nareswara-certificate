@@ -17,6 +17,8 @@ export default function LoginPage() {
 
     const resAuth = await AuthServices.login(email, password);
 
+    console.log(event);
+
     if (resAuth?.operationType == "signIn") {
       const resUser = await UserServices.getUser("email", resAuth.user.email);
 
@@ -55,7 +57,7 @@ export default function LoginPage() {
                     name="email"
                     id="email"
                     value={email}
-                    onChange={(e) => setEmail(e.value)}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="name@company.com"
                     required
@@ -72,7 +74,7 @@ export default function LoginPage() {
                     type="password"
                     name="password"
                     value={password}
-                    onChange={(e) => setPassword(e.value)}
+                    onChange={(e) => setPassword(e.target.value)}
                     id="password"
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

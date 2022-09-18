@@ -14,7 +14,7 @@ export default function UploaderRouterPage() {
       <UploaderLayout>
         <div className="bg-gray-100 p-6 mt-16 w-10/12 text-dark">
           <Routes>
-            <Route path="/" element={<HomePage />} exact />
+            <Route path="/home" element={<HomePage />} exact />
           </Routes>
           <Routes>
             <Route path="/acara" element={<ListEventPage />} exact />
