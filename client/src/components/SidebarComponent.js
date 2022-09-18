@@ -18,9 +18,15 @@ import {
 } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { PageContext } from "../context/PageContext";
+import { useLocation } from "react-router-dom";
 
 export function SidebarUploaderComponent() {
   const { page, setPage } = useContext(PageContext);
+  const location = useLocation();
+
+  useEffect(() => {
+    setPage(location.pathname);
+  }, [location]);
 
   const listPage = [
     {
@@ -99,7 +105,7 @@ export function SidebarUploaderComponent() {
               <Link
                 to={el.link}
                 className={
-                  el.id == page
+                  el.link == page
                     ? "mb-3 flex items-center capitalize font-medium text-sm text-indigo-600 transition ease-in-out duration-500"
                     : "mb-3 flex items-center capitalize font-medium text-sm hover:text-indigo-600 transition ease-in-out duration-500"
                 }
