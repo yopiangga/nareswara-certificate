@@ -3,8 +3,10 @@ import { Router, BrowserRouter, Switch, Route, Routes } from "react-router-dom";
 
 import UploaderLayout from "../../layouts/UploaderLayout";
 import { HomePage } from "./HomePage";
+import ListEventPage from "./ListEventPage";
 import ListCertificatePage from "./ListCertificatePage";
-import { ListEventPage } from "./ListEventPage";
+import ListRequestPage from "./ListRequestPage";
+import ProfilePage from "./ProfilePage";
 
 export default function UploaderRouterPage() {
   return (
@@ -19,6 +21,12 @@ export default function UploaderRouterPage() {
           </Routes>
           <Routes>
             <Route path="/buat-sertifikat" element={<ListCertificatePage />} exact />
+          </Routes>
+          <Routes>
+            <Route path="/semua-permintaan" element={<ListRequestPage />} exact />
+          </Routes>
+          <Routes>
+            <Route path="/profile" element={<ProfilePage />} exact />
           </Routes>
         </div>
       </UploaderLayout>

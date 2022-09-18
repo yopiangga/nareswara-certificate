@@ -16,6 +16,7 @@ import {
   FiUser,
   FiUsers,
 } from "react-icons/fi";
+import { TbFileCertificate } from 'react-icons/tb';
 import { Link } from "react-router-dom";
 import { PageContext } from "../context/PageContext";
 
@@ -40,7 +41,7 @@ export function SidebarUploaderComponent() {
     {
       id: "create-certificate",
       link: "/buat-sertifikat",
-      title: "Buat Sertifikat",
+      title: "Sertifikat",
       icon: FiPlusSquare,
       group: "Sertifikat",
     },

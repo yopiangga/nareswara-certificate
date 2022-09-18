@@ -1,5 +1,5 @@
 import { CardEvent } from "../../components/CardComponent";
-export function ListEventPage() {
+export default function ListEventPage() {
   return (
     <>
       <h1 className="px-5 py-5 text-2xl font-bold">List Event Page</h1>
