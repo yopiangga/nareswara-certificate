@@ -36,11 +36,7 @@ export function NavbarUploaderComponent() {
             <span className="relative inline-flex rounded-full h-3 w-3 bg-indigo-500"></span>
           </span>
         </a>
-        <Link
-          to="/akun"
-          className="flex items-center hover:text-gray-600"
-          href="#"
-        >
+        <Link to="/akun" className="flex items-center hover:text-gray-600">
           <span className="mr-2">{user.name}</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"

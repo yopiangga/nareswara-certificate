@@ -81,7 +81,7 @@ export function SidebarUploaderComponent() {
 
         {listPage.map((el, idx) => {
           return (
-            <>
+            <div key={idx}>
               {idx == 0 ? (
                 <p className="uppercase text-xs text-gray-600 mb-4 tracking-wider">
                   {el.group}
@@ -107,7 +107,7 @@ export function SidebarUploaderComponent() {
                 <el.icon className="mr-3" />
                 {el.title}
               </Link>
-            </>
+            </div>
           );
         })}
       </div>

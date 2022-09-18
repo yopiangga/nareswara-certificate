@@ -2,6 +2,7 @@ import {
   getFirestore,
   getDoc,
   doc,
+  setDoc,
   getDocs,
   collection,
   query,
@@ -56,7 +57,20 @@ export class EventServices {
     return await updateDoc(doc(db, "event", id), {
       name: data.name ?? "",
       description: data.description ?? "",
-      created_at: created_at ?? "",
+    });
+  }
+
+  static async addEvent(id, data, listName) {
+    const result = await setDoc(doc(db, "event", id), {
+      eventName: data.eventName,
+      eventDescription: data.eventDescription,
+      noCertificateStatic: data.noCertificateStatic,
+      noCertificateStart: data.noCertificateStart,
+      titleCertificate: data.titleCertificate,
+      authorCertificate: data.authorCertificate,
+      dateCertificate: data.dateCertificate,
+      descriptionCertificate: data.descriptionCertificate,
+      certificates: listName,
     });
   }
 }
