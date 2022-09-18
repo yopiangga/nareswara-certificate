@@ -27,16 +27,10 @@ export class EventServices {
     return data;
   }
 
-  static async getEvent(label, value) {
-    const q = query(col, where(label, "==", value));
-    const data = [];
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      data.push(doc.data());
-    });
-
-    if (data[0] != null) {
-      return data[0];
+  static async getEvent(id) {
+    const result = await getDoc(doc(db, "event", id));
+    if (result.exists()) {
+      return result.data();
     } else {
       return false;
     }
