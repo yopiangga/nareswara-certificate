@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
-
 import { Router, BrowserRouter, Switch, Route, Routes } from "react-router-dom";
+
 import UploaderLayout from "../../layouts/UploaderLayout";
 import { HomePage } from "./HomePage";
+import ListCertificatePage from "./ListCertificatePage";
 import { ListEventPage } from "./ListEventPage";
 
 export default function UploaderRouterPage() {
@@ -15,6 +16,9 @@ export default function UploaderRouterPage() {
           </Routes>
           <Routes>
             <Route path="/acara" element={<ListEventPage />} exact />
+          </Routes>
+          <Routes>
+            <Route path="/buat-sertifikat" element={<ListCertificatePage />} exact />
           </Routes>
         </div>
       </UploaderLayout>
