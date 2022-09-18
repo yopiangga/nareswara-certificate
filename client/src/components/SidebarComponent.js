@@ -7,6 +7,7 @@ import {
   FiCheckSquare,
   FiDownload,
   FiGift,
+  FiCalendar,
   FiHome,
   FiLayers,
   FiList,

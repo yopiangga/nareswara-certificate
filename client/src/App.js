@@ -2,7 +2,7 @@ import "./App.css";
 import app from "./config/Firebase";
 import { AppContextProvider } from "./context/AppContextProvider";
 import { UserContext } from "./context/UserContext";
-import LoginPage from "./pages/auth/LoginPage";
+import RegisterPage from "./pages/auth/RegisterPage";
 import UploaderRouterPage from "./pages/uploader/UploaderRouterPage";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import { useContext, useEffect, useState } from "react";
@@ -10,6 +10,7 @@ import { AuthServices } from "./services/AuthServices";
 import { UserServices } from "./services/UserServices";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import { Loader } from "./components/Loader";
+import LoginPage from "./pages/auth/LoginPage";
 const auth = getAuth(app);
 
 const queryClient = new QueryClient();
