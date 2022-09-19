@@ -69,8 +69,9 @@ export class EventServices {
     });
   }
 
-  static async addEvent(id, data, listName) {
+  static async addEvent(id, data, email, listName) {
     const result = await setDoc(doc(db, "event", id), {
+      email: email,
       eventName: data.eventName,
       eventDescription: data.eventDescription,
       noCertificateStatic: data.noCertificateStatic,

@@ -85,6 +85,7 @@ export function CreateCertificatePage() {
     EventServices.addEvent(
       `${time}-${user.email}`,
       data,
+      user.email,
       convertArrayToObject(values)
     );
   }
