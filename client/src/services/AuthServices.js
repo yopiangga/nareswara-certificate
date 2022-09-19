@@ -3,6 +3,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
+  signOut,
 } from "firebase/auth";
 import app from "../config/Firebase";
 const auth = getAuth(app);
@@ -20,12 +21,17 @@ export class AuthServices {
   static checkLogin() {
     onAuthStateChanged(auth, function (user) {
       if (user) {
-        console.log("check login");
+        // console.log("check login");
         return user;
       } else {
         // console.log("else");
         return false;
       }
     });
+  }
+
+  static async logout() {
+    const res = await signOut(auth);
+    return res;
   }
 }

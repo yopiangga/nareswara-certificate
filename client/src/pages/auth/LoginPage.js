@@ -9,7 +9,7 @@ import Logo from "../../logo.svg";
 
 export default function LoginPage() {
   const { user, setUser } = useContext(UserContext);
-  const [email, setEmail] = useState("ristekbempens@gmail.com");
+  const [email, setEmail] = useState("yopiangga@gmail.com");
   const [password, setPassword] = useState("123456");
 
   const handleSubmit = async (event) => {
@@ -77,7 +77,7 @@ export default function LoginPage() {
                   />
                 </div>
                 <div className="flex items-center justify-between">
-                  <div className="flex items-start">
+                  {/* <div className="flex items-start">
                     <div className="flex items-center h-5">
                       <input
                         id="remember"
@@ -95,7 +95,7 @@ export default function LoginPage() {
                         Remember me
                       </label>
                     </div>
-                  </div>
+                  </div> */}
                   <a className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">
                     Forgot password?
                   </a>

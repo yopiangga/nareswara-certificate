@@ -12,10 +12,10 @@ import {
 } from "firebase/firestore";
 
 const db = getFirestore();
-const col = collection(db, "event");
+const col = collection(db, "request");
 
-export class EventServices {
-  static async getEvents() {
+export class RequestServices {
+  static async getRequests() {
     const docSnap = await getDocs(col);
 
     const data = [];
@@ -27,8 +27,8 @@ export class EventServices {
     return data;
   }
 
-  static async getEvent(id) {
-    const result = await getDoc(doc(db, "event", id));
+  static async getRequest(id) {
+    const result = await getDoc(doc(db, "request", id));
     if (result.exists()) {
       return result.data();
     } else {
@@ -36,7 +36,7 @@ export class EventServices {
     }
   }
 
-  static async getEventByParameter(label, value) {
+  static async getRequestByParameter(label, value) {
     const q = query(col, where(label, "==", value));
     const data = [];
     const querySnapshot = await getDocs(q);
@@ -51,8 +51,8 @@ export class EventServices {
     }
   }
 
-  static async deleteEvent(id) {
-    const docRef = doc(db, "event", id);
+  static async deleteRequest(id) {
+    const docRef = doc(db, "request", id);
     const result = await deleteDoc(docRef);
 
     if (result) {
@@ -62,24 +62,22 @@ export class EventServices {
     }
   }
 
-  static async editEvent(id, data) {
-    return await updateDoc(doc(db, "event", id), {
+  static async editRequest(id, data) {
+    return await updateDoc(doc(db, "request", id), {
       name: data.name ?? "",
       description: data.description ?? "",
     });
   }
 
-  static async addEvent(id, data, listName) {
-    const result = await setDoc(doc(db, "event", id), {
-      eventName: data.eventName,
-      eventDescription: data.eventDescription,
-      noCertificateStatic: data.noCertificateStatic,
-      noCertificateStart: data.noCertificateStart,
-      titleCertificate: data.titleCertificate,
-      authorCertificate: data.authorCertificate,
-      dateCertificate: data.dateCertificate,
-      descriptionCertificate: data.descriptionCertificate,
-      certificates: listName,
+  static async addRequest(id, data) {
+    const result = await setDoc(doc(db, "request", id), {
+      metaId: data.metaId,
+      email: data.email,
+      eventId: data.eventId,
+      status: data.status,
+      createdAt: data.createdAt,
     });
+
+    return result;
   }
 }

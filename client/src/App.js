@@ -2,15 +2,14 @@ import "./App.css";
 import app from "./config/Firebase";
 import { AppContextProvider } from "./context/AppContextProvider";
 import { UserContext } from "./context/UserContext";
-import RegisterPage from "./pages/auth/RegisterPage";
 import UploaderRouterPage from "./pages/uploader/UploaderRouterPage";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import { useContext, useEffect, useState } from "react";
-import { AuthServices } from "./services/AuthServices";
 import { UserServices } from "./services/UserServices";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import { Loader } from "./components/Loader";
 import LoginPage from "./pages/auth/LoginPage";
+import DownloaderRouterPage from "./pages/downloader/DownloaderRouterPage";
 const auth = getAuth(app);
 
 const queryClient = new QueryClient();
@@ -57,7 +56,7 @@ function UserManager() {
   } else if (user.role == 1) {
     return <UploaderRouterPage />;
   } else if (user.role == 2) {
-    return <h1>Downloader</h1>;
+    return <DownloaderRouterPage />;
   } else {
     return <h1>404 Page</h1>;
   }

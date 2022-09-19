@@ -1,12 +1,17 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import certificatePreview from "src/assets/images/certificate-preview.png";
+import { UserContext } from "src/context/UserContext";
 
 export function CardComponentDefault({ data }) {
+  const { user, setUser } = useContext(UserContext);
   return (
     <div className="relative max-w-md mx-auto xl:max-w-2xl min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-xl mt-16">
       <div className="card">
         <div className="card-header mx-4 -mt-6">
-          <Link to={`/acara/${data.id}`}>
+          <Link
+            to={`${user.role == 1 ? "/acara" : "/permintaan-baru"}/${data.id}`}
+          >
             <img
               className="w-auto rounded-lg shadow-lg"
               src={certificatePreview}
