@@ -29,7 +29,7 @@ function App() {
 export default App;
 
 function UserManager() {
-  const { currentAccount } = useContext(SmartContractContext);
+  const { currentAccount, isLoading } = useContext(SmartContractContext);
   const { user, setUser } = useContext(UserContext);
   const [load, setLoad] = useState(true);
 
@@ -41,13 +41,8 @@ function UserManager() {
     onAuthStateChanged(auth, async function (users) {
       if (users) {
         const resUser = await UserServices.getUser("email", users.email);
-        console.log(resUser);
-        if (resUser.metaId == currentAccount) {
-          
-          setUser(resUser);
-          
-        }
-        setLoad(false);
+        
+        setLoad(isLoading);
       } else {
         setUser(null);
         setLoad(false);
