@@ -1,10 +1,9 @@
 import React, { useContext, useState } from "react";
-import app from "../../config/Firebase";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { Btn1Active } from "../../components/ButtonComponent";
+
 import { UserContext } from "../../context/UserContext";
 import { AuthServices } from "../../services/AuthServices";
 import { UserServices } from "../../services/UserServices";
+
 import Logo from "../../logo.svg";
 
 export default function LoginPage() {

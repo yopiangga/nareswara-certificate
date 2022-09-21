@@ -1,6 +1,7 @@
 import {
   getFirestore,
   getDoc,
+  setDoc,
   doc,
   getDocs,
   collection,
@@ -14,6 +15,18 @@ const db = getFirestore();
 const col = collection(db, "user");
 
 export class UserServices {
+
+  static async addUsers(uid, email, name, address, metaId, role, photoPath) {
+    await setDoc(doc(db, "user", uid), {
+      email: email,
+      name: name,
+      address: address,
+      metaId: metaId,
+      role: parseInt(role),
+      photoPath: photoPath
+    });
+  }
+
   static async getUsers() {
     const docSnap = await getDocs(col);
 

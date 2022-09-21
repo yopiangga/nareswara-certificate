@@ -163,7 +163,7 @@ export function SidebarDownloaderComponent() {
     {
       id: "profile",
       link: "/profile",
-      title: "Profile Organisasi",
+      title: "Profile",
       icon: FiSlack,
       group: "Akun",
     },

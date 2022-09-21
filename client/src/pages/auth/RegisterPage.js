@@ -1,8 +1,44 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+
+import { SmartContractContext } from "src/context/SmartContractContext";
+import { AuthServices } from "../../services/AuthServices";
+import { UserServices } from "../../services/UserServices";
 
 import Logo from "../../logo.svg";
+import { UserContext } from "src/context/UserContext";
 
-export default function LoginPage() {
+export default function RegisterPage() {
+
+  const { currentAccount, connectWallet, addOrganization, addUser} = useContext(SmartContractContext);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [role, setRole] = useState(0);
+  const { user, setUser } = useContext(UserContext);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (currentAccount == "") {
+      await connectWallet();
+    } else {
+      const resAuth = await AuthServices.register(email, password);
+      if (resAuth.user != null) {
+        const doc = await UserServices.addUsers(resAuth.user.uid, email, name, address, currentAccount, role, "");
+        if (role == 1) {
+          await addOrganization(name, email);
+        } else {
+          await addUser(name, email);
+        }
+        const resUser = await UserServices.getUser("email", resAuth.user.email);
+        setUser(resUser);
+        console.log(user);
+      }
+    }
+  }
+
   return (
     <>
       <section className="bg-gray-50 dark:bg-gray-900">
@@ -28,6 +64,7 @@ export default function LoginPage() {
                     type="email"
                     name="email"
                     id="email"
+                    onChange={(e) => setEmail(e.target.value)}
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="name@company.com"
                     required
@@ -45,6 +82,7 @@ export default function LoginPage() {
                     name="name"
                     id="name"
                     placeholder="nama"
+                    onChange={(e) => setName(e.target.value)}
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required
                   />
@@ -61,6 +99,7 @@ export default function LoginPage() {
                     name="address"
                     id="address"
                     placeholder="Alamat"
+                    onChange={(e) => setAddress(e.target.value)}
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required
                   />
@@ -73,11 +112,13 @@ export default function LoginPage() {
                 </label>
                 <select
                   id="countries"
+                  onChange={(e) => setRole(e.target.value)}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
                   <option selected>Pilih role</option>
-                  <option value="1">Pengguna biasa</option>
-                  <option value="2">Organisasi</option>
+                  <option value="1">Organisasi</option>
+                  <option value="2">Pengguna biasa</option>
+                  
                 </select>
                 <div>
                   <label
@@ -91,6 +132,7 @@ export default function LoginPage() {
                     name="password"
                     id="password"
                     placeholder="••••••••"
+                    onChange={(e) => setPassword(e.target.value)}
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required
                   />
@@ -120,6 +162,7 @@ export default function LoginPage() {
                 <button
                   type="submit"
                   className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                  onClick={handleSubmit}
                 >
                   Buat akun
                 </button>
