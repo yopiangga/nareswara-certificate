@@ -9,7 +9,7 @@ import { UserContext } from "src/context/UserContext";
 
 export default function RegisterPage() {
 
-  const { currentAccount, connectWallet, addOrganization, isLoading } = useContext(SmartContractContext);
+  const { currentAccount, connectWallet, addOrganization, addUser} = useContext(SmartContractContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,7 +30,7 @@ export default function RegisterPage() {
         if (role == 1) {
           await addOrganization(name, email);
         } else {
-          // add user
+          await addUser(name, email);
         }
         const resUser = await UserServices.getUser("email", resAuth.user.email);
         setUser(resUser);
