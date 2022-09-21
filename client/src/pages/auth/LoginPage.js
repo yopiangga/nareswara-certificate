@@ -9,13 +9,16 @@ import Logo from "../../logo.svg";
 
 export default function LoginPage() {
   const { user, setUser } = useContext(UserContext);
-  const [email, setEmail] = useState("yopiangga@gmail.com");
-  const [password, setPassword] = useState("123456");
+  const [dataAuth, setDataAuth] = useState({ email: "", password: "" });
+
+  const handleChange = (e) => {
+    setDataAuth({ ...dataAuth, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const resAuth = await AuthServices.login(email, password);
+    const resAuth = await AuthServices.login(dataAuth.email, dataAuth.password);
 
     if (resAuth?.operationType == "signIn") {
       const resUser = await UserServices.getUser("email", resAuth.user.email);
@@ -51,8 +54,8 @@ export default function LoginPage() {
                     type="email"
                     name="email"
                     id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.value)}
+                    value={dataAuth.email}
+                    onChange={handleChange}
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="name@company.com"
                     required
@@ -68,8 +71,8 @@ export default function LoginPage() {
                   <input
                     type="password"
                     name="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.value)}
+                    value={dataAuth.password}
+                    onChange={handleChange}
                     id="password"
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

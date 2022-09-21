@@ -71,7 +71,11 @@ export function CreateCertificatePage() {
     var object = [];
 
     for (let i = 0; i < array.length; i++) {
-      object.push({ name: array[i][0], email: array[i][1] });
+      object.push({
+        name: array[i][0],
+        email: array[i][1],
+        metaId: array[i][2],
+      });
     }
 
     return object;
