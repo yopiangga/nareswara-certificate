@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-
 import { Router, BrowserRouter, Switch, Route, Routes } from "react-router-dom";
 import DownloaderLayout from "src/layouts/DownloaderLayout";
 import { HomePage } from "./HomePage";

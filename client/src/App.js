@@ -10,6 +10,8 @@ import { onAuthStateChanged, getAuth } from "firebase/auth";
 import { Loader } from "./components/Loader";
 import LoginPage from "./pages/auth/LoginPage";
 import DownloaderRouterPage from "./pages/downloader/DownloaderRouterPage";
+import AuthRouterPage from "./pages/auth/AuthRouterPage";
+import { SmartContractContext } from "./context/SmartContractContext";
 const auth = getAuth(app);
 
 const queryClient = new QueryClient();
@@ -27,6 +29,7 @@ function App() {
 export default App;
 
 function UserManager() {
+  const { currentAccount } = useContext(SmartContractContext);
   const { user, setUser } = useContext(UserContext);
   const [load, setLoad] = useState(true);
 
@@ -35,13 +38,16 @@ function UserManager() {
   }, []);
 
   async function fetch() {
-    onAuthStateChanged(auth, async function (user) {
-      if (user) {
-        const resUser = await UserServices.getUser("email", user.email);
-        if (resUser != false) {
+    onAuthStateChanged(auth, async function (users) {
+      if (users) {
+        const resUser = await UserServices.getUser("email", users.email);
+        console.log(resUser);
+        if (resUser.metaId == currentAccount) {
+          
           setUser(resUser);
-          setLoad(false);
+          
         }
+        setLoad(false);
       } else {
         setUser(null);
         setLoad(false);
@@ -52,7 +58,7 @@ function UserManager() {
   if (load) {
     return <Loader />;
   } else if (user == null) {
-    return <LoginPage />;
+    return <AuthRouterPage />;
   } else if (user.role == 1) {
     return <UploaderRouterPage />;
   } else if (user.role == 2) {
