@@ -6,7 +6,6 @@ import { EventServices } from "src/services/EventServices";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 import templateCertificate from "src/assets/images/template-certificate.jpg";
-import { useScreenshot } from "use-react-screenshot";
 import { MetaServices } from "src/services/MetaServices";
 
 export function ListCertificatePage() {
@@ -73,7 +72,7 @@ export function ListCertificatePage() {
       var fd = new File([file], "File name", { type: "application/pdf" });
       console.log(fd);
       // const res = await MetaServices.upload(fd);
-      const res = await MetaServices.uploadPDF(pdf);
+      const res = await MetaServices.uploadPDF(fd);
     });
   };
 
