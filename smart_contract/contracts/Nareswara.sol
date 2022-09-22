@@ -79,8 +79,8 @@ contract Nareswara {
         return organizations[_organizationAddress].id == _organizationAddress;
     }
 
-    function addEvent(address _organizationAddress, string memory _eventName) public {
-        Event memory _event = Event(_eventName, new string[](0));
+    function addEvent(address _organizationAddress, string memory _eventName, string[] memory _participants) public {
+        Event memory _event = Event(_eventName, _participants);
         organizations[_organizationAddress].events.push(_event);
 
         emit EventAdded(_organizationAddress, _eventName);

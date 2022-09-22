@@ -9,11 +9,13 @@ import Papa from "papaparse";
 import { TableComponentDefault } from "../../components/TableComponent";
 import certificatePreview from "src/assets/images/certificate-preview.png";
 import { EventServices } from "src/services/EventServices";
+import { SmartContractContext } from "src/context/SmartContractContext";
 
 const allowedExtensions = ["csv"];
 
 export function CreateCertificatePage() {
   const { user, setUser } = useContext(UserContext);
+  const { addEvent } = useContext(SmartContractContext);
 
   const [parsedData, setParsedData] = useState([]);
   const [tableRows, setTableRows] = useState([]);
@@ -81,10 +83,21 @@ export function CreateCertificatePage() {
     return object;
   }
 
-  function handleSubmit(event) {
+  function getEmailFromArray(array) {
+    var object = [];
+    for (let i = 0; i < array.length; i++) {
+      object.push(array[i][1]);
+    }
+    return object;
+  }
+
+  async function handleSubmit(event) {
     event.preventDefault();
     const date = new Date();
     const time = date.getTime();
+
+    
+    await addEvent(data.eventName, getEmailFromArray(values));
 
     EventServices.addEvent(
       `${time}-${user.email}`,

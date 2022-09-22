@@ -63,6 +63,26 @@ export const SmartContractProvider = ({ children }) => {
     }
   };
 
+  const addEvent = async (name, email) => {
+    try {
+      if (ethereum) {
+        const contract = createEthereumContract();
+        const hash = await contract.addEvent(currentAccount, name, email);
+
+        setIsLoading(true);
+        console.log(`Loading - ${hash}`);
+        await hash.wait();
+        console.log(`Success - ${hash.hash}`);
+        setIsLoading(false);
+
+      } else {
+        console.log("No ethereum object");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const checkIfWalletIsConnect = async () => {
     try {
       if (!ethereum) return alert("Please install metamask!");
@@ -109,7 +129,8 @@ export const SmartContractProvider = ({ children }) => {
         currentAccount,
         connectWallet,
         addOrganization,
-        addUser
+        addUser,
+        addEvent
       }}
     >
       {children}
