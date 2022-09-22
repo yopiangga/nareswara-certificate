@@ -41,7 +41,7 @@ function UserManager() {
     onAuthStateChanged(auth, async function (users) {
       if (users) {
         const resUser = await UserServices.getUser("email", users.email);
-        
+        setUser(resUser);
         setLoad(isLoading);
       } else {
         setUser(null);

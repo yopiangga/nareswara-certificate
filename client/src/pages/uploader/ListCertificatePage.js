@@ -6,6 +6,8 @@ import { EventServices } from "src/services/EventServices";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 import templateCertificate from "src/assets/images/template-certificate.jpg";
+import { useScreenshot } from "use-react-screenshot";
+import { MetaServices } from "src/services/MetaServices";
 
 export function ListCertificatePage() {
   const [event, setEvent] = useState();
@@ -17,9 +19,15 @@ export function ListCertificatePage() {
 
   const inputRef = useRef(null);
 
+  const [file, setFile] = useState();
+
   useEffect(() => {
     fetch();
   }, []);
+
+  function handleFile(e) {
+    console.log(e.target.files[0]);
+  }
 
   function init(n) {
     var temp = [];
@@ -50,8 +58,8 @@ export function ListCertificatePage() {
     setLoad(false);
   }
 
-  const download = () => {
-    html2canvas(ref[0]).then((canvas) => {
+  const download = async () => {
+    html2canvas(document.getElementById("canvas-3")).then(async (canvas) => {
       const imgData = canvas.toDataURL("image/jpeg");
       const pdf = new jsPDF({
         orientation: "l",
@@ -60,7 +68,12 @@ export function ListCertificatePage() {
         putOnlyUsedFonts: true,
       });
       pdf.addImage(imgData, "JPEG", 0, 0, 297, 210);
-      pdf.save("lean-canvas.pdf");
+
+      var file = pdf.output("blob");
+      var fd = new File([file], "File name", { type: "application/pdf" });
+      console.log(fd);
+      // const res = await MetaServices.upload(fd);
+      const res = await MetaServices.uploadPDF(pdf);
     });
   };
 
@@ -74,6 +87,7 @@ export function ListCertificatePage() {
       >
         Save Image
       </button>
+      <input type="file" onChange={handleFile} />
       {load ? (
         ""
       ) : (
@@ -91,8 +105,9 @@ export function ListCertificatePage() {
           : certificates.map((el, idx) => {
               return (
                 <div
+                  key={idx}
                   className="leancanvas-container relative bg-white mb-10 flex "
-                  id={`canvas${idx}`}
+                  id={`canvas-${idx + 1}`}
                   style={{ width: "870px", height: "624px" }}
                   ref={ref[idx]}
                 >
