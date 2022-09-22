@@ -7,11 +7,6 @@ import { UserContext } from "../context/UserContext";
 export function NavbarUploaderComponent() {
   const { user, setUser } = useContext(UserContext);
 
-  async function handleLogout() {
-    const res = await AuthServices.logout();
-    console.log(res);
-  }
-
   return (
     <div className="fixed md:w-full md:top-0 md:z-20 flex flex-row flex-wrap items-center bg-white h-20 w-full px-6 shadow-sm">
       <div className="flex-none w-56 flex flex-row items-center">
@@ -42,28 +37,25 @@ export function NavbarUploaderComponent() {
             <span className="relative inline-flex rounded-full h-3 w-3 bg-indigo-500"></span>
           </span>
         </a>
-        <button
-          onClick={() => {
-            handleLogout();
-          }}
-          className="flex items-center hover:text-gray-600"
-        >
-          <span className="mr-2">{user.name}</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 hover:text-gray-600"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-        </button>
+        <Link to={"/profile"}>
+          <a className="flex items-center hover:text-gray-600">
+            <span className="mr-2">{user.name}</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 hover:text-gray-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </a>
+        </Link>
       </div>
     </div>
   );
@@ -72,11 +64,6 @@ export function NavbarUploaderComponent() {
 export function NavbarDownloaderComponent() {
   const { user, setUser } = useContext(UserContext);
 
-  async function handleLogout() {
-    const res = await AuthServices.logout();
-    console.log(res);
-  }
-
   return (
     <div className="fixed md:w-full md:top-0 md:z-20 flex flex-row flex-wrap items-center bg-white h-20 w-full px-6 shadow-sm">
       <div className="flex-none w-56 flex flex-row items-center">
@@ -107,28 +94,25 @@ export function NavbarDownloaderComponent() {
             <span className="relative inline-flex rounded-full h-3 w-3 bg-indigo-500"></span>
           </span>
         </a>
-        <button
-          onClick={() => {
-            handleLogout();
-          }}
-          className="flex items-center hover:text-gray-600"
-        >
-          <span className="mr-2">{user.name}</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 hover:text-gray-600"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-        </button>
+        <Link to={"/profile"}>
+          <a className="flex items-center hover:text-gray-600">
+            <span className="mr-2">{user.name}</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 hover:text-gray-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </a>
+        </Link>
       </div>
     </div>
   );

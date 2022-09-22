@@ -3,9 +3,11 @@ import React, { useContext } from "react";
 import { Router, BrowserRouter, Switch, Route, Routes } from "react-router-dom";
 import UploaderLayout from "../../layouts/UploaderLayout";
 import { CreateCertificatePage } from "./CreateCertificatePage";
+import { EditProfilePage } from "./EditProfilePage";
 import { HomePage } from "./HomePage";
 import { ListCertificatePage } from "./ListCertificatePage";
 import { ListEventPage } from "./ListEventPage";
+import { ProfilePage } from "./ProfilePage";
 
 export default function UploaderRouterPage() {
   return (
@@ -27,6 +29,12 @@ export default function UploaderRouterPage() {
               element={<CreateCertificatePage />}
               exact
             />
+          </Routes>
+          <Routes>
+            <Route path="/profile" element={<ProfilePage />} exact />
+          </Routes>
+          <Routes>
+            <Route path="/edit-profile" element={<EditProfilePage />} exact />
           </Routes>
         </div>
       </UploaderLayout>

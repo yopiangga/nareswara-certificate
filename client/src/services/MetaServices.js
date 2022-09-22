@@ -13,8 +13,6 @@ export class MetaServices {
   static async uploadPDF(file) {
     try {
       const res = await ipfs.add(file);
-      console.log(res.path);
-      //   console.log(res.path);
     } catch (error) {
       console.log("Error uploading file: ", error);
     }

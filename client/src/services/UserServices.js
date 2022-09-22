@@ -15,7 +15,6 @@ const db = getFirestore();
 const col = collection(db, "user");
 
 export class UserServices {
-
   static async addUsers(uid, email, name, address, metaId, role, photoPath) {
     await setDoc(doc(db, "user", uid), {
       email: email,
@@ -23,7 +22,7 @@ export class UserServices {
       address: address,
       metaId: metaId,
       role: parseInt(role),
-      photoPath: photoPath
+      photoPath: photoPath,
     });
   }
 
@@ -42,13 +41,15 @@ export class UserServices {
   static async getUser(label, value) {
     const q = query(col, where(label, "==", value));
     const data = [];
+    var id;
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       data.push(doc.data());
+      id = doc.id;
     });
 
     if (data[0] != null) {
-      return data[0];
+      return { ...data[0], id: id };
     } else {
       return false;
     }
@@ -68,8 +69,9 @@ export class UserServices {
   static async editUser(id, data) {
     return await updateDoc(doc(db, "user", id), {
       name: data.name ?? "",
-      photo: data.photo ?? "",
+      photoPath: data.photoPath ?? "",
       address: data.address ?? "",
+      metaId: data.metaId ?? "",
     });
   }
 }

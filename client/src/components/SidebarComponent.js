@@ -131,13 +131,13 @@ export function SidebarDownloaderComponent() {
   }, [location]);
 
   const listPage = [
-    {
-      id: "new-request",
-      link: "/permintaan-baru",
-      title: "Permintaan Baru",
-      icon: FiFeather,
-      group: "Utama",
-    },
+    // {
+    //   id: "new-request",
+    //   link: "/permintaan-baru",
+    //   title: "Permintaan Baru",
+    //   icon: FiFeather,
+    //   group: "Utama",
+    // },
     {
       id: "home",
       link: "/",

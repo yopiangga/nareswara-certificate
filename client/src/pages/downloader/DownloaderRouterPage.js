@@ -1,10 +1,13 @@
 import React, { useContext } from "react";
 import { Router, BrowserRouter, Switch, Route, Routes } from "react-router-dom";
 import DownloaderLayout from "src/layouts/DownloaderLayout";
+import { EditProfilePage } from "./EditProfilePage";
 import { HomePage } from "./HomePage";
 import { ListCertificateByEventPage } from "./ListCertificateByEventPage";
+import { ListCertificatePage } from "./ListCertificatePage";
 import { ListRequestPage } from "./ListRequestPage";
 import { NewRequestPage } from "./NewRequestPage";
+import { ProfilePage } from "./ProfilePage";
 
 export default function DownloaderRouterPage() {
   return (
@@ -30,6 +33,15 @@ export default function DownloaderRouterPage() {
               element={<ListRequestPage />}
               exact
             />
+          </Routes>
+          <Routes>
+            <Route path="/sertifikat" element={<ListCertificatePage />} exact />
+          </Routes>
+          <Routes>
+            <Route path="/profile" element={<ProfilePage />} exact />
+          </Routes>
+          <Routes>
+            <Route path="/edit-profile" element={<EditProfilePage />} exact />
           </Routes>
         </div>
       </DownloaderLayout>
