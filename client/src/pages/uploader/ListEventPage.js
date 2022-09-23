@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CardComponentDefault } from "src/components/CardComponent";
+import { UserContext } from "src/context/UserContext";
 import { EventServices } from "src/services/EventServices";
 
 export function ListEventPage() {
+  const { user, setUser } = useContext(UserContext);
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
@@ -10,7 +12,7 @@ export function ListEventPage() {
   }, []);
 
   async function fetch() {
-    const res = await EventServices.getEvents();
+    const res = await EventServices.getEventByParameter("email", user.email);
     setEvents(res);
   }
 

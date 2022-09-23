@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { FiBell } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { AuthServices } from "src/services/AuthServices";
 import { UserContext } from "../context/UserContext";
 
 export function NavbarUploaderComponent() {
@@ -30,15 +29,15 @@ export function NavbarUploaderComponent() {
       </button>
 
       <div className="hidden xl:flex space-x-5 items-center ml-auto text-dark">
-        <a className="flex items-center hover:text-gray-600" href="#">
+        <button className="flex items-center hover:text-gray-600" href="#">
           <FiBell className="text-xl" />
           <span className="flex absolute -mt-5 ml-4">
             <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-indigo-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-3 w-3 bg-indigo-500"></span>
           </span>
-        </a>
+        </button>
         <Link to={"/profile"}>
-          <a className="flex items-center hover:text-gray-600">
+          <div className="flex items-center hover:text-gray-600">
             <span className="mr-2">{user.name}</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +53,7 @@ export function NavbarUploaderComponent() {
                 d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-          </a>
+          </div>
         </Link>
       </div>
     </div>
@@ -87,15 +86,15 @@ export function NavbarDownloaderComponent() {
       </button>
 
       <div className="hidden xl:flex space-x-5 items-center ml-auto text-dark">
-        <a className="flex items-center hover:text-gray-600" href="#">
+        <button className="flex items-center hover:text-gray-600" href="#">
           <FiBell className="text-xl" />
           <span className="flex absolute -mt-5 ml-4">
             <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-indigo-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-3 w-3 bg-indigo-500"></span>
           </span>
-        </a>
+        </button>
         <Link to={"/profile"}>
-          <a className="flex items-center hover:text-gray-600">
+          <div className="flex items-center hover:text-gray-600">
             <span className="mr-2">{user.name}</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -111,7 +110,7 @@ export function NavbarDownloaderComponent() {
                 d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-          </a>
+          </div>
         </Link>
       </div>
     </div>
