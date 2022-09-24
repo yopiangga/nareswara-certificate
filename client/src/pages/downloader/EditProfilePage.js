@@ -6,8 +6,11 @@ import {
   InputComponentTextarea,
 } from "../../components/InputComponent";
 import { UserContext } from "../../context/UserContext";
+import { useNavigate } from "react-router-dom";
+import { ModalInformationLittle } from "src/components/ModalInformationComponent";
 
 export function EditProfilePage() {
+  const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
   const [data, setData] = useState({
     name: "",
@@ -15,6 +18,11 @@ export function EditProfilePage() {
     metaId: "",
     photoPath: "",
   });
+  const [modalInformationLittle, setModalInformationLittle] = useState({
+    status: false,
+    description: "",
+  });
+
   useEffect(() => {
     fetch();
   }, []);
@@ -35,11 +43,30 @@ export function EditProfilePage() {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    UserServices.editUser(user.id, data);
+    await UserServices.editUser(user.id, data);
+    setModalInformationLittle({
+      status: true,
+      description: `Profile "${user.name}" telah berhasil diperbarui`,
+    });
   }
+
+  const handleCloseModal = () => {
+    setModalInformationLittle({
+      status: false,
+      title: "",
+      description: "",
+    });
+    navigate("/profile");
+  };
 
   return (
     <>
+      <ModalInformationLittle
+        status={modalInformationLittle.status}
+        title={modalInformationLittle.title}
+        description={modalInformationLittle.description}
+        handleClose={handleCloseModal}
+      />
       <div className="w-11/12 p-12 bg-white mt-5 rounded-lg shadow-lg">
         <h1 className="text-xl font-semibold">
           Hallo {user?.name} 👋<span className="font-normal"></span>

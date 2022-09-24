@@ -32,8 +32,15 @@ export function CardComponentDefault({ data }) {
   );
 }
 
-export function CardComponentCertificateDownload({ data }) {
+export function CardComponentCertificateDownload({ data, callback }) {
   const { user, setUser } = useContext(UserContext);
+
+  function handleCopy() {
+    navigator.clipboard.writeText(data.data.link);
+
+    callback(data.data.link);
+  }
+
   return (
     <div className="relative max-w-md mx-auto xl:max-w-2xl min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-xl mt-16">
       <div className="card">
@@ -52,7 +59,15 @@ export function CardComponentCertificateDownload({ data }) {
               {data.data.eventName}
             </h4>
           </Link>
-          <p className="opcacity-60 mb-4">{data.data.link}</p>
+          <div className="flex gap-4 justify-between">
+            <p className="opcacity-60 mb-4 truncate w-1/2">{data.data.link}</p>
+            <button
+              onClick={handleCopy}
+              className="h-6 text-xs px-3 rounded-md bg-gray-100 text-slate-600"
+            >
+              Salin URL
+            </button>
+          </div>
           <a
             href={data.data.link}
             className="py-2 px-5 transition-colors duration-700 transform bg-indigo-500 hover:bg-blue-400 text-gray-100 text-md border-indigo-300 rounded-md"

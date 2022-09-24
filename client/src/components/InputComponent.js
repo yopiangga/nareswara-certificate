@@ -69,7 +69,7 @@ export function InputComponentFile({ id, title, onChange, placeholder }) {
     <div className="my-5">
       <label
         htmlFor={id}
-        className="block mt-2 text-xs font-semibold text-gray-600 uppercase"
+        className="block mt-2 mb-2 text-xs font-semibold text-gray-600 uppercase"
       >
         {title}
       </label>
