@@ -6,10 +6,14 @@ import { UserServices } from "../../services/UserServices";
 
 import Logo from "../../logo.svg";
 import { UserContext } from "src/context/UserContext";
+import { Link } from "react-router-dom";
+import { Loading } from "src/components/Loader";
+import { LoadingContext } from "src/context/LoadingContext";
 
 export default function RegisterPage() {
-
-  const { currentAccount, connectWallet, addOrganization, addUser} = useContext(SmartContractContext);
+  const { loading, setLoading } = useContext(LoadingContext);
+  const { currentAccount, connectWallet, addOrganization, addUser } =
+    useContext(SmartContractContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,12 +25,22 @@ export default function RegisterPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    setLoading(true);
+
     if (currentAccount == "") {
       await connectWallet();
     } else {
       const resAuth = await AuthServices.register(email, password);
       if (resAuth.user != null) {
-        const doc = await UserServices.addUsers(resAuth.user.uid, email, name, address, currentAccount, role, "");
+        const doc = await UserServices.addUsers(
+          resAuth.user.uid,
+          email,
+          name,
+          address,
+          currentAccount,
+          role,
+          ""
+        );
         if (role == 1) {
           await addOrganization(name, email);
         } else {
@@ -34,13 +48,15 @@ export default function RegisterPage() {
         }
         const resUser = await UserServices.getUser("email", resAuth.user.email);
         setUser(resUser);
-        console.log(user);
+        // console.log(user);
       }
     }
-  }
+    setLoading(false);
+  };
 
   return (
     <>
+      <Loading loading={loading} />
       <section className="bg-gray-50 dark:bg-gray-900">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <a className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
@@ -66,7 +82,7 @@ export default function RegisterPage() {
                     id="email"
                     onChange={(e) => setEmail(e.target.value)}
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="name@company.com"
+                    placeholder="contoh@email.com"
                     required
                   />
                 </div>
@@ -118,7 +134,6 @@ export default function RegisterPage() {
                   <option selected>Pilih role</option>
                   <option value="1">Organisasi</option>
                   <option value="2">Pengguna biasa</option>
-                  
                 </select>
                 <div>
                   <label
@@ -167,10 +182,12 @@ export default function RegisterPage() {
                   Buat akun
                 </button>
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                  Already have an account?{" "}
-                  <a className="font-medium text-primary-600 hover:underline dark:text-primary-500">
-                    Login here
-                  </a>
+                  Sudah punya akun?{" "}
+                  <Link to="/login">
+                    <a className="font-medium text-primary-600 hover:underline dark:text-primary-500">
+                      Masuk
+                    </a>
+                  </Link>
                 </p>
               </form>
             </div>

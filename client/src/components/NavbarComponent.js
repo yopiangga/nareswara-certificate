@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { FiBell } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
+import Logo from "src/logo.svg";
 
 export function NavbarUploaderComponent() {
   const { user, setUser } = useContext(UserContext);
@@ -9,9 +10,17 @@ export function NavbarUploaderComponent() {
   return (
     <div className="fixed md:w-full md:top-0 md:z-20 flex flex-row flex-wrap items-center bg-white h-20 w-full px-6 shadow-sm">
       <div className="flex-none w-56 flex flex-row items-center">
-        <h2 className="text-dark text-xl font-bold">
+        {/* <h2 className="text-dark text-xl font-bold">
           Nares <span className="text-indigo-600 font-bold">Certificate</span>
-        </h2>
+        </h2> */}
+        <Link to="/">
+          <a className="flex items-center text-2xl font-semibold text-gray-900">
+            <img className="w-6 h-6 mr-2" src={Logo} alt="logo" />
+            <h2 className="text-sm">
+              Nares <span className="text-indigo-600">Certificate</span>
+            </h2>
+          </a>
+        </Link>
 
         <button
           id="sliderBtn"
@@ -66,9 +75,17 @@ export function NavbarDownloaderComponent() {
   return (
     <div className="fixed md:w-full md:top-0 md:z-20 flex flex-row flex-wrap items-center bg-white h-20 w-full px-6 shadow-sm">
       <div className="flex-none w-56 flex flex-row items-center">
-        <h2 className="text-dark text-xl font-bold">
+        {/* <h2 className="text-dark text-xl font-bold">
           Nares <span className="text-indigo-600 font-bold">Certificate</span>
-        </h2>
+        </h2> */}
+        <Link to="/">
+          <a className="flex items-center text-2xl font-semibold text-gray-900">
+            <img className="w-6 h-6 mr-2" src={Logo} alt="logo" />
+            <h2 className="text-sm">
+              Nares <span className="text-indigo-600">Certificate</span>
+            </h2>
+          </a>
+        </Link>
 
         <button
           id="sliderBtn"

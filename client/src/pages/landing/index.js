@@ -1,5 +1,6 @@
 import logo from "../../logo.svg";
 import onlineTest from "../../assets/images/online_test.svg";
+import { Link } from "react-router-dom";
 
 export default function LandingPage() {
   return (
@@ -8,10 +9,13 @@ export default function LandingPage() {
         <div class="container flex flex-wrap justify-between items-center mx-auto">
           <a href="/" class="flex items-center">
             <img src={logo} class="mr-3 h-6 sm:h-9" alt="Nares Logo" />
-            <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-            Nares Certificate
-            </span>
+            <div class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+              <h2 className="">
+                Nares <span className="text-indigo-600">Certificate</span>
+              </h2>
+            </div>
           </a>
+
           <button
             data-collapse-toggle="navbar-default"
             type="button"
@@ -74,12 +78,11 @@ export default function LandingPage() {
               </li>
 
               <li>
-                <button
-                  type="submit"
-                  className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                >
-                  Sign in
-                </button>
+                <Link to="/login">
+                  <a className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                    Masuk
+                  </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -87,71 +90,71 @@ export default function LandingPage() {
       </nav>
 
       <section>
-  <div class="px-4 py-16 mx-auto max-w-screen-xl sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 gap-8 lg:gap-16 lg:grid-cols-2">
-      <div
-        class="relative h-64 rounded-lg sm:h-80 lg:h-full lg:order-last"
-      >
-        <img
-          alt="Party"
-          src={onlineTest}
-          class="object-cover w-full h-full"
-        />
-      </div>
+        <div class="px-4 py-16 mx-auto max-w-screen-xl sm:px-6 lg:px-8">
+          <div class="grid grid-cols-1 gap-8 lg:gap-16 lg:grid-cols-2">
+            <div class="relative h-64 rounded-lg sm:h-80 lg:h-full lg:order-last">
+              <img
+                alt="Party"
+                src={onlineTest}
+                class="object-cover w-full h-full"
+              />
+            </div>
 
-      <div class="lg:py-24">
-        <h2 class="text-3xl font-bold sm:text-4xl">Grow your audience</h2>
+            <div class="lg:py-24">
+              <h2 class="text-3xl font-bold sm:text-4xl">
+                Dapatkan sertifikat asli tanpa duplikasi
+              </h2>
 
-        <p class="mt-4 text-gray-600">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut qui hic
-          atque tenetur quis eius quos ea neque sunt, accusantium soluta minus
-          veniam tempora deserunt? Molestiae eius quidem quam repellat.
-        </p>
+              <p class="mt-4 text-gray-600">
+                Nares Certificate adalah aplikasi berbasis website yang dapat
+                digunakan oleh pengguna untuk membuat sertifikat secara mudah,
+                cepat dan terjamin keasliannya.
+              </p>
 
-        <a
-          href="#"
-          class="inline-flex items-center px-8 py-3 mt-8 text-white bg-indigo-600 border border-indigo-600 rounded hover:bg-transparent hover:text-indigo-600 active:text-indigo-500 focus:outline-none focus:ring"
-        >
-          <span class="text-sm font-medium"> Get Started </span>
+              <Link to="/register">
+                <a class="inline-flex items-center px-8 py-3 mt-8 text-white bg-indigo-600 border border-indigo-600 rounded hover:bg-transparent hover:text-indigo-600 active:text-indigo-500 focus:outline-none focus:ring">
+                  <span class="text-sm font-medium"> Mulai Sekarang </span>
 
-          <svg
-            class="w-5 h-5 ml-3"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M17 8l4 4m0 0l-4 4m4-4H3"
-            />
-          </svg>
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
+                  <svg
+                    class="w-5 h-5 ml-3"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    />
+                  </svg>
+                </a>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
-<footer class="text-gray-600 body-font">
-  <div class="container py-8 mx-auto flex items-center sm:flex-row flex-col">
-    <a class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
-      <img class="mr-3 h-6 sm:h-9" src={logo} />
-      <span class="ml-3 text-lg">Nares Certificate</span>
-    </a>
-    <p class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">© 2022 —
-      Nareswara Team
-    </p>
-    <span class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
-      <a class="text-gray-500" href="https://pens.ac.id">
-        <img src="https://cdn-icons-png.flaticon.com/512/154/154843.png" class="h-4 sm:h-5" />
-      </a>
-      
-    </span>
-  </div>
-</footer>
-
+      <footer class="text-gray-600 body-font">
+        <div class="container py-8 mx-auto flex items-center sm:flex-row flex-col">
+          <a class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
+            <img class="mr-3 h-6 sm:h-9" src={logo} />
+            <span class="ml-3 text-lg">Nares Certificate</span>
+          </a>
+          <p class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">
+            © 2022 — Tim Nareswara
+          </p>
+          <span class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
+            <a class="text-gray-500" href="https://pens.ac.id">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/154/154843.png"
+                class="h-4 sm:h-5"
+              />
+            </a>
+          </span>
+        </div>
+      </footer>
     </div>
   );
 }

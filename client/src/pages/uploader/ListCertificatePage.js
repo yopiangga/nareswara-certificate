@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { CardComponentDefault } from "src/components/CardComponent";
 import { TableComponentDefault } from "src/components/TableComponent";
@@ -10,9 +10,12 @@ import { MetaServices } from "src/services/MetaServices";
 import { CertificateServices } from "src/services/CertificateServices";
 import { ModalInformationLittle } from "src/components/ModalInformationComponent";
 import { useNavigate } from "react-router-dom";
+import { Loading } from "src/components/Loader";
+import { LoadingContext } from "src/context/LoadingContext";
 
 export function ListCertificatePage() {
   const navigate = useNavigate();
+  const { loading, setLoading } = useContext(LoadingContext);
   const [event, setEvent] = useState();
   const [certificates, setCertificates] = useState([]);
   const location = useLocation();
@@ -60,10 +63,12 @@ export function ListCertificatePage() {
   }
 
   const loopDownload = async () => {
+    setLoading(true);
     for (let i = 0; i < certificates.length; i++) {
       await download(i);
     }
 
+    setLoading(false);
     setModalInformationLittle({
       status: true,
       description: `Proses selesai, ${certificates.length} data sertifikat peserta telah terkirim`,
@@ -120,6 +125,7 @@ export function ListCertificatePage() {
 
   return (
     <>
+      <Loading loading={loading} />
       <ModalInformationLittle
         status={modalInformationLittle.status}
         title={modalInformationLittle.title}

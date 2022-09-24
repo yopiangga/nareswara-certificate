@@ -12,10 +12,13 @@ import { EventServices } from "src/services/EventServices";
 import { SmartContractContext } from "src/context/SmartContractContext";
 import { ModalInformationLittle } from "src/components/ModalInformationComponent";
 import { useNavigate } from "react-router-dom";
+import { Loading } from "src/components/Loader";
+import { LoadingContext } from "src/context/LoadingContext";
 
 export function CreateCertificatePage() {
   const navigate = useNavigate();
 
+  const { loading, setLoading } = useContext(LoadingContext);
   const { user, setUser } = useContext(UserContext);
   const { addEvent } = useContext(SmartContractContext);
 
@@ -100,6 +103,7 @@ export function CreateCertificatePage() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    setLoading(true);
     const date = new Date();
     const time = date.getTime();
 
@@ -111,6 +115,8 @@ export function CreateCertificatePage() {
       user.email,
       convertArrayToObject(values)
     );
+
+    setLoading(false);
 
     setModalInformationLittle({
       status: true,
@@ -129,6 +135,7 @@ export function CreateCertificatePage() {
 
   return (
     <>
+      <Loading loading={loading} />
       <ModalInformationLittle
         status={modalInformationLittle.status}
         title={modalInformationLittle.title}
