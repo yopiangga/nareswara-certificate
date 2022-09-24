@@ -8,12 +8,19 @@ import { jsPDF } from "jspdf";
 import templateCertificate from "src/assets/images/template-certificate.jpg";
 import { MetaServices } from "src/services/MetaServices";
 import { CertificateServices } from "src/services/CertificateServices";
+import { ModalInformationLittle } from "src/components/ModalInformationComponent";
+import { useNavigate } from "react-router-dom";
 
 export function ListCertificatePage() {
+  const navigate = useNavigate();
   const [event, setEvent] = useState();
   const [certificates, setCertificates] = useState([]);
   const location = useLocation();
   const [load, setLoad] = useState(true);
+  const [modalInformationLittle, setModalInformationLittle] = useState({
+    status: false,
+    description: "",
+  });
 
   const [ref, setRef] = useState([]);
 
@@ -52,10 +59,15 @@ export function ListCertificatePage() {
     setLoad(false);
   }
 
-  const loopDownload = () => {
+  const loopDownload = async () => {
     for (let i = 0; i < certificates.length; i++) {
-      download(i);
+      await download(i);
     }
+
+    setModalInformationLittle({
+      status: true,
+      description: `Proses selesai, ${certificates.length} data sertifikat peserta telah terkirim`,
+    });
   };
 
   const download = async (index) => {
@@ -76,8 +88,11 @@ export function ListCertificatePage() {
         var fd = new File([file], `${time}-${certificates[index][2]}.pdf`, {
           type: "application/pdf",
         });
+
+        // pdf.save("ss.pdf");
+        // return;
         // const res = await MetaServices.upload(fd);
-        // const res = await MetaServices.uploadPDF(fd);
+        const path = await MetaServices.uploadPDF(fd);
 
         const resCert = await CertificateServices.addCertificate(
           `${time}-${certificates[index][2]}`,
@@ -86,15 +101,31 @@ export function ListCertificatePage() {
             emailAuthor: event.email,
             eventName: event.eventName,
             dateCertificate: time,
-            link: `${time}-${certificates[index][2]}`,
+            link: `https://ipfs.io/ipfs/${path}`,
           }
         );
       }
     );
   };
 
+  const handleCloseModal = () => {
+    setModalInformationLittle({
+      status: false,
+      title: "",
+      description: "",
+    });
+
+    navigate("/");
+  };
+
   return (
     <>
+      <ModalInformationLittle
+        status={modalInformationLittle.status}
+        title={modalInformationLittle.title}
+        description={modalInformationLittle.description}
+        handleClose={handleCloseModal}
+      />
       <div className="flex flex-row justify-between items-center my-5">
         <h1 className="text-lg font-bold my-3 mb-3">{event?.eventName}</h1>
         <button
@@ -130,6 +161,16 @@ export function ListCertificatePage() {
                   ref={ref[idx]}
                 >
                   <img src={templateCertificate} className="absolute z-0" />
+                  <div className="bg-transparent h-16 right-10 top-10 absolute">
+                    <h3 className="text-right text-lg font-bold text-teal-900">
+                      {event.authorCertificate}
+                    </h3>
+                    <h4 className="text-right text-xs text-teal-900">
+                      {`${event.noCertificateStart + idx}/${
+                        event.noCertificateStatic
+                      }`}
+                    </h4>
+                  </div>
                   <div className="bg-transparent h-10 left-64 right-64 top-64 mt-5 absolute flex justify-center items-center">
                     <h1 className="font-black text-3xl text-teal-900 text-center">
                       {el[1][0]}
@@ -159,6 +200,14 @@ export function ListCertificatePage() {
                     <p className="font-normal text-sm text-teal-900 text-center">
                       {event.descriptionCertificate}
                     </p>
+                  </div>
+                  <div className="bg-transparent left-10 w-72 bottom-10 absolute">
+                    <h3 className="text-left text-lg font-bold text-teal-900">
+                      {event.eventName}
+                    </h3>
+                    <h4 className="text-left text-xs text-teal-900">
+                      {event.dateCertificate}
+                    </h4>
                   </div>
                 </div>
               );

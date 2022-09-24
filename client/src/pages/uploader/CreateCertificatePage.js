@@ -10,12 +10,19 @@ import { TableComponentDefault } from "../../components/TableComponent";
 import certificatePreview from "src/assets/images/certificate-preview.png";
 import { EventServices } from "src/services/EventServices";
 import { SmartContractContext } from "src/context/SmartContractContext";
-
-const allowedExtensions = ["csv"];
+import { ModalInformationLittle } from "src/components/ModalInformationComponent";
+import { useNavigate } from "react-router-dom";
 
 export function CreateCertificatePage() {
+  const navigate = useNavigate();
+
   const { user, setUser } = useContext(UserContext);
   const { addEvent } = useContext(SmartContractContext);
+
+  const [modalInformationLittle, setModalInformationLittle] = useState({
+    status: false,
+    description: "",
+  });
 
   const [parsedData, setParsedData] = useState([]);
   const [tableRows, setTableRows] = useState([]);
@@ -98,16 +105,36 @@ export function CreateCertificatePage() {
 
     await addEvent(data.eventName, getEmailFromArray(values));
 
-    EventServices.addEvent(
+    await EventServices.addEvent(
       `${time}-${user.email}`,
       data,
       user.email,
       convertArrayToObject(values)
     );
+
+    setModalInformationLittle({
+      status: true,
+      description: `Acara "${data.eventName}" dengan ${values.length} data peserta berhasil dibuat`,
+    });
   }
+
+  const handleCloseModal = () => {
+    setModalInformationLittle({
+      status: false,
+      title: "",
+      description: "",
+    });
+    navigate("/acara");
+  };
 
   return (
     <>
+      <ModalInformationLittle
+        status={modalInformationLittle.status}
+        title={modalInformationLittle.title}
+        description={modalInformationLittle.description}
+        handleClose={handleCloseModal}
+      />
       <div className="w-11/12 p-12 bg-white mt-5 rounded-lg shadow-lg">
         <h1 className="text-xl font-semibold">
           Hallo {user?.name} 👋<span className="font-normal"></span>
