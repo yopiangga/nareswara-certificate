@@ -1,8 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { CardHomeCount } from "src/components/CardComponent";
 import { UserContext } from "src/context/UserContext";
-import { CertificateServices } from "src/services/CertificateServices";
-import { EventServices } from "src/services/EventServices";
+import { CountServices } from "src/services/CountServices";
 
 export function HomePage() {
   const { user, setUser } = useContext(UserContext);
@@ -14,19 +13,19 @@ export function HomePage() {
     fetch();
   }, []);
 
-  async function fetch() {
-    CertificateServices.getCertificateByParameter("emailAuthor", user.email)
-      .then(async (resCertificate) => {
-        setCertificates(resCertificate);
-        EventServices.getCertificateByParameter("email", user.email)
-          .then((resEvent) => {
-            setEvents(resEvent);
-          })
-          .catch((err) => console.log(err));
-      })
-      .catch((err) => console.log(err));
-    setLoad(false);
-  }
+  const fetch = async () => {
+    const resCertificate = await CountServices.getCertificateByParameter(
+      "emailAuthor",
+      user.email
+    );
+    const resEvent = await CountServices.getEventByParameter(
+      "email",
+      user.email
+    );
+
+    setCertificates(resCertificate);
+    setEvents(resEvent);
+  };
 
   return (
     <>
