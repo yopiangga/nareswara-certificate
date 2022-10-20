@@ -2,7 +2,7 @@ import React from "react";
 
 export function Loader() {
   return (
-    <div className="flex items-center justify-center w-full h-full fixed">
+    <div className="flex items-center justify-center w-full h-full fixed ">
       <div className="flex justify-center items-center space-x-1 text-sm text-gray-700">
         <svg
           fill="none"
@@ -29,7 +29,7 @@ export function Loading({ loading }) {
     <div
       className={`${
         loading ? "flex" : "hidden"
-      } items-center justify-center w-full h-full fixed z-50`}
+      } items-center justify-center w-full h-full left-0 top-0 fixed z-50 bg-slate-900 bg-opacity-20`}
     >
       <div className="flex justify-center items-center space-x-1 text-sm text-gray-700">
         <svg

@@ -31,29 +31,29 @@ export function CreateCertificatePage() {
   const [tableRows, setTableRows] = useState([]);
   const [values, setValues] = useState([]);
 
-  //   const [data, setData] = useState({
-  //     eventName: "",
-  //     eventDescription: "",
-  //     noCertificateStatic: "",
-  //     noCertificateStart: "",
-  //     titleCertificate: "",
-  //     authorCertificate: "",
-  //     dateCertificate: "",
-  //     descriptionCertificate: "",
-  //   });
-
   const [data, setData] = useState({
-    eventName: "Kompetisi UI/UX BEM PENS",
-    eventDescription:
-      "Kompetisi yang diikuti oleh mahasiswa S1 sederajat seluruh Indonesia.",
-    noCertificateStatic: "09/2022/RISTEK/BEM",
-    noCertificateStart: 1,
-    titleCertificate: "UI/UX Competition BEM PENS 2022",
-    authorCertificate: "RISTEK BEM PENS",
-    dateCertificate: "-",
-    descriptionCertificate:
-      "Sebagai peserta dalam ajang Kompetisi UI/UX BEM PENS 2022.",
+    eventName: "",
+    eventDescription: "",
+    noCertificateStatic: "",
+    noCertificateStart: "",
+    titleCertificate: "",
+    authorCertificate: "",
+    dateCertificate: "",
+    descriptionCertificate: "",
   });
+
+  // const [data, setData] = useState({
+  //   eventName: "Kompetisi UI/UX BEM PENS",
+  //   eventDescription:
+  //     "Kompetisi yang diikuti oleh mahasiswa S1 sederajat seluruh Indonesia.",
+  //   noCertificateStatic: "09/2022/RISTEK/BEM",
+  //   noCertificateStart: 1,
+  //   titleCertificate: "UI/UX Competition BEM PENS 2022",
+  //   authorCertificate: "RISTEK BEM PENS",
+  //   dateCertificate: "-",
+  //   descriptionCertificate:
+  //     "Sebagai peserta dalam ajang Kompetisi UI/UX BEM PENS 2022.",
+  // });
 
   function handleChange(event) {
     setData({ ...data, [event.target.name]: event.target.value });
@@ -174,7 +174,7 @@ export function CreateCertificatePage() {
               />
 
               <InputComponentDefault
-                id="noCertificationStatic"
+                id="noCertificateStatic"
                 title="Nomor Sertifikat"
                 type="text"
                 onChange={handleChange}
@@ -183,7 +183,7 @@ export function CreateCertificatePage() {
                 required={true}
               />
               <InputComponentDefault
-                id="noCertificationStart"
+                id="noCertificateStart"
                 title="Nomor Dinamis"
                 type="number"
                 onChange={handleChange}
