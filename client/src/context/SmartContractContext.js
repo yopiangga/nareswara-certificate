@@ -101,6 +101,27 @@ export const SmartContractProvider = ({ children }) => {
     }
   };
 
+  const connectWalletWithId = async (id) => {
+    try {
+      if (!ethereum) return alert("Please install MetaMask.");
+
+      const accounts = await ethereum.request({
+        method: "eth_requestAccounts",
+      });
+
+      accounts.forEach(element => {
+        if (element == id) {
+          setCurrentAccount(element);
+        }
+      });
+
+    } catch (error) {
+      console.log(error);
+
+      throw new Error("No ethereum object");
+    }
+  }
+
   const connectWallet = async () => {
     try {
       if (!ethereum) return alert("Please install MetaMask.");
@@ -130,7 +151,8 @@ export const SmartContractProvider = ({ children }) => {
         connectWallet,
         addOrganization,
         addUser,
-        addEvent
+        addEvent,
+        connectWalletWithId
       }}
     >
       {children}
