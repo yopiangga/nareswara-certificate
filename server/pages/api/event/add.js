@@ -11,18 +11,18 @@ export default async function handler(req, res) {
 
   if (req.method === "POST") {
     const data = {
-      name: req.body.name,
-      email: req.body.email,
-      address: req.body.address,
-      meta_id: req.body.meta_id,
-      photo_path: req.body.photo_path,
-      role: req.body.role,
+      title: req.body.title,
+      description: req.body.description,
+      certificates: req.body.certificates,
+      user: req.body.user,
+      certificate: req.body.certificate,
+      template: req.body.template,
       createdAt: new Date(),
       updatedAt: null,
     };
 
     try {
-      const result = await db.collection("users").insertOne(data);
+      const result = await db.collection("events").insertOne(data);
 
       return res.status(200).json({ message: "Berhasil submit", data: result });
     } catch (e) {

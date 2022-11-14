@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import { initDB } from "service/db";
 import NextCors from "nextjs-cors";
 
@@ -11,20 +12,16 @@ export default async function handler(req, res) {
 
   if (req.method === "POST") {
     const data = {
-      name: req.body.name,
-      email: req.body.email,
-      address: req.body.address,
-      meta_id: req.body.meta_id,
-      photo_path: req.body.photo_path,
-      role: req.body.role,
-      createdAt: new Date(),
-      updatedAt: null,
+      ...req.body.data,
+      updatedAt: new Date(),
     };
 
     try {
-      const result = await db.collection("users").insertOne(data);
+      const result = await db
+        .collection("events")
+        .updateOne({ _id: ObjectId(req.body._id) }, { $set: data });
 
-      return res.status(200).json({ message: "Berhasil submit", data: result });
+      return res.status(200).json({ message: "Berhasil update", data: result });
     } catch (e) {
       return e;
     }
