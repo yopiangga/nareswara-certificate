@@ -7,11 +7,13 @@ import { UserServices } from "../../services/UserServices";
 import Logo from "../../logo.svg";
 import { Link } from "react-router-dom";
 import { LoadingContext } from "src/context/LoadingContext";
+import { SmartContractContext } from "src/context/SmartContractContext";
 import { Loading } from "src/components/Loader";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const { connectWalletWithId, currentAccount } = useContext(SmartContractContext);
   const { loading, setLoading } = useContext(LoadingContext);
   const { user, setUser } = useContext(UserContext);
   const [dataAuth, setDataAuth] = useState({ email: "", password: "" });
@@ -29,10 +31,21 @@ export default function LoginPage() {
       setLoading(true);
       const resUser = await UserServices.getUser("email", resAuth.user.email);
 
-      if (resUser != false) {
-        setUser(resUser);
+      if (resUser != null) {
+        
+        await connectWalletWithId(resUser.metaId);
+
+        if (currentAccount.toString() == resUser.metaId) {
+          setUser(resUser);
+          setLoading(false);
+          console.log("Benar");
+          navigate("/");
+        } else {
+          console.log("Salah");
+          setLoading(false);
+        }
+      } else {
         setLoading(false);
-        navigate("/");
       }
     }
   };
