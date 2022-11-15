@@ -235,7 +235,7 @@ export function SidebarAdminComponent() {
     },
     {
       id: "list-certificate",
-      link: "/sertifikat",
+      link: "/template",
       title: "Semua Template",
       icon: FiLayers,
       group: "Sertifikat",

@@ -11,7 +11,7 @@ export default async function handler(req, res) {
 
   if (req.method === "POST") {
     const data = {
-      image_path: req.body.image_path,
+      image: req.body.image,
       title: req.body.title,
       number: req.body.number,
       author: req.body.author,

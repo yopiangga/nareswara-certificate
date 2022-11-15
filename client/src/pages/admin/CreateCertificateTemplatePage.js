@@ -2,125 +2,133 @@ import { useContext, useEffect, useState } from "react";
 import {
   InputComponentDefault,
   InputComponentFile,
+  InputComponentImage,
   InputComponentTextarea,
 } from "../../components/InputComponent";
 import { UserContext } from "../../context/UserContext";
-import Papa from "papaparse";
-import { TableComponentDefault } from "../../components/TableComponent";
 import certificatePreview from "src/assets/images/certificate-preview.png";
-import { EventServices } from "src/services/EventServices";
-import { SmartContractContext } from "src/context/SmartContractContext";
 import { ModalInformationLittle } from "src/components/ModalInformationComponent";
 import { useNavigate } from "react-router-dom";
 import { Loading } from "src/components/Loader";
 import { LoadingContext } from "src/context/LoadingContext";
+import { TemplateCertificateComponent } from "src/components/TemplateCertificateComponent";
+import { TemplateServices } from "src/services/TemplateServices";
 
 export function CreateCertificateTemplatePage() {
   const navigate = useNavigate();
 
   const { loading, setLoading } = useContext(LoadingContext);
   const { user, setUser } = useContext(UserContext);
-  const { addEvent } = useContext(SmartContractContext);
 
   const [modalInformationLittle, setModalInformationLittle] = useState({
     status: false,
     description: "",
   });
 
-  const [parsedData, setParsedData] = useState([]);
-  const [tableRows, setTableRows] = useState([]);
-  const [values, setValues] = useState([]);
-
-  const [data, setData] = useState({
-    eventName: "",
-    eventDescription: "",
-    noCertificateStatic: "",
-    noCertificateStart: "",
-    titleCertificate: "",
-    authorCertificate: "",
-    dateCertificate: "",
-    descriptionCertificate: "",
-  });
+  const [image, setImage] = useState();
 
   // const [data, setData] = useState({
-  //   eventName: "Kompetisi UI/UX BEM PENS",
-  //   eventDescription:
-  //     "Kompetisi yang diikuti oleh mahasiswa S1 sederajat seluruh Indonesia.",
-  //   noCertificateStatic: "09/2022/RISTEK/BEM",
-  //   noCertificateStart: 1,
-  //   titleCertificate: "UI/UX Competition BEM PENS 2022",
-  //   authorCertificate: "RISTEK BEM PENS",
-  //   dateCertificate: "-",
-  //   descriptionCertificate:
-  //     "Sebagai peserta dalam ajang Kompetisi UI/UX BEM PENS 2022.",
+  //   image_path: "",
+  //   title: {
+  //     value: "",
+  //     class: "",
+  //   },
+  //   number: {
+  //     value: "",
+  //     class: "",
+  //   },
+  //   author: {
+  //     value: "",
+  //     class: "",
+  //   },
+  //   description: {
+  //     value: "",
+  //     class: "",
+  //   },
+  //   date: {
+  //     value: "",
+  //     class: "",
+  //   },
+  //   name: {
+  //     value: "",
+  //     class: "",
+  //   },
   // });
+
+  const [data, setData] = useState({
+    image_path: "",
+    title: {
+      value: "Contoh Kompetisi",
+      class:
+        "bg-transparent left-10 w-72 bottom-10 absolute text-teal-900 text-left",
+    },
+    number: {
+      value: "09/2022/RISTEK/BEM",
+      class: "-",
+    },
+    author: {
+      value: "RISTEK BEM PENS",
+      class:
+        "bg-transparent h-16 right-10 top-10 absolute text-right text-lg font-bold text-teal-900",
+    },
+    description: {
+      value: "Sebagai peserta dalam ajang Kompetisi BEM 2022.",
+      class:
+        "bg-transparent h-32 left-44 right-44 top-72 mt-7 absolute flex justify-center items-center overflow-hidden font-normal text-sm text-teal-900 text-center",
+    },
+    date: {
+      value: "2022-10-20",
+      class: "-",
+    },
+    name: {
+      value: "Alfian Prisma Yopiangga",
+      class:
+        "bg-transparent h-10 left-64 right-64 top-64 mt-5 absolute flex justify-center items-center font-black text-3xl text-teal-900 text-center",
+    },
+  });
 
   function handleChange(event) {
     setData({ ...data, [event.target.name]: event.target.value });
   }
 
-  const changeHandler = (event) => {
-    Papa.parse(event.target.files[0], {
-      header: true,
-      skipEmptyLines: true,
-      complete: function (results) {
-        const rowsArray = [];
-        const valuesArray = [];
-
-        results.data.map((d) => {
-          rowsArray.push(Object.keys(d));
-          valuesArray.push(Object.values(d));
-        });
-
-        setParsedData(results.data);
-        setTableRows(rowsArray[0]);
-        setValues(valuesArray);
-      },
-    });
-  };
-
-  function convertArrayToObject(array) {
-    var object = [];
-
-    for (let i = 0; i < array.length; i++) {
-      object.push({
-        name: array[i][0],
-        email: array[i][1],
-        metaId: array[i][2],
-      });
+  function handleFile(event) {
+    setData({ ...data, image_path: event.target.files[0] });
+    if (event.target.files && event.target.files[0]) {
+      let reader = new FileReader();
+      reader.onload = (e) => {
+        setImage(e.target.result);
+      };
+      reader.readAsDataURL(event.target.files[0]);
     }
-
-    return object;
-  }
-
-  function getEmailFromArray(array) {
-    var object = [];
-    for (let i = 0; i < array.length; i++) {
-      object.push(array[i][1]);
-    }
-    return object;
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
     setLoading(true);
-    const date = new Date();
-    const time = date.getTime();
 
-    await addEvent(data.eventName, getEmailFromArray(values));
+    const templateServices = new TemplateServices();
 
-    await EventServices.addEvent(
-      `${time}-${user.email}`,
-      data,
-      user.email,
-      convertArrayToObject(values)
-    );
+    const resUrl = await templateServices.upload(data.image_path);
+    const resName = `files/templates/${data.image_path.name}`;
+
+    const res = await templateServices.add({
+      image: {
+        path: resUrl,
+        name: resName,
+      },
+      title: data.title,
+      number: data.number,
+      author: data.author,
+      description: data.description,
+      date: data.date,
+      name: data.name,
+    });
 
     setLoading(false);
 
     setModalInformationLittle({
       status: true,
-      description: `Acara "${data.eventName}" dengan ${values.length} data peserta berhasil dibuat`,
+      description: `Template berhasil dibuat`,
     });
   }
 
@@ -130,7 +138,7 @@ export function CreateCertificateTemplatePage() {
       title: "",
       description: "",
     });
-    navigate("/acara");
+    navigate("/template");
   };
 
   return (
@@ -146,104 +154,225 @@ export function CreateCertificateTemplatePage() {
         <h1 className="text-xl font-semibold">
           Hallo {user?.name} 👋<span className="font-normal"></span>
         </h1>
-        <div className="w-96 mx-auto bg-gray-200 h-64 my-10">
-          <img src={certificatePreview} />
-        </div>
+
         <form className="mt-6" onSubmit={handleSubmit}>
           <div className="form grid grid-cols-1">
             <div className="left mr-5">
+              {image == null ? (
+                ""
+              ) : (
+                <div className="">
+                  <TemplateCertificateComponent
+                    image_path={image}
+                    title={data.title}
+                    number={data.number}
+                    author={data.author}
+                    description={data.description}
+                    date={data.date}
+                    name={data.name}
+                  />
+                </div>
+              )}
+
+              <InputComponentImage
+                id="file"
+                title="Frame Template"
+                onChange={handleFile}
+                placeholder={`${
+                  data.image_path == "" ? "Pilih file" : data.image_path.name
+                }`}
+              />
+
               <InputComponentDefault
-                id="eventName"
+                id="title-value"
                 title="Nama Acara"
                 type="text"
-                onChange={handleChange}
+                onChange={(e) =>
+                  setData(
+                    {
+                      ...data,
+                      title: { ...data.title, value: e.target.value },
+                    },
+                    console.log(data)
+                  )
+                }
                 placeholder="Nama acara"
-                value={data.eventName}
+                value={data.title.value}
+                required={true}
+              />
+
+              <InputComponentDefault
+                id="title-class"
+                title="Style Nama Acara"
+                type="text"
+                onChange={(e) =>
+                  setData({
+                    ...data,
+                    title: { ...data.title, class: e.target.value },
+                  })
+                }
+                placeholder="container text-lg font-bold"
+                value={data.title.class}
                 required={true}
               />
 
               <InputComponentTextarea
-                id="eventDescription"
+                id="description-value"
                 title="Deskripsi Acara"
                 type="text"
-                onChange={handleChange}
+                onChange={(e) =>
+                  setData({
+                    ...data,
+                    description: { ...data.description, value: e.target.value },
+                  })
+                }
                 placeholder="Deskripsi acara"
-                value={data.eventDescription}
+                value={data.description.value}
                 rows={4}
                 required={true}
               />
 
               <InputComponentDefault
-                id="noCertificateStatic"
-                title="Nomor Sertifikat"
+                id="description-class"
+                title="Style Deskripsi Acara"
                 type="text"
-                onChange={handleChange}
-                placeholder="/09/2022/RISTEK/BEM"
-                value={data.noCertificateStatic}
-                required={true}
-              />
-              <InputComponentDefault
-                id="noCertificateStart"
-                title="Nomor Dinamis"
-                type="number"
-                onChange={handleChange}
-                placeholder="01"
-                value={data.noCertificateStart}
+                onChange={(e) =>
+                  setData({
+                    ...data,
+                    description: { ...data.description, class: e.target.value },
+                  })
+                }
+                placeholder="container text-lg font-bold"
+                value={data.description.class}
                 required={true}
               />
 
               <InputComponentDefault
-                id="titleCertificate"
-                title="Judul Sertifikat"
+                id="author-value"
+                title="Penyelenggara Acara"
                 type="text"
-                onChange={handleChange}
-                placeholder="Kompetisi UI/UX BEM PENS 2022"
-                value={data.titleCertificate}
-                required={true}
-              />
-              <InputComponentDefault
-                id="authorCertificate"
-                title="Penerbit"
-                type="text"
-                onChange={handleChange}
-                placeholder="Kabinet Relevansi BEM PENS 2022"
-                value={data.authorCertificate}
-                required={true}
-              />
-              <InputComponentDefault
-                id="dateCertificate"
-                title="Tanggal Terbit"
-                type="date"
-                onChange={handleChange}
-                value={data.dateCertificate}
-                required={true}
-              />
-              <InputComponentTextarea
-                id="descriptionCertificate"
-                title="Deskripsi Sertifkat"
-                type="text"
-                onChange={handleChange}
-                placeholder="Sebagai peserta dalam ajang Kompetisi UI/UX BEM PENS 2022."
-                value={data.descriptionCertificate}
-                rows={4}
+                onChange={(e) =>
+                  setData({
+                    ...data,
+                    author: { ...data.author, value: e.target.value },
+                  })
+                }
+                placeholder="BEM PENS 2022"
+                value={data.author.value}
                 required={true}
               />
 
-              <InputComponentFile
-                id="file"
+              <InputComponentDefault
+                id="author-class"
+                title="Style Penyelenggara Acara"
+                type="text"
+                onChange={(e) =>
+                  setData({
+                    ...data,
+                    author: { ...data.author, class: e.target.value },
+                  })
+                }
+                placeholder="container text-lg font-bold"
+                value={data.author.class}
+                required={true}
+              />
+
+              <InputComponentDefault
+                id="number-value"
+                title="Nomor Surat"
+                type="text"
+                onChange={(e) =>
+                  setData({
+                    ...data,
+                    number: { ...data.number, value: e.target.value },
+                  })
+                }
+                placeholder="15/09/2022/BEM/PENS"
+                value={data.number.value}
+                required={true}
+              />
+
+              <InputComponentDefault
+                id="number-class"
+                title="Style Nomor Surat"
+                type="text"
+                onChange={(e) =>
+                  setData({
+                    ...data,
+                    number: { ...data.number, class: e.target.value },
+                  })
+                }
+                placeholder="container text-lg font-bold"
+                value={data.number.class}
+                required={true}
+              />
+
+              <InputComponentDefault
+                id="date-value"
+                title="Tanggal Acara"
+                type="text"
+                onChange={(e) =>
+                  setData({
+                    ...data,
+                    date: { ...data.date, value: e.target.value },
+                  })
+                }
+                placeholder="15 November 2022"
+                value={data.date.value}
+                required={true}
+              />
+
+              <InputComponentDefault
+                id="date-class"
+                title="Style Tanggal Acara"
+                type="text"
+                onChange={(e) =>
+                  setData({
+                    ...data,
+                    date: { ...data.date, class: e.target.value },
+                  })
+                }
+                placeholder="container text-lg font-bold"
+                value={data.date.class}
+                required={true}
+              />
+
+              <InputComponentDefault
+                id="name-value"
                 title="Nama Penerima"
-                onChange={changeHandler}
-                placeholder="Unggah File CSV"
+                type="text"
+                onChange={(e) =>
+                  setData({
+                    ...data,
+                    name: { ...data.name, value: e.target.value },
+                  })
+                }
+                placeholder="Alfian Prisma Yopiangga"
+                value={data.number.value}
+                required={true}
               />
 
-              <TableComponentDefault header={tableRows} body={values} />
+              <InputComponentDefault
+                id="number-class"
+                title="Style Nomor Surat"
+                type="text"
+                onChange={(e) =>
+                  setData({
+                    ...data,
+                    name: { ...data.name, class: e.target.value },
+                  })
+                }
+                placeholder="container text-lg font-bold"
+                value={data.number.class}
+                required={true}
+              />
             </div>
           </div>
           <button
             type="submit"
             className="py-3 pl-5 pr-5 mr-2 mt-5 transition-colors duration-700 transform bg-indigo-500 hover:bg-blue-400 text-gray-100 text-md border-indigo-300"
           >
-            Buat Sertifikat
+            Buat Template
           </button>
         </form>
       </div>
