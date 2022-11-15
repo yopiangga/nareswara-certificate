@@ -5,6 +5,7 @@ import AdminLayout from "../../layouts/AdminLayout";
 import { CreateCertificateTemplatePage } from "./CreateCertificateTemplatePage";
 import { EditProfilePage } from "./EditProfilePage";
 import { HomePage } from "./HomePage";
+import { ListCertificateTemplatePage } from "./ListCertificateTemplatePage";
 import { ProfilePage } from "./ProfilePage";
 
 export default function AdminRouterPage() {
@@ -14,6 +15,13 @@ export default function AdminRouterPage() {
         <div className="bg-gray-100 p-6 mt-16 w-10/12 text-dark">
           <Routes>
             <Route path="/" element={<HomePage />} exact />
+          </Routes>
+          <Routes>
+            <Route
+              path="/template"
+              element={<ListCertificateTemplatePage />}
+              exact
+            />
           </Routes>
           <Routes>
             <Route

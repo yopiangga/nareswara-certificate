@@ -7,13 +7,13 @@ export function TemplateCertificateComponent(data) {
       style={{ width: "870px", height: "624px" }}
       //   ref={ref[idx]}
     >
-      <img src={data.image_path} className="absolute z-0" />
+      <img src={data.image_path} className="absolute z-0 w-full h-full" />
       <div className={`${data.author.class}`}>
         <h3>{data.author.value}</h3>
         <h4 className="text-right text-xs">{`${data.number.value}`}</h4>
       </div>
       <div className={`${data.name.class}`}>
-        <h1>Nama : Alfian Prisma Yopiangga</h1>
+        <h1>{data.name.value}</h1>
       </div>
       <div className={`${data.description.class}`}>
         <p>{data.description.value}</p>
