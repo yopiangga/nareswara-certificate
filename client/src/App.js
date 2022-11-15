@@ -12,6 +12,7 @@ import LoginPage from "./pages/auth/LoginPage";
 import DownloaderRouterPage from "./pages/downloader/DownloaderRouterPage";
 import AuthRouterPage from "./pages/auth/AuthRouterPage";
 import { SmartContractContext } from "./context/SmartContractContext";
+import AdminRouterPage from "./pages/admin/AdminRouterPage";
 const auth = getAuth(app);
 
 const queryClient = new QueryClient();
@@ -59,6 +60,8 @@ function UserManager() {
     return <UploaderRouterPage />;
   } else if (user.role == 1) {
     return <DownloaderRouterPage />;
+  } else if (user.role == 99) {
+    return <AdminRouterPage />;
   } else {
     return <h1>404 Page</h1>;
   }
