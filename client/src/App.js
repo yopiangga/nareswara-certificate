@@ -15,6 +15,7 @@ import { SmartContractContext } from "./context/SmartContractContext";
 const auth = getAuth(app);
 
 const queryClient = new QueryClient();
+const userServices = new UserServices();
 
 function App() {
   return (
@@ -40,7 +41,7 @@ function UserManager() {
   async function fetch() {
     onAuthStateChanged(auth, async function (users) {
       if (users) {
-        const resUser = await UserServices.getUser("email", users.email);
+        const resUser = await userServices.getUserByEmail(users.email);
         setUser(resUser);
         setLoad(isLoading);
       } else {
@@ -54,9 +55,9 @@ function UserManager() {
     return <Loader />;
   } else if (user == null) {
     return <AuthRouterPage />;
-  } else if (user.role == 1) {
-    return <UploaderRouterPage />;
   } else if (user.role == 2) {
+    return <UploaderRouterPage />;
+  } else if (user.role == 1) {
     return <DownloaderRouterPage />;
   } else {
     return <h1>404 Page</h1>;

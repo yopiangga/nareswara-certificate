@@ -10,7 +10,7 @@ export function CardComponentDefault({ data }) {
       <div className="card">
         <div className="card-header mx-4 -mt-6">
           <Link
-            to={`${user.role == 1 ? "/acara" : "/permintaan-baru"}/${data.id}`}
+            to={`${user.role == 2 ? "/acara" : "/permintaan-baru"}/${data.id}`}
           >
             <img
               className="w-auto rounded-lg shadow-lg"

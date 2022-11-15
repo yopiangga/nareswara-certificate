@@ -38,7 +38,7 @@ export function ProfilePage() {
                 </div>
                 <div className="w-full lg:w-4/12 px-4 lg:order-1">
                   <div className="flex justify-start py-4 lg:pt-4 pt-8">
-                    <h4>Role : {user?.role == 1 ? "Organisasi" : "User"}</h4>
+                    <h4>Role : {user?.role == 1 ? "User" : "Organisasi"}</h4>
                   </div>
                 </div>
               </div>
@@ -47,7 +47,7 @@ export function ProfilePage() {
                   <div className="relative w-96 flex justify-center">
                     <img
                       alt="photo-profile"
-                      src={user?.photoPath}
+                      src={user?.photo_path}
                       className="shadow-xl rounded-lg align-middle border-none max-h-54"
                     />
                   </div>

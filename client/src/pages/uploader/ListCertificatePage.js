@@ -12,6 +12,7 @@ import { ModalInformationLittle } from "src/components/ModalInformationComponent
 import { useNavigate } from "react-router-dom";
 import { Loading } from "src/components/Loader";
 import { LoadingContext } from "src/context/LoadingContext";
+import { TemplateCertificateComponent } from "src/components/TemplateCertificateComponent";
 
 export function ListCertificatePage() {
   const navigate = useNavigate();
@@ -94,9 +95,6 @@ export function ListCertificatePage() {
           type: "application/pdf",
         });
 
-        // pdf.save("ss.pdf");
-        // return;
-        // const res = await MetaServices.upload(fd);
         const path = await MetaServices.uploadPDF(fd);
 
         const resCert = await CertificateServices.addCertificate(
@@ -159,6 +157,7 @@ export function ListCertificatePage() {
           ? ""
           : certificates.map((el, idx) => {
               return (
+                // <TemplateCertificateComponent id={idx} />
                 <div
                   key={idx}
                   className="leancanvas-container relative bg-white flex mb-10 mx-auto"
@@ -167,18 +166,16 @@ export function ListCertificatePage() {
                   ref={ref[idx]}
                 >
                   <img src={templateCertificate} className="absolute z-0" />
-                  <div className="bg-transparent h-16 right-10 top-10 absolute">
-                    <h3 className="text-right text-lg font-bold text-teal-900">
-                      {event.authorCertificate}
-                    </h3>
-                    <h4 className="text-right text-xs text-teal-900">
+                  <div className="bg-transparent h-16 right-10 top-10 absolute text-right text-lg font-bold text-teal-900">
+                    <h3>{event.authorCertificate}</h3>
+                    <h4 className="text-right text-xs">
                       {`${event.noCertificateStart + idx}/${
                         event.noCertificateStatic
                       }`}
                     </h4>
                   </div>
-                  <div className="bg-transparent h-10 left-64 right-64 top-64 mt-5 absolute flex justify-center items-center">
-                    <h1 className="font-black text-3xl text-teal-900 text-center">
+                  <div className="bg-transparent h-10 left-64 right-64 top-64 mt-5 absolute flex justify-center items-center font-black text-3xl text-teal-900 text-center">
+                    <h1>
                       {el[1][0]}
                       {el[1][1]}
                       {el[1][2]}
@@ -202,18 +199,12 @@ export function ListCertificatePage() {
                       {el[1][20]}
                     </h1>
                   </div>
-                  <div className="bg-transparent h-32 left-44 right-44 top-72 mt-7 absolute flex justify-center items-center overflow-hidden">
-                    <p className="font-normal text-sm text-teal-900 text-center">
-                      {event.descriptionCertificate}
-                    </p>
+                  <div className="bg-transparent h-32 left-44 right-44 top-72 mt-7 absolute flex justify-center items-center overflow-hidden font-normal text-sm text-teal-900 text-center">
+                    <p>{event.descriptionCertificate}</p>
                   </div>
-                  <div className="bg-transparent left-10 w-72 bottom-10 absolute">
-                    <h3 className="text-left text-lg font-bold text-teal-900">
-                      {event.eventName}
-                    </h3>
-                    <h4 className="text-left text-xs text-teal-900">
-                      {event.dateCertificate}
-                    </h4>
+                  <div className="bg-transparent left-10 w-72 bottom-10 absolute text-teal-900 text-left">
+                    <h3 className="text-lg font-bold ">{event.eventName}</h3>
+                    <h4 className="text-xs">{event.dateCertificate}</h4>
                   </div>
                 </div>
               );

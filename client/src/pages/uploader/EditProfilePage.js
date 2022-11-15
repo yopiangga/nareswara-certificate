@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { ModalInformationLittle } from "src/components/ModalInformationComponent";
 
 export function EditProfilePage() {
+  const userServices = new UserServices();
   const navigate = useNavigate();
 
   const { user, setUser } = useContext(UserContext);
@@ -44,7 +45,7 @@ export function EditProfilePage() {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    await UserServices.editUser(user.id, data);
+    await userServices.update(user._id, data);
     setModalInformationLittle({
       status: true,
       description: `Profile "${user.name}" telah berhasil diperbarui`,
@@ -100,7 +101,7 @@ export function EditProfilePage() {
                 type="text"
                 onChange={handleChange}
                 placeholder="0 xxx"
-                value={data.metaId}
+                value={data.meta_id}
                 required={true}
               />
               <InputComponentDefault
@@ -109,7 +110,7 @@ export function EditProfilePage() {
                 type="text"
                 onChange={handleChange}
                 placeholder="https://yourprofile.com/photo.jpg"
-                value={data.photoPath}
+                value={data.photo_path}
                 required={true}
               />
             </div>

@@ -1,77 +1,37 @@
-import {
-  getFirestore,
-  getDoc,
-  setDoc,
-  doc,
-  getDocs,
-  collection,
-  query,
-  where,
-  deleteDoc,
-  updateDoc,
-} from "firebase/firestore";
-
-const db = getFirestore();
-const col = collection(db, "user");
+import axios from "axios";
+import baseUrl from "src/config/Url";
 
 export class UserServices {
-  static async addUsers(uid, email, name, address, metaId, role, photoPath) {
-    await setDoc(doc(db, "user", uid), {
-      email: email,
-      name: name,
-      address: address,
-      metaId: metaId,
-      role: parseInt(role),
-      photoPath: photoPath,
-    });
+  async add(data) {
+    const res = await axios.post(`${baseUrl}/user/add`, data);
+    return res.data;
   }
 
-  static async getUsers() {
-    const docSnap = await getDocs(col);
-
-    const data = [];
-
-    docSnap.forEach((doc) => {
-      data.push({ id: doc.id, data: doc.data() });
-    });
-
-    return data;
+  async getAll() {
+    const res = await axios.get(`${baseUrl}/user`);
+    return res.data;
   }
 
-  static async getUser(label, value) {
-    const q = query(col, where(label, "==", value));
-    const data = [];
-    var id;
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      data.push(doc.data());
-      id = doc.id;
-    });
-
-    if (data[0] != null) {
-      return { ...data[0], id: id };
-    } else {
-      return false;
-    }
+  async getUser(value) {
+    const res = await axios.get(`${baseUrl}/user/${value}`);
+    return res.data;
   }
 
-  static async deleteUser(id) {
-    const docRef = doc(db, "user", id);
-    const result = await deleteDoc(docRef);
-
-    if (result) {
-      return true;
-    } else {
-      return false;
-    }
+  async getUserByEmail(email) {
+    const res = await axios.get(`${baseUrl}/user/get-one?email=${email}`);
+    return res.data;
   }
 
-  static async editUser(id, data) {
-    return await updateDoc(doc(db, "user", id), {
-      name: data.name ?? "",
-      photoPath: data.photoPath ?? "",
-      address: data.address ?? "",
-      metaId: data.metaId ?? "",
+  async delete(id) {
+    const res = await axios.post(`${baseUrl}/user/delete`, { _id: id });
+    return res.data;
+  }
+
+  async update(id, data) {
+    const res = await axios.put(`${baseUrl}/user/update`, {
+      _id: id,
+      data: data,
     });
+    return res.data;
   }
 }

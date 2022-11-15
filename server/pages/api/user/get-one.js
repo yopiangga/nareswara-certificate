@@ -12,8 +12,7 @@ export default async function handler(req, res) {
   const { email } = req.query;
 
   try {
-    const data = await db.collection("users").find({ email: email }).toArray();
-
+    const data = await db.collection("users").findOne({ email: email });
     return res.json(data);
   } catch (e) {
     return e;
