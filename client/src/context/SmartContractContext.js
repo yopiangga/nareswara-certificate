@@ -139,6 +139,25 @@ export const SmartContractProvider = ({ children }) => {
     }
   };
 
+  const redeemCertificate = async (certificates) => {
+    try {
+      if (ethereum) {
+        const contract = createEthereumContract();
+        const hash = await contract.redeemCertificate(certificates);
+
+        
+        console.log(`Loading - ${hash}`);
+        await hash.wait();
+        console.log(`Success - ${hash.hash}`);
+
+      } else {
+        console.log("No ethereum object");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     checkIfWalletIsConnect();
   }, []);
@@ -152,6 +171,7 @@ export const SmartContractProvider = ({ children }) => {
         addOrganization,
         addUser,
         addEvent,
+        redeemCertificate,
         connectWalletWithId
       }}
     >

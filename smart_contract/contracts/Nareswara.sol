@@ -16,6 +16,10 @@ contract Nareswara {
         Certificate[] certificates;
     }
 
+    string [] certificateForPublic;
+    
+    Certificate [] certificateForPrivate;
+
     mapping (address => User) public users;
 
     event UserAdded(address userAddress, string name, string email);
@@ -65,6 +69,7 @@ contract Nareswara {
     event OrganizationAdded(address id, string name, string email);
     event EventAdded(address id, string eventName);
     event ParticipantAdded(string[] participants);
+    event CertificateAdded(string[] certificateForPublic);
 
     function addOrganization(address _organizationAddress, string memory _name, string memory _email) public {
         require(organizations[_organizationAddress].id != _organizationAddress, "This user already exists.");
@@ -110,10 +115,25 @@ contract Nareswara {
         return false;
     }
 
-    function redeemCertificate(string memory _email, uint _index,address _userAddress, address _organizationAddress, string memory _cid) public {
-        if (isParticipantReady(_organizationAddress, _email, _index)) {
-            Certificate memory _certificate = Certificate(_cid, _userAddress, _organizationAddress);
-            users[_userAddress].certificates.push(_certificate);
+    function redeemCertificate(Certificate[] memory _certificates) public {
+        for (uint i = 0; i < _certificates.length; i++) {
+            Certificate memory _certificate = Certificate(_certificates[i].cid,_certificates[i].userAddress, _certificates[i].issuerAddress);
+            //users[_certificates[i].userAddress].certificates.push(_certificate);
+            certificateForPrivate.push(_certificate);
+            certificateForPublic.push(_certificates[i].cid);
         }
+    }
+
+    function verifyCertificate(string memory _cid) public view returns(bool) {
+         for (uint i = 0; i < certificateForPublic.length; i++) {
+            if (stringsEquals(certificateForPublic[i], _cid)) {
+                return true;
+            }
+         }
+        return false;
+    }
+
+    function getAllCertificate() public view returns(Certificate[] memory) {
+        return certificateForPrivate;
     }
 }

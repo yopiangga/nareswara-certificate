@@ -13,12 +13,16 @@ import { useNavigate } from "react-router-dom";
 import { Loading } from "src/components/Loader";
 import { LoadingContext } from "src/context/LoadingContext";
 import { TemplateCertificateComponent } from "src/components/TemplateCertificateComponent";
+import { SmartContractContext } from "src/context/SmartContractContext";
 
 export function ListCertificatePage() {
   const navigate = useNavigate();
   const { loading, setLoading } = useContext(LoadingContext);
+  const { currentAccount, redeemCertificate } = useContext(SmartContractContext);
   const [event, setEvent] = useState();
   const [certificates, setCertificates] = useState([]);
+  // khusus untuk diupload ke blockchain
+  const [cert, setCert] = useState([]);
   const location = useLocation();
   const [load, setLoad] = useState(true);
   const [modalInformationLittle, setModalInformationLittle] = useState({
@@ -68,7 +72,9 @@ export function ListCertificatePage() {
     for (let i = 0; i < certificates.length; i++) {
       await download(i);
     }
-
+    // TODO(upload ke blockchain)
+    await redeemCertificate(cert);
+    
     setLoading(false);
     setModalInformationLittle({
       status: true,
@@ -79,6 +85,7 @@ export function ListCertificatePage() {
   const download = async (index) => {
     const date = new Date();
     const time = date.getTime();
+    
     html2canvas(document.getElementById(`canvas-${index + 1}`)).then(
       async (canvas) => {
         const imgData = canvas.toDataURL("image/jpeg");
@@ -107,6 +114,13 @@ export function ListCertificatePage() {
             link: `https://ipfs.io/ipfs/${path}`,
           }
         );
+
+        const data = {
+          cid: path,
+          userAddress: certificates[index][2],
+          issuerAddress: currentAccount
+        }
+        cert.push(data);
       }
     );
   };
