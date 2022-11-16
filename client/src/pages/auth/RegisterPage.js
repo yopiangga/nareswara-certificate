@@ -32,23 +32,22 @@ export default function RegisterPage() {
     } else {
       const resAuth = await AuthServices.register(email, password);
       if (resAuth.user != null) {
-        const doc = await UserServices.addUsers(
-          resAuth.user.uid,
-          email,
-          name,
-          address,
-          currentAccount,
-          role,
-          ""
-        );
-        if (role == 1) {
+        const doc = await UserServices.add({
+          name: name,
+          email: email,
+          address: address,
+          meta_id: currentAccount,
+          photo_path: "",
+          role: role,
+        });
+        if (role == 2) {
           await addOrganization(name, email);
         } else {
           await addUser(name, email);
         }
         const resUser = await UserServices.getUser("email", resAuth.user.email);
         setUser(resUser);
-        // console.log(user);
+        console.log(user);
       }
     }
     setLoading(false);
@@ -132,8 +131,8 @@ export default function RegisterPage() {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
                   <option selected>Pilih role</option>
-                  <option value="1">Organisasi</option>
-                  <option value="2">Pengguna biasa</option>
+                  <option value="1">Pengguna biasa</option>
+                  <option value="2">Organisasi</option>
                 </select>
                 <div>
                   <label
