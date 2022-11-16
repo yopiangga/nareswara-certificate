@@ -12,8 +12,10 @@ import { Loading } from "src/components/Loader";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
+  const userServices = new UserServices();
   const navigate = useNavigate();
-  const { connectWalletWithId, currentAccount } = useContext(SmartContractContext);
+  const { connectWalletWithId, currentAccount } =
+    useContext(SmartContractContext);
   const { loading, setLoading } = useContext(LoadingContext);
   const { user, setUser } = useContext(UserContext);
   const [dataAuth, setDataAuth] = useState({ email: "", password: "" });
@@ -29,10 +31,9 @@ export default function LoginPage() {
 
     if (resAuth?.operationType == "signIn") {
       setLoading(true);
-      const resUser = await UserServices.getUser("email", resAuth.user.email);
+      const resUser = await userServices.getUser("email", resAuth.user.email);
 
       if (resUser != null) {
-        
         await connectWalletWithId(resUser.metaId);
 
         if (currentAccount.toString() == resUser.metaId) {

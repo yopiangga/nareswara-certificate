@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { ModalInformationLittle } from "src/components/ModalInformationComponent";
 
 export function EditProfilePage() {
+  const userServices = new UserServices();
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
   const [data, setData] = useState({
@@ -43,7 +44,7 @@ export function EditProfilePage() {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    await UserServices.editUser(user.id, data);
+    await userServices.editUser(user.id, data);
     setModalInformationLittle({
       status: true,
       description: `Profile "${user.name}" telah berhasil diperbarui`,

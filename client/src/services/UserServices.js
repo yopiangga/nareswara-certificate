@@ -2,17 +2,17 @@ import axios from "axios";
 import baseUrl from "src/config/Url";
 
 export class UserServices {
-  static async add(data) {
+  async add(data) {
     const res = await axios.post(`${baseUrl}/user/add`, data);
     return res.data;
   }
 
-  static async getAll() {
+  async getAll() {
     const res = await axios.get(`${baseUrl}/user`);
     return res.data;
   }
 
-  static async getUser(value) {
+  async getUser(value) {
     const res = await axios.get(`${baseUrl}/user/${value}`);
     return res.data;
   }

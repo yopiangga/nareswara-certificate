@@ -11,6 +11,7 @@ import { Loading } from "src/components/Loader";
 import { LoadingContext } from "src/context/LoadingContext";
 
 export default function RegisterPage() {
+  const userServices = new UserServices();
   const { loading, setLoading } = useContext(LoadingContext);
   const { currentAccount, connectWallet, addOrganization, addUser } =
     useContext(SmartContractContext);
@@ -32,7 +33,7 @@ export default function RegisterPage() {
     } else {
       const resAuth = await AuthServices.register(email, password);
       if (resAuth.user != null) {
-        const doc = await UserServices.add({
+        const doc = await userServices.add({
           name: name,
           email: email,
           address: address,
@@ -45,7 +46,7 @@ export default function RegisterPage() {
         } else {
           await addUser(name, email);
         }
-        const resUser = await UserServices.getUser("email", resAuth.user.email);
+        const resUser = await userServices.getUser("email", resAuth.user.email);
         setUser(resUser);
         console.log(user);
       }
