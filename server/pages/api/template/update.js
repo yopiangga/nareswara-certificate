@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     optionsSuccessStatus: 200,
   });
 
-  if (req.method === "POST") {
+  if (req.method === "PUT") {
     const data = {
       ...req.body.data,
       updatedAt: new Date(),

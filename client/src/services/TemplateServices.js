@@ -28,7 +28,7 @@ export class TemplateServices {
     return res.data;
   }
 
-  async getCertificate(value) {
+  async getOne(value) {
     const res = await axios.get(`${baseUrl}/template/${value}`);
     return res.data;
   }

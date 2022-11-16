@@ -17,6 +17,7 @@ export default async function handler(req, res) {
       author: req.body.author,
       description: req.body.description,
       date: req.body.date,
+      name: req.body.name,
       createdAt: new Date(),
       updatedAt: null,
     };

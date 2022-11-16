@@ -8,17 +8,20 @@ import {
 import { UserContext } from "../../context/UserContext";
 import certificatePreview from "src/assets/images/certificate-preview.png";
 import { ModalInformationLittle } from "src/components/ModalInformationComponent";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Loading } from "src/components/Loader";
 import { LoadingContext } from "src/context/LoadingContext";
 import { TemplateCertificateComponent } from "src/components/TemplateCertificateComponent";
 import { TemplateServices } from "src/services/TemplateServices";
 
-export function CreateCertificateTemplatePage() {
+export function CertificateTemplatePage() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { loading, setLoading } = useContext(LoadingContext);
   const { user, setUser } = useContext(UserContext);
+
+  const templateServices = new TemplateServices();
 
   const [modalInformationLittle, setModalInformationLittle] = useState({
     status: false,
@@ -27,65 +30,45 @@ export function CreateCertificateTemplatePage() {
 
   const [image, setImage] = useState();
 
-  // const [data, setData] = useState({
-  //   image_path: "",
-  //   title: {
-  //     value: "",
-  //     class: "",
-  //   },
-  //   number: {
-  //     value: "",
-  //     class: "",
-  //   },
-  //   author: {
-  //     value: "",
-  //     class: "",
-  //   },
-  //   description: {
-  //     value: "",
-  //     class: "",
-  //   },
-  //   date: {
-  //     value: "",
-  //     class: "",
-  //   },
-  //   name: {
-  //     value: "",
-  //     class: "",
-  //   },
-  // });
-
   const [data, setData] = useState({
-    image_path: "",
+    image: {
+      path: "",
+      name: "",
+    },
     title: {
-      value: "Contoh Kompetisi",
-      class:
-        "bg-transparent left-10 w-72 bottom-10 absolute text-teal-900 text-left",
+      value: "",
+      class: "",
     },
     number: {
-      value: "09/2022/RISTEK/BEM",
-      class: "-",
+      value: "",
+      class: "",
     },
     author: {
-      value: "RISTEK BEM PENS",
-      class:
-        "bg-transparent h-16 right-10 top-10 absolute text-right text-lg font-bold text-teal-900",
+      value: "",
+      class: "",
     },
     description: {
-      value: "Sebagai peserta dalam ajang Kompetisi BEM 2022.",
-      class:
-        "bg-transparent h-32 left-44 right-44 top-72 mt-7 absolute flex justify-center items-center overflow-hidden font-normal text-sm text-teal-900 text-center",
+      value: "",
+      class: "",
     },
     date: {
-      value: "2022-10-20",
-      class: "-",
+      value: "",
+      class: "",
     },
     name: {
-      value: "Alfian Prisma Yopiangga",
-      class:
-        "bg-transparent h-10 left-64 right-64 top-64 mt-5 absolute flex justify-center items-center font-black text-3xl text-teal-900 text-center",
+      value: "",
+      class: "",
     },
   });
+
+  useEffect(() => {
+    fetch();
+  }, []);
+
+  async function fetch() {
+    const res = await templateServices.getOne(location.pathname.split("/")[2]);
+    setData(res);
+  }
 
   function handleChange(event) {
     setData({ ...data, [event.target.name]: event.target.value });
@@ -106,16 +89,7 @@ export function CreateCertificateTemplatePage() {
     event.preventDefault();
     setLoading(true);
 
-    const templateServices = new TemplateServices();
-
-    const resUrl = await templateServices.upload(data.image_path);
-    const resName = `files/templates/${data.image_path.name}`;
-
-    const res = await templateServices.add({
-      image: {
-        path: resUrl,
-        name: resName,
-      },
+    const res = await templateServices.update(data._id, {
       title: data.title,
       number: data.number,
       author: data.author,
@@ -128,7 +102,7 @@ export function CreateCertificateTemplatePage() {
 
     setModalInformationLittle({
       status: true,
-      description: `Template berhasil dibuat`,
+      description: `Template berhasil diubah`,
     });
   }
 
@@ -140,6 +114,17 @@ export function CreateCertificateTemplatePage() {
     });
     navigate("/template");
   };
+
+  async function handleDelete() {
+    setLoading(true);
+    const res = await templateServices.delete(data._id);
+
+    setLoading(false);
+    setModalInformationLittle({
+      status: true,
+      description: `Template berhasil dihapus`,
+    });
+  }
 
   return (
     <>
@@ -158,12 +143,12 @@ export function CreateCertificateTemplatePage() {
         <form className="mt-6" onSubmit={handleSubmit}>
           <div className="form grid grid-cols-1">
             <div className="left mr-5">
-              {image == null ? (
+              {image == null && data.image.path == "" ? (
                 ""
               ) : (
                 <div className="">
                   <TemplateCertificateComponent
-                    image_path={image}
+                    image_path={image == null ? data.image.path : image}
                     title={data.title}
                     number={data.number}
                     author={data.author}
@@ -173,15 +158,6 @@ export function CreateCertificateTemplatePage() {
                   />
                 </div>
               )}
-
-              <InputComponentImage
-                id="file"
-                title="Frame Template"
-                onChange={handleFile}
-                placeholder={`${
-                  data.image_path == "" ? "Pilih file" : data.image_path.name
-                }`}
-              />
 
               <InputComponentDefault
                 id="title-value"
@@ -372,7 +348,14 @@ export function CreateCertificateTemplatePage() {
             type="submit"
             className="py-3 pl-5 pr-5 mr-2 mt-5 transition-colors duration-700 transform bg-indigo-500 hover:bg-blue-400 text-gray-100 text-md border-indigo-300"
           >
-            Buat Template
+            Ubah Template
+          </button>
+          <button
+            type="button"
+            onClick={handleDelete}
+            className="py-3 pl-5 pr-5 mr-2 mt-5 transition-colors duration-700 transform bg-red-500 hover:bg-red-400 text-gray-100 text-md border-red-300"
+          >
+            Hapus
           </button>
         </form>
       </div>

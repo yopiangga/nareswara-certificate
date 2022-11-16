@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 
 import { Router, BrowserRouter, Switch, Route, Routes } from "react-router-dom";
 import AdminLayout from "../../layouts/AdminLayout";
+import { CertificateTemplatePage } from "./CertificateTemplatePage";
 import { CreateCertificateTemplatePage } from "./CreateCertificateTemplatePage";
 import { EditProfilePage } from "./EditProfilePage";
 import { HomePage } from "./HomePage";
@@ -20,6 +21,13 @@ export default function AdminRouterPage() {
             <Route
               path="/template"
               element={<ListCertificateTemplatePage />}
+              exact
+            />
+          </Routes>
+          <Routes>
+            <Route
+              path="/template/:id"
+              element={<CertificateTemplatePage />}
               exact
             />
           </Routes>
