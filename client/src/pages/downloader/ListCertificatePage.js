@@ -8,6 +8,7 @@ import { CertificateServices } from "src/services/CertificateServices";
 import { ModalInformationLittle } from "src/components/ModalInformationComponent";
 
 export function ListCertificatePage() {
+  const certificateServices = new CertificateServices();
   const { user, setUser } = useContext(UserContext);
   const [certificates, setCertificates] = useState([]);
   const [modalInformationLittle, setModalInformationLittle] = useState({
@@ -20,8 +21,7 @@ export function ListCertificatePage() {
   }, []);
 
   async function getCertificates() {
-    const res = await CertificateServices.getCertificateByParameter(
-      "email",
+    const res = await certificateServices.getAllCertificateByParticipant(
       user.email
     );
     setCertificates(res);

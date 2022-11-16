@@ -65,7 +65,7 @@ export function ProfilePage() {
                 </div>
                 <div className="mb-2 text-blueGray-600">
                   <i className="fas fa-university mr-2 text-lg text-blueGray-400"></i>
-                  {user?.metaId}
+                  {user?.meta_id}
                 </div>
               </div>
               <div className="my-10 border-t border-blueGray-200 text-center">

@@ -1,48 +1,20 @@
-import {
-  getFirestore,
-  getDoc,
-  doc,
-  setDoc,
-  getDocs,
-  collection,
-  query,
-  where,
-  deleteDoc,
-  updateDoc,
-} from "firebase/firestore";
+import React, { useState } from "react";
+import axios from "axios";
+import baseUrl from "src/config/Url";
 
 export class CountServices {
-  static async getCertificateByParameter(label, value) {
-    const db = getFirestore();
-    const col = collection(db, "certificate");
-    const q = query(col, where(label, "==", value));
-    const data = [];
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      data.push({ id: doc.id, data: doc.data() });
-    });
-
-    if (data != null) {
-      return data;
-    } else {
-      return false;
-    }
+  async getAllEventByAuthor(email) {
+    const res = await axios.get(`${baseUrl}/event/author/${email}`);
+    return res.data;
   }
 
-  static async getEventByParameter(label, value) {
-    const db = getFirestore();
-    const col = collection(db, "event");
-    const q = query(col, where(label, "==", value));
-    const data = [];
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      data.push({ id: doc.id, data: doc.data() });
-    });
+  async getAllCertificateByAuthor(email) {
+    const res = await axios.get(`${baseUrl}/certificate/author/${email}`);
+    return res.data;
+  }
 
-    if (data != null) {
-      return data;
-    } else {
-      return false;
-    }
+  async getAllCertificateByParticipant(email) {
+    const res = await axios.get(`${baseUrl}/certificate/participant/${email}`);
+    return res.data;
   }
 }

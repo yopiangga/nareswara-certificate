@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { CardComponentDefault } from "src/components/CardComponent";
 import { TableComponentDefault } from "src/components/TableComponent";
-import { EventServices } from "src/services/_EventServices";
+import { EventServices } from "src/services/EventServices";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 import templateCertificate from "src/assets/images/template-certificate.jpg";
@@ -14,10 +14,16 @@ import { Loading } from "src/components/Loader";
 import { LoadingContext } from "src/context/LoadingContext";
 import { TemplateCertificateComponent } from "src/components/TemplateCertificateComponent";
 import { SmartContractContext } from "src/context/SmartContractContext";
+import { UserContext } from "src/context/UserContext";
 
 export function ListCertificatePage() {
+  const eventServices = new EventServices();
+  const metaServices = new MetaServices();
+  const certificateServices = new CertificateServices();
+
   const navigate = useNavigate();
   const { loading, setLoading } = useContext(LoadingContext);
+  const { user, setUser } = useContext(UserContext);
   const { currentAccount, redeemCertificate } =
     useContext(SmartContractContext);
   const [event, setEvent] = useState();
@@ -50,15 +56,15 @@ export function ListCertificatePage() {
   }
 
   async function fetch() {
-    const res = await EventServices.getEvent(location.pathname.split("/")[2]);
+    const res = await eventServices.getOne(location.pathname.split("/")[2]);
 
     var temp = [];
 
-    for (let i = 0; i < res.certificates.length; i++) {
+    for (let i = 0; i < res.participants.length; i++) {
       temp.push([
-        res.certificates[i].email,
-        res.certificates[i].name,
-        res.certificates[i].metaId,
+        res.participants[i].email,
+        res.participants[i].name,
+        res.participants[i].metaId,
       ]);
     }
 
@@ -103,18 +109,19 @@ export function ListCertificatePage() {
           type: "application/pdf",
         });
 
-        const path = await MetaServices.uploadPDF(fd);
+        const path = await metaServices.uploadPDF(fd);
 
-        const resCert = await CertificateServices.addCertificate(
-          `${time}-${certificates[index][2]}`,
-          {
+        const resCert = await certificateServices.add({
+          participant: {
             email: certificates[index][0],
-            emailAuthor: event.email,
-            eventName: event.eventName,
-            dateCertificate: time,
-            link: `https://ipfs.io/ipfs/${path}`,
-          }
-        );
+            name: certificates[index][1],
+            metaId: certificates[index][2],
+          },
+          author: user,
+          title: event.title,
+          date: event.certificate.date.value,
+          link: `https://ipfs.io/ipfs/${path}`,
+        });
 
         const data = {
           cid: path,
@@ -172,56 +179,40 @@ export function ListCertificatePage() {
           ? ""
           : certificates.map((el, idx) => {
               return (
-                // <TemplateCertificateComponent id={idx} />
-                <div
-                  key={idx}
-                  className="leancanvas-container relative bg-white flex mb-10 mx-auto"
-                  id={`canvas-${idx + 1}`}
-                  style={{ width: "870px", height: "624px" }}
-                  ref={ref[idx]}
-                >
-                  <img src={templateCertificate} className="absolute z-0" />
-                  <div className="bg-transparent h-16 right-10 top-10 absolute text-right text-lg font-bold text-teal-900">
-                    <h3>{event.authorCertificate}</h3>
-                    <h4 className="text-right text-xs">
-                      {`${event.noCertificateStart + idx}/${
-                        event.noCertificateStatic
-                      }`}
-                    </h4>
-                  </div>
-                  <div className="bg-transparent h-10 left-64 right-64 top-64 mt-5 absolute flex justify-center items-center font-black text-3xl text-teal-900 text-center">
-                    <h1>
-                      {el[1][0]}
-                      {el[1][1]}
-                      {el[1][2]}
-                      {el[1][3]}
-                      {el[1][4]}
-                      {el[1][5]}
-                      {el[1][6]}
-                      {el[1][7]}
-                      {el[1][8]}
-                      {el[1][9]}
-                      {el[1][10]}
-                      {el[1][11]}
-                      {el[1][12]}
-                      {el[1][13]}
-                      {el[1][14]}
-                      {el[1][15]}
-                      {el[1][16]}
-                      {el[1][17]}
-                      {el[1][18]}
-                      {el[1][19]}
-                      {el[1][20]}
-                    </h1>
-                  </div>
-                  <div className="bg-transparent h-32 left-44 right-44 top-72 mt-7 absolute flex justify-center items-center overflow-hidden font-normal text-sm text-teal-900 text-center">
-                    <p>{event.descriptionCertificate}</p>
-                  </div>
-                  <div className="bg-transparent left-10 w-72 bottom-10 absolute text-teal-900 text-left">
-                    <h3 className="text-lg font-bold ">{event.eventName}</h3>
-                    <h4 className="text-xs">{event.dateCertificate}</h4>
-                  </div>
-                </div>
+                <TemplateCertificateComponent
+                  id={idx}
+                  image_path={event.certificate.image.path}
+                  title={event.certificate.title}
+                  number={event.certificate.number}
+                  author={event.certificate.author}
+                  description={event.certificate.description}
+                  date={event.certificate.date}
+                  name={{
+                    //   value: `${el[1][0]}
+                    // ${el[1][1]}
+                    // ${el[1][2]}
+                    // ${el[1][3]}
+                    // ${el[1][4]}
+                    // ${el[1][5]}
+                    // ${el[1][6]}
+                    // ${el[1][7]}
+                    // ${el[1][8]}
+                    // ${el[1][9]}
+                    // ${el[1][10]}
+                    // ${el[1][11]}
+                    // ${el[1][12]}
+                    // ${el[1][13]}
+                    // ${el[1][14]}
+                    // ${el[1][15]}
+                    // ${el[1][16]}
+                    // ${el[1][17]}
+                    // ${el[1][18]}
+                    // ${el[1][19]}
+                    // ${el[1][20]}`,
+                    value: el[1],
+                    class: event.certificate.name.class,
+                  }}
+                />
               );
             })}
       </div>

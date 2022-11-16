@@ -38,7 +38,7 @@ export function ProfilePage() {
                 </div>
                 <div className="w-full lg:w-4/12 px-4 lg:order-1">
                   <div className="flex justify-start py-4 lg:pt-4 pt-8">
-                    <h4>Role : {user?.role == 1 ? "User" : "Organisasi"}</h4>
+                    <h4>Role : {user?.role == 2 ? "Organisasi" : "User"}</h4>
                   </div>
                 </div>
               </div>
@@ -65,7 +65,7 @@ export function ProfilePage() {
                 </div>
                 <div className="mb-2 text-blueGray-600">
                   <i className="fas fa-university mr-2 text-lg text-blueGray-400"></i>
-                  {user?.metaId}
+                  {user?.meta_id}
                 </div>
               </div>
               <div className="my-10 border-t border-blueGray-200 text-center">

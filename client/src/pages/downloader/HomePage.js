@@ -4,6 +4,8 @@ import { UserContext } from "src/context/UserContext";
 import { CountServices } from "src/services/CountServices";
 
 export function HomePage() {
+  const countServices = new CountServices();
+
   const { user, setUser } = useContext(UserContext);
   const [certificates, setCertificates] = useState([]);
   const [load, setLoad] = useState(true);
@@ -13,8 +15,7 @@ export function HomePage() {
   }, []);
 
   const fetch = async () => {
-    const resCertificate = await CountServices.getCertificateByParameter(
-      "email",
+    const resCertificate = await countServices.getAllCertificateByParticipant(
       user.email
     );
 

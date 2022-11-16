@@ -10,7 +10,7 @@ import {
 const storage = getStorage();
 
 export class MetaServices {
-  static async uploadPDF(file) {
+  async uploadPDF(file) {
     try {
       const res = await ipfs.add(file);
       // console.log(res);
@@ -20,7 +20,7 @@ export class MetaServices {
     }
   }
 
-  static async upload(file) {
+  async upload(file) {
     const storageRef = ref(storage, `files/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
   }
