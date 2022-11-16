@@ -1,86 +1,38 @@
-import {
-  getFirestore,
-  getDoc,
-  doc,
-  setDoc,
-  getDocs,
-  collection,
-  query,
-  where,
-  deleteDoc,
-  updateDoc,
-} from "firebase/firestore";
-
-const db = getFirestore();
-const col = collection(db, "event");
+import React, { useState } from "react";
+import axios from "axios";
+import baseUrl from "src/config/Url";
 
 export class EventServices {
-  static async getEvents() {
-    const docSnap = await getDocs(col);
+  async add(data) {
+    const res = await axios.post(`${baseUrl}/event/add`, data);
+    return res.data;
+  }
 
-    const data = [];
+  async getAll() {
+    const res = await axios.get(`${baseUrl}/event`);
+    return res.data;
+  }
 
-    docSnap.forEach((doc) => {
-      data.push({ id: doc.id, data: doc.data() });
+  async getAllByEmail(email) {
+    const res = await axios.get(`${baseUrl}/event/author/${email}`);
+    return res.data;
+  }
+
+  async getOne(value) {
+    const res = await axios.get(`${baseUrl}/event/${value}`);
+    return res.data;
+  }
+
+  async delete(id) {
+    const res = await axios.post(`${baseUrl}/event/delete`, { _id: id });
+    return res.data;
+  }
+
+  async update(id, data) {
+    const res = await axios.put(`${baseUrl}/event/update`, {
+      _id: id,
+      data: data,
     });
-
-    return data;
-  }
-
-  static async getEvent(id) {
-    const result = await getDoc(doc(db, "event", id));
-    if (result.exists()) {
-      return result.data();
-    } else {
-      return false;
-    }
-  }
-
-  static async getEventByParameter(label, value) {
-    const q = query(col, where(label, "==", value));
-    const data = [];
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      data.push({ id: doc.id, data: doc.data() });
-    });
-
-    if (data != null) {
-      return data;
-    } else {
-      return false;
-    }
-  }
-
-  static async deleteEvent(id) {
-    const docRef = doc(db, "event", id);
-    const result = await deleteDoc(docRef);
-
-    if (result) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  static async editEvent(id, data) {
-    return await updateDoc(doc(db, "event", id), {
-      name: data.name ?? "",
-      description: data.description ?? "",
-    });
-  }
-
-  static async addEvent(id, data, email, listName) {
-    const result = await setDoc(doc(db, "event", id), {
-      email: email,
-      eventName: data.eventName,
-      eventDescription: data.eventDescription,
-      noCertificateStatic: data.noCertificateStatic,
-      noCertificateStart: data.noCertificateStart,
-      titleCertificate: data.titleCertificate,
-      authorCertificate: data.authorCertificate,
-      dateCertificate: data.dateCertificate,
-      descriptionCertificate: data.descriptionCertificate,
-      certificates: listName,
-    });
+    return res.data;
   }
 }

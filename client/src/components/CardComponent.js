@@ -10,22 +10,22 @@ export function CardComponentDefault({ data }) {
       <div className="card">
         <div className="card-header mx-4 -mt-6">
           <Link
-            to={`${user.role == 2 ? "/acara" : "/permintaan-baru"}/${data.id}`}
+            to={`${user.role == 1 ? "/acara" : "/permintaan-baru"}/${data._id}`}
           >
             <img
               className="w-auto rounded-lg shadow-lg"
-              src={certificatePreview}
+              src={data.certificate.image.path}
               alt="event-image"
             />
           </Link>
         </div>
         <div className="card-body p-4">
-          <Link to={`/acara/${data.id}`}>
+          <Link to={`/acara/${data._id}`}>
             <h4 className="font-semibold mb-1 hover:text-indigo-600">
-              {data.data.eventName}
+              {data.title}
             </h4>
           </Link>
-          <p className="opcacity-60 mb-4">{data.data.eventDescription}</p>
+          <p className="opcacity-60 mb-4">{data.description}</p>
         </div>
       </div>
     </div>

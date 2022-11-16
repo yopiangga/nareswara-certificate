@@ -7,7 +7,7 @@ import {
   TableComponentNewRequest,
 } from "src/components/TableComponent";
 import { UserContext } from "src/context/UserContext";
-import { EventServices } from "src/services/EventServices";
+import { EventServices } from "src/services/_EventServices";
 import { RequestServices } from "src/services/RequestServices";
 
 export function ListRequestPage() {

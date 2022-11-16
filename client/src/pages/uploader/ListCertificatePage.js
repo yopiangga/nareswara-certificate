@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { CardComponentDefault } from "src/components/CardComponent";
 import { TableComponentDefault } from "src/components/TableComponent";
-import { EventServices } from "src/services/EventServices";
+import { EventServices } from "src/services/_EventServices";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 import templateCertificate from "src/assets/images/template-certificate.jpg";
@@ -18,7 +18,8 @@ import { SmartContractContext } from "src/context/SmartContractContext";
 export function ListCertificatePage() {
   const navigate = useNavigate();
   const { loading, setLoading } = useContext(LoadingContext);
-  const { currentAccount, redeemCertificate } = useContext(SmartContractContext);
+  const { currentAccount, redeemCertificate } =
+    useContext(SmartContractContext);
   const [event, setEvent] = useState();
   const [certificates, setCertificates] = useState([]);
   // khusus untuk diupload ke blockchain
@@ -74,7 +75,7 @@ export function ListCertificatePage() {
     }
     // TODO(upload ke blockchain)
     await redeemCertificate(cert);
-    
+
     setLoading(false);
     setModalInformationLittle({
       status: true,
@@ -85,7 +86,7 @@ export function ListCertificatePage() {
   const download = async (index) => {
     const date = new Date();
     const time = date.getTime();
-    
+
     html2canvas(document.getElementById(`canvas-${index + 1}`)).then(
       async (canvas) => {
         const imgData = canvas.toDataURL("image/jpeg");
@@ -118,8 +119,8 @@ export function ListCertificatePage() {
         const data = {
           cid: path,
           userAddress: certificates[index][2],
-          issuerAddress: currentAccount
-        }
+          issuerAddress: currentAccount,
+        };
         cert.push(data);
       }
     );

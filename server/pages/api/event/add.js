@@ -13,10 +13,9 @@ export default async function handler(req, res) {
     const data = {
       title: req.body.title,
       description: req.body.description,
-      certificates: req.body.certificates,
       user: req.body.user,
       certificate: req.body.certificate,
-      template: req.body.template,
+      participants: req.body.participants,
       createdAt: new Date(),
       updatedAt: null,
     };

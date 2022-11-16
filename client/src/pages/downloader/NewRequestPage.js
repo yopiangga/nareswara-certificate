@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { CardComponentDefault } from "src/components/CardComponent";
 import { InputComponentDefault } from "src/components/InputComponent";
 import { UserContext } from "src/context/UserContext";
-import { EventServices } from "src/services/EventServices";
+import { EventServices } from "src/services/_EventServices";
 
 export function NewRequestPage() {
   const { user, setUser } = useContext(UserContext);

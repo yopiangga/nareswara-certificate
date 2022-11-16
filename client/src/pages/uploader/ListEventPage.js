@@ -7,12 +7,14 @@ export function ListEventPage() {
   const { user, setUser } = useContext(UserContext);
   const [events, setEvents] = useState([]);
 
+  const eventServices = new EventServices();
+
   useEffect(() => {
     fetch();
   }, []);
 
   async function fetch() {
-    const res = await EventServices.getEventByParameter("email", user.email);
+    const res = await eventServices.getAllByEmail(user.email);
     setEvents(res);
   }
 
