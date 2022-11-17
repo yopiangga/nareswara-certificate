@@ -1,4 +1,4 @@
 import abi from "./Nareswara.json";
 
 export const contractABI = abi.abi;
-export const contractAddress = "0xAF401a5828609C745070123bb269a22Fa8b037EA";
+export const contractAddress = "0x4821461ffE18d590F18E7b3168f92E8c274518De";

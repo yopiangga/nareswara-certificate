@@ -80,8 +80,8 @@ export function ListCertificatePage() {
       const cid = await download(i);
       temp[i] = [cid, certificates[i][2], currentAccount];
     }
-    // TODO(upload ke blockchain)
-    await redeemCertificate(cert);
+    
+    await redeemCertificate(temp);
 
     setLoading(false);
     setModalInformationLittle({
@@ -94,44 +94,36 @@ export function ListCertificatePage() {
     const date = new Date();
     const time = date.getTime();
 
-    html2canvas(document.getElementById(`canvas-${index + 1}`)).then(
-      async (canvas) => {
-        const imgData = canvas.toDataURL("image/jpeg");
-        const pdf = new jsPDF({
-          orientation: "l",
-          unit: "mm",
-          format: "a4",
-          putOnlyUsedFonts: true,
-        });
-        pdf.addImage(imgData, "JPEG", 0, 0, 297, 210);
-
-        var file = pdf.output("blob");
-        var fd = new File([file], `${time}-${certificates[index][2]}.pdf`, {
-          type: "application/pdf",
-        });
-
-        const path = await metaServices.uploadPDF(fd);
-
-        const resCert = await certificateServices.add({
-          participant: {
-            email: certificates[index][0],
-            name: certificates[index][1],
-            metaId: certificates[index][2],
-          },
-          author: user,
-          title: event.title,
-          date: event.certificate.date.value,
-          link: `https://ipfs.io/ipfs/${path}`,
-        });
-
-        const data = {
-          cid: path,
-          userAddress: certificates[index][2],
-          issuerAddress: currentAccount,
-        };
-        cert.push(data);
-      }
+    const canvas = await html2canvas(
+      document.getElementById(`canvas-${index + 1}`)
     );
+    const imgData = canvas.toDataURL("image/jpeg");
+    const pdf = new jsPDF({
+      orientation: "l",
+      unit: "mm",
+      format: "a4",
+      putOnlyUsedFonts: true,
+    });
+    pdf.addImage(imgData, "JPEG", 0, 0, 297, 210);
+
+    var file = pdf.output("blob");
+    var fd = new File([file], `${time}-${certificates[index][2]}.pdf`, {
+      type: "application/pdf",
+    });
+
+    const path = await metaServices.uploadPDF(fd);
+
+    const resCert = await certificateServices.add({
+      participant: {
+        email: certificates[index][0],
+        name: certificates[index][1],
+        metaId: certificates[index][2],
+      },
+      author: user,
+      title: event.title,
+      date: event.certificate.date.value,
+      link: `https://ipfs.io/ipfs/${path}`,
+    });
 
     return path;
   };

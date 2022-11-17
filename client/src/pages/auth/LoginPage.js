@@ -35,16 +35,16 @@ export default function LoginPage() {
 
       if (resUser != null) {
         await connectWalletWithId(resUser.metaId);
-
-        if (currentAccount.toString() == resUser.metaId) {
-          setUser(resUser);
-          setLoading(false);
-          console.log("Benar");
-          navigate("/");
-        } else {
-          console.log("Salah");
-          setLoading(false);
-        }
+        setUser(resUser);
+        setLoading(false);
+        console.log("Benar");
+        navigate("/");
+        // if (currentAccount.toString() == resUser.metaId) {
+          
+        // } else {
+        //   console.log("Salah");
+        //   setLoading(false);
+        // }
       } else {
         setLoading(false);
       }
