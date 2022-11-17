@@ -93,11 +93,7 @@ export default function LandingPage() {
         <div className="px-4 py-16 mx-auto max-w-screen-xl sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-8 lg:gap-16 lg:grid-cols-2">
             <div className="relative h-64 rounded-lg sm:h-80 lg:h-full lg:order-last">
-              <img
-                alt="Party"
-                src={onlineTest}
-                className="object-cover w-full h-full"
-              />
+              <img alt="Party" src={onlineTest} className="w-full h-full" />
             </div>
 
             <div className="lg:py-24">

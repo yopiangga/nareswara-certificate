@@ -28,8 +28,6 @@ export function ListCertificatePage() {
     useContext(SmartContractContext);
   const [event, setEvent] = useState();
   const [certificates, setCertificates] = useState([]);
-  // khusus untuk diupload ke blockchain
-  const [cert, setCert] = useState([]);
   const location = useLocation();
   const [load, setLoad] = useState(true);
   const [modalInformationLittle, setModalInformationLittle] = useState({
@@ -75,9 +73,12 @@ export function ListCertificatePage() {
   }
 
   const loopDownload = async () => {
+    var temp = [];
+    let i = 0;
     setLoading(true);
     for (let i = 0; i < certificates.length; i++) {
-      await download(i);
+      const cid = await download(i);
+      temp[i] = [cid, certificates[i][2], currentAccount];
     }
     // TODO(upload ke blockchain)
     await redeemCertificate(cert);
@@ -131,6 +132,8 @@ export function ListCertificatePage() {
         cert.push(data);
       }
     );
+
+    return path;
   };
 
   const handleCloseModal = () => {

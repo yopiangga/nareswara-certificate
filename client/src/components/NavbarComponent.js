@@ -10,9 +10,27 @@ export function NavbarUploaderComponent() {
   return (
     <div className="fixed md:w-full md:top-0 md:z-20 flex flex-row flex-wrap items-center bg-white h-20 w-full px-6 shadow-sm">
       <div className="flex-none w-56 flex flex-row items-center">
-        {/* <h2 className="text-dark text-xl font-bold">
-          Nares <span className="text-indigo-600 font-bold">Certificate</span>
-        </h2> */}
+        <button
+          data-collapse-toggle="navbar-default"
+          type="button"
+          className="inline-flex items-center p-2 mr-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          aria-controls="navbar-default"
+          aria-expanded="false"
+        >
+          <svg
+            className="w-6 h-6"
+            aria-hidden="true"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              ffillRule="evenodd"
+              d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+              clipRule="evenodd"
+            ></path>
+          </svg>
+        </button>
         <Link to="/">
           <a className="flex items-center text-2xl font-semibold text-gray-900">
             <img className="w-6 h-6 mr-2" src={Logo} alt="logo" />
