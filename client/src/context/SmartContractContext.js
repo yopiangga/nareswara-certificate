@@ -143,9 +143,11 @@ export const SmartContractProvider = ({ children }) => {
     try {
       if (ethereum) {
         const contract = createEthereumContract();
-        const hash = await contract.redeemCertificate(certificates);
+        console.log(certificates);
+        //const hash = await contract.redeemCertificate([["a", "0x9fd578d3238Adf079fA9C66CB200203c6FAdAe8a", "0x9fd578d3238Adf079fA9C66CB200203c6FAdAe8a"]]);
 
-        
+        const hash = await contract.redeemCertificate([...certificates]);
+
         console.log(`Loading - ${hash}`);
         await hash.wait();
         console.log(`Success - ${hash.hash}`);
@@ -158,8 +160,24 @@ export const SmartContractProvider = ({ children }) => {
     }
   };
 
+  const getAllCertificate = async () => {
+    try {
+      if (ethereum) {
+        const contract = createEthereumContract();
+        const hash = await contract.getAllCertificate("0x9fd578d3238Adf079fA9C66CB200203c6FAdAe8a");
+        console.log(hash);
+
+      } else {
+        console.log("No ethereum object");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     checkIfWalletIsConnect();
+    //getAllCertificate();
   }, []);
 
   return (

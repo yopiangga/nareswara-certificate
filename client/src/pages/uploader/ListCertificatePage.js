@@ -14,15 +14,13 @@ import { Loading } from "src/components/Loader";
 import { LoadingContext } from "src/context/LoadingContext";
 import { TemplateCertificateComponent } from "src/components/TemplateCertificateComponent";
 import { SmartContractContext } from "src/context/SmartContractContext";
-
 export function ListCertificatePage() {
   const navigate = useNavigate();
   const { loading, setLoading } = useContext(LoadingContext);
-  const { currentAccount, redeemCertificate } = useContext(SmartContractContext);
+  const { currentAccount, redeemCertificate } =
+    useContext(SmartContractContext);
   const [event, setEvent] = useState();
   const [certificates, setCertificates] = useState([]);
-  // khusus untuk diupload ke blockchain
-  const [cert, setCert] = useState([]);
   const location = useLocation();
   const [load, setLoad] = useState(true);
   const [modalInformationLittle, setModalInformationLittle] = useState({
@@ -68,13 +66,17 @@ export function ListCertificatePage() {
   }
 
   const loopDownload = async () => {
+    var temp = [];
+    let i = 0;
     setLoading(true);
     for (let i = 0; i < certificates.length; i++) {
-      await download(i);
+      const cid = await download(i);
+      temp[i] = [cid, certificates[i][2], currentAccount];
     }
-    // TODO(upload ke blockchain)
-    await redeemCertificate(cert);
-    
+
+    console.log(temp);
+    await redeemCertificate(temp);
+
     setLoading(false);
     setModalInformationLittle({
       status: true,
@@ -85,44 +87,41 @@ export function ListCertificatePage() {
   const download = async (index) => {
     const date = new Date();
     const time = date.getTime();
-    
-    html2canvas(document.getElementById(`canvas-${index + 1}`)).then(
-      async (canvas) => {
-        const imgData = canvas.toDataURL("image/jpeg");
-        const pdf = new jsPDF({
-          orientation: "l",
-          unit: "mm",
-          format: "a4",
-          putOnlyUsedFonts: true,
-        });
-        pdf.addImage(imgData, "JPEG", 0, 0, 297, 210);
+    var path;
 
-        var file = pdf.output("blob");
-        var fd = new File([file], `${time}-${certificates[index][2]}.pdf`, {
-          type: "application/pdf",
-        });
+    const canvas = await html2canvas(
+      document.getElementById(`canvas-${index + 1}`)
+    );
+    const imgData = canvas.toDataURL("image/jpeg");
+    const pdf = new jsPDF({
+      orientation: "l",
+      unit: "mm",
+      format: "a4",
+      putOnlyUsedFonts: true,
+    });
+    pdf.addImage(imgData, "JPEG", 0, 0, 297, 210);
 
-        const path = await MetaServices.uploadPDF(fd);
+    var file = pdf.output("blob");
+    var fd = new File([file], `${time}-${certificates[index][2]}.pdf`, {
+      type: "application/pdf",
+    });
 
-        const resCert = await CertificateServices.addCertificate(
-          `${time}-${certificates[index][2]}`,
-          {
-            email: certificates[index][0],
-            emailAuthor: event.email,
-            eventName: event.eventName,
-            dateCertificate: time,
-            link: `https://ipfs.io/ipfs/${path}`,
-          }
-        );
+    path = await MetaServices.uploadPDF(fd);
 
-        const data = {
-          cid: path,
-          userAddress: certificates[index][2],
-          issuerAddress: currentAccount
-        }
-        cert.push(data);
+    console.log(path + " " + certificates[index][2]);
+
+    const resCert = await CertificateServices.addCertificate(
+      `${time}-${certificates[index][2]}`,
+      {
+        email: certificates[index][0],
+        emailAuthor: event.email,
+        eventName: event.eventName,
+        dateCertificate: time,
+        link: `https://ipfs.io/ipfs/${path}`,
       }
     );
+
+    return path;
   };
 
   const handleCloseModal = () => {

@@ -40,10 +40,10 @@ export default function RegisterPage() {
           photo_path: "",
           role: role,
         });
-        if (role == 2) {
-          await addOrganization(name, email);
-        } else {
+        if (role == 1) {
           await addUser(name, email);
+        } else {
+          await addOrganization(name, email);
         }
         const resUser = await UserServices.getUser("email", resAuth.user.email);
         setUser(resUser);

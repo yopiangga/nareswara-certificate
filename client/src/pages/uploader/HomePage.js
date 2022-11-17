@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { CardHomeCount } from "src/components/CardComponent";
+import { SmartContractContext } from "src/context/SmartContractContext";
 import { UserContext } from "src/context/UserContext";
 import { CountServices } from "src/services/CountServices";
 
 export function HomePage() {
   const { user, setUser } = useContext(UserContext);
+  const { getAllCertificates } = useContext(SmartContractContext);
   const [certificates, setCertificates] = useState([]);
   const [events, setEvents] = useState([]);
   const [load, setLoad] = useState(true);
@@ -14,6 +16,8 @@ export function HomePage() {
   }, []);
 
   const fetch = async () => {
+  
+
     const resCertificate = await CountServices.getCertificateByParameter(
       "emailAuthor",
       user.email

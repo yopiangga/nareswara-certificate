@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity >=0.4.22 <0.9.0;
+pragma solidity 0.8.17;
 
 contract Nareswara {
 
@@ -17,12 +17,12 @@ contract Nareswara {
     }
 
     string [] certificateForPublic;
-    
     Certificate [] certificateForPrivate;
 
     mapping (address => User) public users;
 
     event UserAdded(address userAddress, string name, string email);
+
     
     function addUser(address _userAddress, string memory _name, string memory _email) public {
         require(users[_userAddress].id != _userAddress, "This user already exists.");
@@ -69,7 +69,7 @@ contract Nareswara {
     event OrganizationAdded(address id, string name, string email);
     event EventAdded(address id, string eventName);
     event ParticipantAdded(string[] participants);
-    event CertificateAdded(string[] certificateForPublic);
+    event CertificateAdded(Certificate[] certificates);
 
     function addOrganization(address _organizationAddress, string memory _name, string memory _email) public {
         require(organizations[_organizationAddress].id != _organizationAddress, "This user already exists.");
@@ -118,10 +118,16 @@ contract Nareswara {
     function redeemCertificate(Certificate[] memory _certificates) public {
         for (uint i = 0; i < _certificates.length; i++) {
             Certificate memory _certificate = Certificate(_certificates[i].cid,_certificates[i].userAddress, _certificates[i].issuerAddress);
-            //users[_certificates[i].userAddress].certificates.push(_certificate);
-            certificateForPrivate.push(_certificate);
-            certificateForPublic.push(_certificates[i].cid);
+            users[_certificates[i].userAddress].certificates.push(_certificate);
+            // emit CertificateAdded(_certificates[i].cid,_certificates[i].userAddress, _certificates[i].issuerAddress);
+            // certificateForPrivate.push(_certificate);
+            //certificateForPublic.push(_certificates[i].cid);
         }
+        emit CertificateAdded(_certificates);
+    }
+
+    function getCertificateForPublic() public view returns(string[] memory) {
+        return certificateForPublic;
     }
 
     function verifyCertificate(string memory _cid) public view returns(bool) {
@@ -131,9 +137,5 @@ contract Nareswara {
             }
          }
         return false;
-    }
-
-    function getAllCertificate() public view returns(Certificate[] memory) {
-        return certificateForPrivate;
     }
 }
