@@ -24,11 +24,11 @@ export const SmartContractProvider = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const addOrganization = async (name, email) => {
+  const addOrganization = async (email) => {
     try {
       if (ethereum) {
         const contract = createEthereumContract();
-        const hash = await contract.addOrganization(currentAccount, name, email);
+        const hash = await contract.addOrganization(email);
 
         setIsLoading(true);
         console.log(`Loading - ${hash}`);
@@ -155,7 +155,7 @@ export const SmartContractProvider = ({ children }) => {
       if (ethereum) {
         const contract = createEthereumContract();
         const hash = await contract.getNowUser();
-        return hash
+        return parseInt(hash._hex, 16);
         console.log(hash);
 
       } else {
@@ -171,7 +171,7 @@ export const SmartContractProvider = ({ children }) => {
       if (ethereum) {
         const contract = createEthereumContract();
         const hash = await contract.getNowOrganization();
-        return hash
+        return parseInt(hash._hex, 16);
         console.log(hash);
 
       } else {
@@ -182,13 +182,14 @@ export const SmartContractProvider = ({ children }) => {
     }
   }
 
-  const verifyCertificate = async (data) => {
+  const verifyCertificate = async (metaId, cid) => {
     try {
       if (ethereum) {
         const contract = createEthereumContract();
-        const hash = await contract.verifyCertificate(data.address, data.cid);
-        return hash
+        const hash = await contract.verifyCertificate(metaId, cid);
         console.log(hash);
+        return hash
+        
 
       } else {
         console.log("No ethereum object");
@@ -202,9 +203,8 @@ export const SmartContractProvider = ({ children }) => {
     try {
       if (ethereum) {
         const contract = createEthereumContract();
-        const hash = await contract.getAllCertificate("0x3Ec1eA2A0874AB5bDB9c057D1feafEd6dAFB854D");
-        
-        console.log(hash);
+        const hash = await contract.getNowOrganization();
+        console.log(parseInt(hash._hex, 16));
 
       } else {
         console.log("No ethereum object");

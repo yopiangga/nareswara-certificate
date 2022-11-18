@@ -4,9 +4,11 @@ import { ModalInformationLittle } from "../../components/ModalInformationCompone
 import { SmartContractContext } from "src/context/SmartContractContext";
 import { NavbarLanding } from "src/components/NavbarComponent";
 import { FooterComponent } from "src/components/FooterComponent";
+import { UserServices } from "../../services/UserServices";
 
 export default function VerifyPage() {
-  const [data, setData] = useState({ address: "", cid: "" });
+  const userServices = new UserServices();
+  const [data, setData] = useState({ email: "", cid: "" });
 
   const { verifyCertificate } = useContext(SmartContractContext);
 
@@ -22,7 +24,10 @@ export default function VerifyPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const isAny = await verifyCertificate(data);
+    const resUser = await userServices.getUserByEmail(data.email);
+    console.log(resUser.meta_id);
+    const isAny = await verifyCertificate(resUser.meta_id, data.cid);
+    
 
     if (isAny) {
       alert("Selamat!! sertifikat Sudah belum terdaftar di jaringan kami");
@@ -62,12 +67,12 @@ export default function VerifyPage() {
                 Email anda
               </label>
               <input
-                type="text"
-                name="address"
+                type="email"
+                name="email"
                 id="email"
                 onChange={handleChange}
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Meta ID"
+                placeholder="Email"
                 required
               />
             </div>
@@ -76,7 +81,7 @@ export default function VerifyPage() {
                 htmlFor="password"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Kata sandi
+                CID
               </label>
               <input
                 type="text"

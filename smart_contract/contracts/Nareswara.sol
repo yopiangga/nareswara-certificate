@@ -4,36 +4,46 @@ pragma solidity >=0.4.22 <0.9.0;
 contract Nareswara {
 
     struct Organization {
-        int id;
+        uint id;
         string email;
     }
 
     struct User {
-        int id;
+        uint id;
         string email;
         Certificate[] certificates;
     }
 
     struct Certificate { 
         string cid;
-        int userId;
-        int organizationId;
+        uint userId;
+        uint organizationId;
     }
 
-    int public indexUser;
-    int public indexOrganization;
+    uint indexUser;
+    uint indexOrganization;
 
-    mapping (int => User) public users;
-    mapping (int => Organization) public organizations;
+    mapping (uint => User) public users;
+    mapping (uint => Organization) public organizations;
 
-    event OrganizationAdded(int id, string email);
-    event UserAdded(int id, string email);
+    event OrganizationAdded(string email);
+    event UserAdded(string email);
 
-    function getNowUser() public view returns (int) {
+    function addUserIndex () public returns (uint result) {
+        result = indexUser; 
+        indexUser += 1;
+    }
+
+    function addOrganizationIndex () public returns (uint result) {
+        result = indexOrganization; 
+        indexOrganization += 1;
+    }
+
+    function getNowUser() public view returns (uint) {
         return indexUser;
     }
 
-    function getNowOrganization() public view returns (int) {
+    function getNowOrganization() public view returns (uint) {
         return indexOrganization;
     }
 
@@ -41,18 +51,17 @@ contract Nareswara {
         users[indexUser].id = indexUser;
         users[indexUser].email = _email;
 
-        indexUser++;
-
-        emit UserAdded(--indexUser, _email);
+        addUserIndex();
+        emit UserAdded(_email);
     }
 
     function addOrganization(string memory _email) public {
         organizations[indexOrganization].id = indexOrganization;
         organizations[indexOrganization].email = _email;
 
-        indexOrganization++;
+        addOrganizationIndex();
 
-        emit OrganizationAdded(--indexOrganization, _email);
+        emit OrganizationAdded(_email);
     }
 
     function addCertificate(Certificate[] memory _certificates) public {
@@ -62,11 +71,11 @@ contract Nareswara {
         }
     }
 
-    function getAllCertificate(int _id) public view returns (Certificate[] memory) {
+    function getAllCertificate(uint _id) public view returns (Certificate[] memory) {
         return users[_id].certificates;
     }
 
-    function verifyCertificate(int _id, string memory _cid) public view returns(bool) {
+    function verifyCertificate(uint _id, string memory _cid) public view returns(bool) {
         Certificate[] memory _certificate = users[_id].certificates;
         for (uint i = 0; i < _certificate.length; i++) {
             if (stringsEquals(_certificate[i].cid, _cid)) {
