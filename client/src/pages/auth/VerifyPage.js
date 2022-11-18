@@ -30,7 +30,7 @@ export default function VerifyPage() {
     
 
     if (isAny) {
-      alert("Selamat!! sertifikat Sudah belum terdaftar di jaringan kami");
+      alert("Selamat!! sertifikat Sudah terdaftar di jaringan kami");
     } else {
       alert("Maaf sertifikat anda belum terdaftar di jaringan kami");
     }

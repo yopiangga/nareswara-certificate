@@ -189,7 +189,7 @@ export function CreateCertificatePage() {
     event.preventDefault();
     setLoading(true);
 
-    await addEvent(data.title, getEmailFromArray(values));
+
 
     // await EventServices.addEvent(
     //   `${time}-${user.email}`,
