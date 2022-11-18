@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
+import { isMobile } from 'react-device-detect';
 
 import { contractAddress, contractABI } from "src/utils/constants";
 
@@ -43,31 +44,11 @@ export const SmartContractProvider = ({ children }) => {
     }
   };
 
-  const addUser = async (name, email) => {
+  const addUser = async (email) => {
     try {
       if (ethereum) {
         const contract = createEthereumContract();
-        const hash = await contract.addUser(currentAccount, name, email);
-
-        setIsLoading(true);
-        console.log(`Loading - ${hash}`);
-        await hash.wait();
-        console.log(`Success - ${hash.hash}`);
-        setIsLoading(false);
-
-      } else {
-        console.log("No ethereum object");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const addEvent = async (name, email) => {
-    try {
-      if (ethereum) {
-        const contract = createEthereumContract();
-        const hash = await contract.addEvent(currentAccount, name, email);
+        const hash = await contract.addUser(email);
 
         setIsLoading(true);
         console.log(`Loading - ${hash}`);
@@ -85,7 +66,16 @@ export const SmartContractProvider = ({ children }) => {
 
   const checkIfWalletIsConnect = async () => {
     try {
-      if (!ethereum) return alert("Please install metamask!");
+      if (!ethereum) {
+        
+        if(window.confirm("Halaman ini memerlukan Metmask, silahkan install terlebih dahulu")) {
+          if (isMobile) {
+            window.location.href = "https://play.google.com/store/apps/details?id=io.metamask&hl=id&gl=US";
+          } else {
+            window.location.href = "https://metamask.io/";
+          }
+        }
+      }
 
       const accounts = await ethereum.request({ method: "eth_accounts" });
 
@@ -160,6 +150,38 @@ export const SmartContractProvider = ({ children }) => {
     }
   };
 
+  const getNowUser = async () => {
+    try {
+      if (ethereum) {
+        const contract = createEthereumContract();
+        const hash = await contract.getNowUser();
+        return hash
+        console.log(hash);
+
+      } else {
+        console.log("No ethereum object");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const getNowOrganization = async (data) => {
+    try {
+      if (ethereum) {
+        const contract = createEthereumContract();
+        const hash = await contract.getNowOrganization();
+        return hash
+        console.log(hash);
+
+      } else {
+        console.log("No ethereum object");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const verifyCertificate = async (data) => {
     try {
       if (ethereum) {
@@ -205,9 +227,10 @@ export const SmartContractProvider = ({ children }) => {
         connectWallet,
         addOrganization,
         addUser,
-        addEvent,
         verifyCertificate,
         redeemCertificate,
+        getNowUser,
+        getNowOrganization,
         connectWalletWithId
       }}
     >

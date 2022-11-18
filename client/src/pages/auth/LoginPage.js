@@ -127,9 +127,6 @@ export default function LoginPage() {
                       </label>
                     </div>
                   </div> */}
-                  <a className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">
-                    Lupa password?
-                  </a>
                 </div>
                 <button
                   type="submit"

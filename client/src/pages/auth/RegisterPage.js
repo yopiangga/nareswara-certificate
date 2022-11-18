@@ -13,7 +13,7 @@ import { LoadingContext } from "src/context/LoadingContext";
 export default function RegisterPage() {
   const userServices = new UserServices();
   const { loading, setLoading } = useContext(LoadingContext);
-  const { currentAccount, connectWallet, addOrganization, addUser } =
+  const { currentAccount, connectWallet, addOrganization, addUser, getNowUser, getNowOrganization } =
     useContext(SmartContractContext);
 
   const [email, setEmail] = useState("");
@@ -32,19 +32,30 @@ export default function RegisterPage() {
       await connectWallet();
     } else {
       const resAuth = await AuthServices.register(email, password);
+      const nowUser = await getNowUser();
+      const nowOrganization = await getNowOrganization();
       if (resAuth.user != null) {
-        const doc = await userServices.add({
-          name: name,
-          email: email,
-          address: address,
-          meta_id: currentAccount,
-          photo_path: "",
-          role: role,
-        });
+        
         if (role == 1) {
-          await addUser(name, email);
+          const doc = await userServices.add({
+            name: name,
+            email: email,
+            address: address,
+            meta_id: nowUser,
+            photo_path: "",
+            role: role,
+          });
+          await addUser(email);
         } else {
-          await addOrganization(name, email);
+          const doc = await userServices.add({
+            name: name,
+            email: email,
+            address: address,
+            meta_id: nowOrganization,
+            photo_path: "",
+            role: role,
+          });
+          await addOrganization(email);
         }
         const resUser = await userServices.getUser("email", resAuth.user.email);
         setUser(resUser);
