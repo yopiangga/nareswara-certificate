@@ -20,9 +20,11 @@ import {
 import { Link } from "react-router-dom";
 import { PageContext } from "../context/PageContext";
 import { useLocation } from "react-router-dom";
+import { SidebarContext } from "src/context/SidebarContext";
 
 export function SidebarUploaderComponent() {
   const { page, setPage } = useContext(PageContext);
+  const { sidebar, setSidebar } = useContext(SidebarContext);
   const location = useLocation();
 
   useEffect(() => {
@@ -51,20 +53,7 @@ export function SidebarUploaderComponent() {
       icon: FiPlusSquare,
       group: "Sertifikat",
     },
-    // {
-    //   id: "list-request",
-    //   link: "/permintaan-unduh",
-    //   title: "Permintaan Unduh",
-    //   icon: FiDownload,
-    //   group: "Permintaan",
-    // },
-    // {
-    //   id: "list-report-request",
-    //   link: "/semua-permintaan",
-    //   title: "Semua Permintaan",
-    //   icon: FiList,
-    //   group: "Permintaan",
-    // },
+
     {
       id: "profile",
       link: "/profile",
@@ -77,7 +66,8 @@ export function SidebarUploaderComponent() {
   return (
     <div
       id="sideBar"
-      className="flex flex-col flex-wrap bg-white text-dark border-r border-gray-100 p-6 min-h-screen w-2/12 md:shadow-xl mt-10"
+      className={`md:flex flex-col flex-wrap bg-white text-dark border-r border-gray-100 p-6 min-h-screen md:w-2/12 md:shadow-xl pt-28 lg:pt-16 fixed lg:static 
+      ${sidebar ? "flex z-30" : "hidden"}`}
     >
       <div className="flex flex-col">
         <div className="text-right hidden md:block mb-4">
@@ -125,6 +115,7 @@ export function SidebarUploaderComponent() {
 export function SidebarDownloaderComponent() {
   const { page, setPage } = useContext(PageContext);
   const location = useLocation();
+  const { sidebar, setSidebar } = useContext(SidebarContext);
 
   useEffect(() => {
     setPage(location.pathname);
@@ -172,7 +163,8 @@ export function SidebarDownloaderComponent() {
   return (
     <div
       id="sideBar"
-      className="flex flex-col flex-wrap bg-white text-dark border-r border-gray-100 p-6 min-h-screen w-2/12 md:shadow-xl mt-10"
+      className={`md:flex flex-col flex-wrap bg-white text-dark border-r border-gray-100 p-6 min-h-screen md:w-2/12 md:shadow-xl pt-28 lg:pt-16 fixed lg:static 
+      ${sidebar ? "flex z-30" : "hidden"}`}
     >
       <div className="flex flex-col">
         <div className="text-right hidden md:block mb-4">
@@ -220,6 +212,7 @@ export function SidebarDownloaderComponent() {
 export function SidebarAdminComponent() {
   const { page, setPage } = useContext(PageContext);
   const location = useLocation();
+  const { sidebar, setSidebar } = useContext(SidebarContext);
 
   useEffect(() => {
     setPage(location.pathname);
@@ -259,7 +252,8 @@ export function SidebarAdminComponent() {
   return (
     <div
       id="sideBar"
-      className="flex flex-col flex-wrap bg-white text-dark border-r border-gray-100 p-6 min-h-screen w-2/12 md:shadow-xl mt-10"
+      className={`md:flex flex-col flex-wrap bg-white text-dark border-r border-gray-100 p-6 min-h-screen md:w-2/12 md:shadow-xl pt-28 lg:pt-16 fixed lg:static 
+      ${sidebar ? "flex z-30" : "hidden"}`}
     >
       <div className="flex flex-col">
         <div className="text-right hidden md:block mb-4">

@@ -20,7 +20,7 @@ export function ListEventPage() {
 
   return (
     <>
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 mt-12">
         {events.map((el, idx) => {
           return <CardComponentDefault key={idx} data={el} />;
         })}

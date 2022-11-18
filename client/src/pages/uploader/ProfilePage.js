@@ -13,13 +13,17 @@ export function ProfilePage() {
   return (
     <>
       <section className="relative mt-5 bg-blueGray-200">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto lg:px-4">
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg">
             <div className="px-6">
-              <div className="flex flex-wrap justify-center">
-                <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center"></div>
-                <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
-                  <div className="py-6 px-3 mt-32 sm:mt-0">
+              <div className="flex justify-between lg:flex-row flex-col items-center">
+                <div className="w-full lg:w-4/12 px-4">
+                  <div className="flex justify-start py-4 lg:pt-4 pt-8">
+                    <h4>Role : {user?.role == 2 ? "Organisasi" : "User"}</h4>
+                  </div>
+                </div>
+                <div className="w-full lg:w-4/12 px-4 flex lg:justify-end justify-start">
+                  <div className="py-6 flex gap-2">
                     <Link
                       to="/edit-profile"
                       className="bg-indigo-500 active:bg-indigo-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
@@ -36,15 +40,10 @@ export function ProfilePage() {
                     </button>
                   </div>
                 </div>
-                <div className="w-full lg:w-4/12 px-4 lg:order-1">
-                  <div className="flex justify-start py-4 lg:pt-4 pt-8">
-                    <h4>Role : {user?.role == 2 ? "Organisasi" : "User"}</h4>
-                  </div>
-                </div>
               </div>
               <div className="text-center mt-8">
-                <div className="w-full px-4 flex justify-center mb-8">
-                  <div className="relative w-96 flex justify-center">
+                <div className="w-full lg:px-4 px-0 flex justify-center mb-8">
+                  <div className="relative lg:w-96 w-40 flex justify-center">
                     <img
                       alt="photo-profile"
                       src={user?.photo_path}

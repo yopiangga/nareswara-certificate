@@ -6,7 +6,7 @@ import { UserContext } from "src/context/UserContext";
 export function CardComponentDefault({ data }) {
   const { user, setUser } = useContext(UserContext);
   return (
-    <div className="relative max-w-md mx-auto xl:max-w-2xl min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-xl mt-16">
+    <div className="relative z-10 max-w-md mx-auto xl:max-w-2xl min-w-0 break-words bg-white w-full shadow-lg rounded-xl mb-8 lg:mt-0">
       <div className="card">
         <div className="card-header mx-4 -mt-6">
           <Link
@@ -105,8 +105,8 @@ export function CardComponentCertificateDownload({ data, callback }) {
 
 export function CardHomeCount({ title, value }) {
   return (
-    <div>
-      <a className="block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+    <div className="">
+      <a className="block p-6 max-w-sm w-full md:w-72 bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
         <p className="font-normal text-gray-700 dark:text-gray-400 mb-3">
           {title}
         </p>

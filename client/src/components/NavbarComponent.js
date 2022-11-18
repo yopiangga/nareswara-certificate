@@ -3,12 +3,14 @@ import { FiBell } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import Logo from "src/logo.svg";
+import { SidebarContext } from "src/context/SidebarContext";
 
 export function NavbarUploaderComponent() {
   const { user, setUser } = useContext(UserContext);
+  const { sidebar, setSidebar } = useContext(SidebarContext);
 
   return (
-    <div className="fixed md:w-full md:top-0 md:z-20 flex flex-row flex-wrap items-center bg-white h-20 w-full px-6 shadow-sm">
+    <div className="fixed z-40 md:w-full md:top-0 md:z-20 flex flex-row flex-wrap items-center bg-white h-20 w-full px-6 shadow-sm">
       <div className="flex-none w-56 flex flex-row items-center">
         <button
           data-collapse-toggle="navbar-default"
@@ -16,6 +18,7 @@ export function NavbarUploaderComponent() {
           className="inline-flex items-center p-2 mr-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
           aria-controls="navbar-default"
           aria-expanded="false"
+          onClick={() => setSidebar(!sidebar)}
         >
           <svg
             className="w-6 h-6"
@@ -89,13 +92,33 @@ export function NavbarUploaderComponent() {
 
 export function NavbarDownloaderComponent() {
   const { user, setUser } = useContext(UserContext);
+  const { sidebar, setSidebar } = useContext(SidebarContext);
 
   return (
-    <div className="fixed md:w-full md:top-0 md:z-20 flex flex-row flex-wrap items-center bg-white h-20 w-full px-6 shadow-sm">
+    <div className="fixed z-40 md:w-full md:top-0 md:z-20 flex flex-row flex-wrap items-center bg-white h-20 w-full px-6 shadow-sm">
       <div className="flex-none w-56 flex flex-row items-center">
-        {/* <h2 className="text-dark text-xl font-bold">
-          Nares <span className="text-indigo-600 font-bold">Certificate</span>
-        </h2> */}
+        <button
+          data-collapse-toggle="navbar-default"
+          type="button"
+          className="inline-flex items-center p-2 mr-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          aria-controls="navbar-default"
+          aria-expanded="false"
+          onClick={() => setSidebar(!sidebar)}
+        >
+          <svg
+            className="w-6 h-6"
+            aria-hidden="true"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              ffillRule="evenodd"
+              d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+              clipRule="evenodd"
+            ></path>
+          </svg>
+        </button>
         <Link to="/">
           <a className="flex items-center text-2xl font-semibold text-gray-900">
             <img className="w-6 h-6 mr-2" src={Logo} alt="logo" />
@@ -154,13 +177,33 @@ export function NavbarDownloaderComponent() {
 
 export function NavbarAdminComponent() {
   const { user, setUser } = useContext(UserContext);
+  const { sidebar, setSidebar } = useContext(SidebarContext);
 
   return (
-    <div className="fixed md:w-full md:top-0 md:z-20 flex flex-row flex-wrap items-center bg-white h-20 w-full px-6 shadow-sm">
+    <div className="fixed z-40 md:w-full md:top-0 md:z-20 flex flex-row flex-wrap items-center bg-white h-20 w-full px-6 shadow-sm">
       <div className="flex-none w-56 flex flex-row items-center">
-        {/* <h2 className="text-dark text-xl font-bold">
-          Nares <span className="text-indigo-600 font-bold">Certificate</span>
-        </h2> */}
+        <button
+          data-collapse-toggle="navbar-default"
+          type="button"
+          className="inline-flex items-center p-2 mr-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          aria-controls="navbar-default"
+          aria-expanded="false"
+          onClick={() => setSidebar(!sidebar)}
+        >
+          <svg
+            className="w-6 h-6"
+            aria-hidden="true"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              ffillRule="evenodd"
+              d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+              clipRule="evenodd"
+            ></path>
+          </svg>
+        </button>
         <Link to="/">
           <a className="flex items-center text-2xl font-semibold text-gray-900">
             <img className="w-6 h-6 mr-2" src={Logo} alt="logo" />
@@ -218,8 +261,9 @@ export function NavbarAdminComponent() {
 }
 
 export function NavbarLanding() {
+  const { sidebar, setSidebar } = useContext(SidebarContext);
   return (
-    <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900 fixed z-50 w-full shadow-md shadow-gray-100">
+    <nav className="bg-white border-gray-200 px-6 sm:px-4 py-2.5 rounded dark:bg-gray-900 fixed z-50 w-full shadow-md shadow-gray-100">
       <div className="container flex flex-wrap justify-between items-center mx-auto">
         <a href="/" className="flex items-center">
           <img src={Logo} className="mr-3 h-6 sm:h-9" alt="Nares Logo" />
@@ -236,6 +280,7 @@ export function NavbarLanding() {
           className="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
           aria-controls="navbar-default"
           aria-expanded="false"
+          onClick={() => setSidebar(!sidebar)}
         >
           <span className="sr-only">Open main menu</span>
           <svg
@@ -252,7 +297,12 @@ export function NavbarLanding() {
             ></path>
           </svg>
         </button>
-        <div className="hidden w-full md:block md:w-auto" id="navbar-default">
+        <div
+          className={`w-full md:block md:w-auto ${
+            sidebar ? "block" : "hidden"
+          }`}
+          id="navbar-default"
+        >
           <ul className="flex flex-col p-4 mt-4 items-center bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
               <a
@@ -291,7 +341,7 @@ export function NavbarLanding() {
               </a>
             </li>
 
-            <li>
+            <li className="lg:mt-0 mt-6">
               <Link to="/login">
                 <a className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                   Masuk

@@ -80,7 +80,7 @@ export function ListCertificatePage() {
       const cid = await download(i);
       temp[i] = [cid, certificates[i][2], currentAccount];
     }
-    
+
     await redeemCertificate(temp);
 
     setLoading(false);
@@ -147,10 +147,10 @@ export function ListCertificatePage() {
         description={modalInformationLittle.description}
         handleClose={handleCloseModal}
       />
-      <div className="flex flex-row justify-between items-center my-5">
+      <div className="flex flex-row justify-between items-center lg:my-5">
         <h1 className="text-lg font-bold my-3 mb-3">{event?.eventName}</h1>
         <button
-          className="py-2 pl-5 pr-5 transition-colors duration-700 transform bg-indigo-500 hover:bg-blue-400 text-gray-100 text-md border-indigo-300"
+          className="lg:block hidden py-2 pl-5 pr-5 transition-colors duration-700 transform bg-indigo-500 hover:bg-blue-400 text-gray-100 text-md border-indigo-300"
           onClick={() => {
             loopDownload();
           }}
@@ -169,7 +169,7 @@ export function ListCertificatePage() {
 
       <div className="my-10"></div>
 
-      <div className="">
+      <div className="lg:block hidden">
         {load == true
           ? ""
           : certificates.map((el, idx) => {

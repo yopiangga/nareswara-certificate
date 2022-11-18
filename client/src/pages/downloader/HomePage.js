@@ -24,7 +24,7 @@ export function HomePage() {
 
   return (
     <>
-      <div className="grid gap-4 grid-cols-3 grid-rows-3 mt-3">
+      <div className="flex flex-col md:flex-row gap-4 min-h-screen w-full">
         <CardHomeCount title="Total Sertifikat" value={certificates.length} />
       </div>
     </>
