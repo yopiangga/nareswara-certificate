@@ -16,10 +16,7 @@ export default function AdminRouterPage() {
   return (
     <BrowserRouter>
       <AdminLayout>
-        <div
-          className="bg-gray-100 p-6 mt-16 lg:w-10/12 w-full text-dark min-h-screen"
-          onClick={() => setSidebar(!sidebar)}
-        >
+        <div className="bg-gray-100 p-6 mt-16 lg:w-10/12 w-full text-dark min-h-screen">
           <Routes>
             <Route path="/" element={<HomePage />} />
           </Routes>

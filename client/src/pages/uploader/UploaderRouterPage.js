@@ -16,10 +16,7 @@ export default function UploaderRouterPage() {
   return (
     <BrowserRouter>
       <UploaderLayout>
-        <div
-          className="bg-gray-100 p-6 mt-16 lg:w-10/12 w-full text-dark"
-          onClick={() => setSidebar(!sidebar)}
-        >
+        <div className="bg-gray-100 p-6 mt-16 lg:w-10/12 w-full text-dark">
           <Routes>
             <Route path="/" element={<HomePage />} />
           </Routes>
