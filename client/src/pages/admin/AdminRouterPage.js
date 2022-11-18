@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 
 import { Router, BrowserRouter, Switch, Route, Routes } from "react-router-dom";
+import { SidebarContext } from "src/context/SidebarContext";
 import AdminLayout from "../../layouts/AdminLayout";
 import { CertificateTemplatePage } from "./CertificateTemplatePage";
 import { CreateCertificateTemplatePage } from "./CreateCertificateTemplatePage";
@@ -10,12 +11,14 @@ import { ListCertificateTemplatePage } from "./ListCertificateTemplatePage";
 import { ProfilePage } from "./ProfilePage";
 
 export default function AdminRouterPage() {
+  const { sidebar, setSidebar } = useContext(SidebarContext);
+
   return (
     <BrowserRouter>
       <AdminLayout>
-        <div className="bg-gray-100 p-6 mt-16 w-10/12 text-dark">
+        <div className="bg-gray-100 p-6 mt-16 lg:w-10/12 w-full text-dark min-h-screen">
           <Routes>
-            <Route path="/" element={<HomePage />} exact />
+            <Route path="/" element={<HomePage />} />
           </Routes>
           <Routes>
             <Route

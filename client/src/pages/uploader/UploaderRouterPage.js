@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 
 import { Router, BrowserRouter, Switch, Route, Routes } from "react-router-dom";
+import { SidebarContext } from "src/context/SidebarContext";
 import UploaderLayout from "../../layouts/UploaderLayout";
 import { CreateCertificatePage } from "./CreateCertificatePage";
 import { EditProfilePage } from "./EditProfilePage";
@@ -10,12 +11,14 @@ import { ListEventPage } from "./ListEventPage";
 import { ProfilePage } from "./ProfilePage";
 
 export default function UploaderRouterPage() {
+  const { sidebar, setSidebar } = useContext(SidebarContext);
+
   return (
     <BrowserRouter>
       <UploaderLayout>
-        <div className="bg-gray-100 p-6 mt-16 w-10/12 text-dark">
+        <div className="bg-gray-100 p-6 mt-16 lg:w-10/12 w-full text-dark">
           <Routes>
-            <Route path="/" element={<HomePage />} exact />
+            <Route path="/" element={<HomePage />} />
           </Routes>
           <Routes>
             <Route path="/acara" element={<ListEventPage />} exact />

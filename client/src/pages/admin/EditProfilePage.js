@@ -69,14 +69,14 @@ export function EditProfilePage() {
         description={modalInformationLittle.description}
         handleClose={handleCloseModal}
       />
-      <div className="w-11/12 p-12 bg-white mt-5 rounded-lg shadow-lg">
+      <div className="lg:w-11/12 w-full lg:p-12 md:p-8 p-6 bg-white mt-5 rounded-lg shadow-lg">
         <h1 className="text-xl font-semibold">
           Hallo {user?.name} 👋<span className="font-normal"></span>
         </h1>
 
         <form className="mt-6" onSubmit={handleSubmit}>
           <div className="form grid grid-cols-1">
-            <div className="left mr-5">
+            <div className="left">
               <InputComponentDefault
                 id="name"
                 title="Nama Pengguna / Organisasi"

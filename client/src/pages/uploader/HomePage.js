@@ -18,20 +18,22 @@ export function HomePage() {
   }, []);
 
   const fetch = async () => {
-    const resCertificate = await countServices.getAllEventByAuthor(user.email);
-    const resEvent = await countServices.getAllCertificateByAuthor(user.email);
+    const resEvent = await countServices.getAllEventByAuthor(user.email);
+    const resCertificate = await countServices.getAllCertificateByAuthor(
+      user.email
+    );
 
     setCertificates(resCertificate);
     setEvents(resEvent);
   };
 
   return (
-    <>
-      <div className="grid gap-4 grid-cols-3 grid-rows-3 mt-3">
+    <div className="w-full">
+      <div className="flex flex-col md:flex-row gap-4 min-h-screen w-full">
         <CardHomeCount title="Total Acara" value={events.length} />
         <CardHomeCount title="Total Sertifikat" value={certificates.length} />
         {/* <CardHomeCount title="Total Peserta Acara" value={5} /> */}
       </div>
-    </>
+    </div>
   );
 }

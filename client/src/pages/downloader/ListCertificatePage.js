@@ -43,7 +43,7 @@ export function ListCertificatePage() {
         description={modalInformationLittle.description}
         handleClose={handleCloseModal}
       />
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 lg:gap-4 ">
         {certificates.map((el, idx) => {
           return (
             <CardComponentCertificateDownload
