@@ -6,10 +6,12 @@ import {
 import { UserContext } from "src/context/UserContext";
 import { CertificateServices } from "src/services/CertificateServices";
 import { ModalInformationLittle } from "src/components/ModalInformationComponent";
+import { LoadingContext } from "src/context/LoadingContext";
 
 export function ListCertificatePage() {
   const certificateServices = new CertificateServices();
   const { user, setUser } = useContext(UserContext);
+  const { loading, setLoading } = useContext(LoadingContext);
   const [certificates, setCertificates] = useState([]);
   const [modalInformationLittle, setModalInformationLittle] = useState({
     status: false,
@@ -21,10 +23,12 @@ export function ListCertificatePage() {
   }, []);
 
   async function getCertificates() {
+    setLoading(true);
     const res = await certificateServices.getAllCertificateByParticipant(
       user.email
     );
     setCertificates(res);
+    setLoading(false);
   }
 
   const handleCloseModal = () => {

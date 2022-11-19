@@ -1,11 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { CardHomeCount } from "src/components/CardComponent";
+import { LoadingContext } from "src/context/LoadingContext";
 import { UserContext } from "src/context/UserContext";
 import { CountServices } from "src/services/CountServices";
 
 export function HomePage() {
   const countServices = new CountServices();
   const { user, setUser } = useContext(UserContext);
+  const { loading, setLoading } = useContext(LoadingContext);
   const [certificates, setCertificates] = useState([]);
   const [events, setEvents] = useState([]);
   const [load, setLoad] = useState(true);
@@ -25,6 +27,7 @@ export function HomePage() {
     // );
     // setCertificates(resCertificate);
     // setEvents(resEvent);
+    setLoading(false);
   };
 
   return (

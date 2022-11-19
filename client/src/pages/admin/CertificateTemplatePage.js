@@ -66,8 +66,10 @@ export function CertificateTemplatePage() {
   }, []);
 
   async function fetch() {
+    setLoading(true);
     const res = await templateServices.getOne(location.pathname.split("/")[2]);
     setData(res);
+    setLoading(false);
   }
 
   function handleChange(event) {

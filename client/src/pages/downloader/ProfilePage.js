@@ -1,10 +1,12 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { LoadingContext } from "src/context/LoadingContext";
 import { UserContext } from "src/context/UserContext";
 import { AuthServices } from "src/services/AuthServices";
 
 export function ProfilePage() {
   const { user, setUser } = useContext(UserContext);
+  const { loading, setLoading } = useContext(LoadingContext);
 
   async function handleLogout() {
     const res = await AuthServices.logout();

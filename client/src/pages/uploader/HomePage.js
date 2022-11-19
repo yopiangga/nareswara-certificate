@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { CardHomeCount } from "src/components/CardComponent";
+import { LoadingContext } from "src/context/LoadingContext";
 import { SmartContractContext } from "src/context/SmartContractContext";
 import { UserContext } from "src/context/UserContext";
 import { CountServices } from "src/services/CountServices";
@@ -8,6 +9,7 @@ export function HomePage() {
   const countServices = new CountServices();
 
   const { user, setUser } = useContext(UserContext);
+  const { loading, setLoading } = useContext(LoadingContext);
   const { getAllCertificates } = useContext(SmartContractContext);
   const [certificates, setCertificates] = useState([]);
   const [events, setEvents] = useState([]);
@@ -18,6 +20,7 @@ export function HomePage() {
   }, []);
 
   const fetch = async () => {
+    setLoading(true);
     const resEvent = await countServices.getAllEventByAuthor(user.email);
     const resCertificate = await countServices.getAllCertificateByAuthor(
       user.email
@@ -25,6 +28,7 @@ export function HomePage() {
 
     setCertificates(resCertificate);
     setEvents(resEvent);
+    setLoading(false);
   };
 
   return (

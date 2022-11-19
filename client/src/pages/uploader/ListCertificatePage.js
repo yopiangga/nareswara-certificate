@@ -54,6 +54,7 @@ export function ListCertificatePage() {
   }
 
   async function fetch() {
+    setLoading(true);
     const res = await eventServices.getOne(location.pathname.split("/")[2]);
 
     var temp = [];
@@ -70,6 +71,7 @@ export function ListCertificatePage() {
     setEvent(res);
     setCertificates(temp);
     setLoad(false);
+    setLoading(false);
   }
 
   const loopDownload = async () => {

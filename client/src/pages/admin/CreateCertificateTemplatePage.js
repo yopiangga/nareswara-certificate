@@ -27,65 +27,65 @@ export function CreateCertificateTemplatePage() {
 
   const [image, setImage] = useState();
 
-  // const [data, setData] = useState({
-  //   image_path: "",
-  //   title: {
-  //     value: "",
-  //     class: "",
-  //   },
-  //   number: {
-  //     value: "",
-  //     class: "",
-  //   },
-  //   author: {
-  //     value: "",
-  //     class: "",
-  //   },
-  //   description: {
-  //     value: "",
-  //     class: "",
-  //   },
-  //   date: {
-  //     value: "",
-  //     class: "",
-  //   },
-  //   name: {
-  //     value: "",
-  //     class: "",
-  //   },
-  // });
-
   const [data, setData] = useState({
     image_path: "",
     title: {
-      value: "Contoh Kompetisi",
-      class:
-        "bg-transparent left-10 w-72 bottom-10 absolute text-teal-900 text-left",
+      value: "",
+      class: "",
     },
     number: {
-      value: "09/2022/RISTEK/BEM",
-      class: "-",
+      value: "",
+      class: "",
     },
     author: {
-      value: "RISTEK BEM PENS",
-      class:
-        "bg-transparent h-16 right-10 top-10 absolute text-right text-lg font-bold text-teal-900",
+      value: "",
+      class: "",
     },
     description: {
-      value: "Sebagai peserta dalam ajang Kompetisi BEM 2022.",
-      class:
-        "bg-transparent h-32 left-44 right-44 top-72 mt-7 absolute flex justify-center items-center overflow-hidden font-normal text-sm text-teal-900 text-center",
+      value: "",
+      class: "",
     },
     date: {
-      value: "2022-10-20",
-      class: "-",
+      value: "",
+      class: "",
     },
     name: {
-      value: "Alfian Prisma Yopiangga",
-      class:
-        "bg-transparent h-10 left-64 right-64 top-64 mt-5 absolute flex justify-center items-center font-black text-3xl text-teal-900 text-center",
+      value: "",
+      class: "",
     },
   });
+
+  // const [data, setData] = useState({
+  //   image_path: "",
+  //   title: {
+  //     value: "Contoh Kompetisi",
+  //     class:
+  //       "bg-transparent left-10 w-72 bottom-10 absolute text-teal-900 text-left",
+  //   },
+  //   number: {
+  //     value: "09/2022/RISTEK/BEM",
+  //     class: "-",
+  //   },
+  //   author: {
+  //     value: "RISTEK BEM PENS",
+  //     class:
+  //       "bg-transparent h-16 right-10 top-10 absolute text-right text-lg font-bold text-teal-900",
+  //   },
+  //   description: {
+  //     value: "Sebagai peserta dalam ajang Kompetisi BEM 2022.",
+  //     class:
+  //       "bg-transparent h-32 left-44 right-44 top-72 mt-7 absolute flex justify-center items-center overflow-hidden font-normal text-sm text-teal-900 text-center",
+  //   },
+  //   date: {
+  //     value: "2022-10-20",
+  //     class: "-",
+  //   },
+  //   name: {
+  //     value: "Alfian Prisma Yopiangga",
+  //     class:
+  //       "bg-transparent h-10 left-64 right-64 top-64 mt-5 absolute flex justify-center items-center font-black text-3xl text-teal-900 text-center",
+  //   },
+  // });
 
   function handleChange(event) {
     setData({ ...data, [event.target.name]: event.target.value });

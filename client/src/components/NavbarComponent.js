@@ -264,7 +264,7 @@ export function NavbarLanding() {
   const { sidebar, setSidebar } = useContext(SidebarContext);
   return (
     <nav className="bg-white border-gray-200 px-6 sm:px-4 py-2.5 rounded dark:bg-gray-900 fixed z-50 w-full shadow-md shadow-gray-100">
-      <div className="container flex flex-wrap justify-between mx-auto">
+      <div className="container flex flex-wrap justify-between mx-auto items-center">
         <a href="/" className="flex items-center">
           <img src={Logo} className="mr-3 h-6 sm:h-9" alt="Nares Logo" />
           <div className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">

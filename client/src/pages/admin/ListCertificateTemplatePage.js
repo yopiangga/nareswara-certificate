@@ -5,11 +5,13 @@ import {
   TableComponentDefault,
   TableComponentAction,
 } from "src/components/TableComponent";
+import { LoadingContext } from "src/context/LoadingContext";
 import { UserContext } from "src/context/UserContext";
 import { TemplateServices } from "src/services/TemplateServices";
 
 export function ListCertificateTemplatePage() {
   const { user, setUser } = useContext(UserContext);
+  const { loading, setLoading } = useContext(LoadingContext);
   const [templates, setTemplates] = useState([]);
   const location = useLocation();
   const [load, setLoad] = useState(true);
@@ -19,11 +21,13 @@ export function ListCertificateTemplatePage() {
   }, []);
 
   async function fetch() {
+    setLoading(true);
     const templateServices = new TemplateServices();
     const res = await templateServices.getAll();
 
     setTemplates(res);
     setLoad(false);
+    setLoading(false);
   }
 
   function handleEdit(id) {}

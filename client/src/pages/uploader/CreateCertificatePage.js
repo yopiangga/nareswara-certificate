@@ -39,94 +39,81 @@ export function CreateCertificatePage() {
   const [templates, setTemplates] = useState([]);
   const [selectedTemplate, setSelectedTemplate] = useState(0);
 
-  // const [data, setData] = useState({
-  //   title: "",
-  //   description: "",
-  //   certificate: {
-  //     _id: "",
-  //     image: {
-  //       path: "",
-  //       name: "",
-  //     },
-  //     title: {
-  //       value: "",
-  //       class: "",
-  //     },
-  //     number: {
-  //       value: "",
-  //       class: "",
-  //     },
-  //     author: {
-  //       value: "",
-  //       class: "",
-  //     },
-  //     description: {
-  //       value: "",
-  //       class: "",
-  //     },
-  //     date: {
-  //       value: "",
-  //       class: "",
-  //     },
-  //     name: {
-  //       value: "",
-  //       class: "",
-  //     },
-  //   },
-  // });
-
   const [data, setData] = useState({
-    title: "Kompetisi UI/UX BEM PENS",
-    description:
-      "Kompetisi yang diikuti oleh mahasiswa S1 sederajat seluruh Indonesia.",
+    title: "",
+    description: "",
     certificate: {
-      _id: "6374885cb0d3b8569d140807",
+      _id: "",
       image: {
-        path: "https://firebasestorage.googleapis.com/v0/b/nareswara-certificate.appspot.com/o/files%2Ftemplates%2F1.jpg?alt=media&token=2d94027c-f21c-48d8-ae23-6509f4061fce",
-        name: "files/templates/1.jpg",
+        path: "",
+        name: "",
       },
       title: {
-        value: "Contoh Kompetisi 2",
-        class:
-          "bg-transparent left-10 w-72 bottom-10 absolute text-teal-900 text-left",
+        value: "",
+        class: "",
       },
       number: {
-        value: "09/2022/RISTEK/BEM",
-        class: "-",
+        value: "",
+        class: "",
       },
       author: {
-        value: "RISTEK BEM PENS",
-        class:
-          "bg-transparent h-16 right-10 top-10 absolute text-right text-lg font-bold text-teal-900",
+        value: "",
+        class: "",
       },
       description: {
-        value: "Sebagai peserta dalam ajang Kompetisi BEM 2022.",
-        class:
-          "bg-transparent h-32 left-44 right-44 top-72 mt-7 absolute flex justify-center items-center overflow-hidden font-normal text-sm text-teal-900 text-center",
+        value: "",
+        class: "",
       },
       date: {
-        value: "2022-10-20",
-        class: "-",
+        value: "",
+        class: "",
       },
       name: {
-        value: "Alfian Prisma Yopiangga",
-        class:
-          "bg-transparent h-10 left-64 right-64 top-64 mt-5 absolute flex justify-center items-center font-black text-3xl text-teal-900 text-center",
+        value: "",
+        class: "",
       },
     },
   });
 
   // const [data, setData] = useState({
-  //   eventName: "Kompetisi UI/UX BEM PENS",
-  //   eventDescription:
+  //   title: "Kompetisi UI/UX BEM PENS",
+  //   description:
   //     "Kompetisi yang diikuti oleh mahasiswa S1 sederajat seluruh Indonesia.",
-  //   noCertificateStatic: "09/2022/RISTEK/BEM",
-  //   noCertificateStart: 1,
-  //   titleCertificate: "UI/UX Competition BEM PENS 2022",
-  //   authorCertificate: "RISTEK BEM PENS",
-  //   dateCertificate: "-",
-  //   descriptionCertificate:
-  //     "Sebagai peserta dalam ajang Kompetisi UI/UX BEM PENS 2022.",
+  //   certificate: {
+  //     _id: "6374885cb0d3b8569d140807",
+  //     image: {
+  //       path: "https://firebasestorage.googleapis.com/v0/b/nareswara-certificate.appspot.com/o/files%2Ftemplates%2F1.jpg?alt=media&token=2d94027c-f21c-48d8-ae23-6509f4061fce",
+  //       name: "files/templates/1.jpg",
+  //     },
+  //     title: {
+  //       value: "Contoh Kompetisi 2",
+  //       class:
+  //         "bg-transparent left-10 w-72 bottom-10 absolute text-teal-900 text-left",
+  //     },
+  //     number: {
+  //       value: "09/2022/RISTEK/BEM",
+  //       class: "-",
+  //     },
+  //     author: {
+  //       value: "RISTEK BEM PENS",
+  //       class:
+  //         "bg-transparent h-16 right-10 top-10 absolute text-right text-lg font-bold text-teal-900",
+  //     },
+  //     description: {
+  //       value: "Sebagai peserta dalam ajang Kompetisi BEM 2022.",
+  //       class:
+  //         "bg-transparent h-32 left-44 right-44 top-72 mt-7 absolute flex justify-center items-center overflow-hidden font-normal text-sm text-teal-900 text-center",
+  //     },
+  //     date: {
+  //       value: "2022-10-20",
+  //       class: "-",
+  //     },
+  //     name: {
+  //       value: "Alfian Prisma Yopiangga",
+  //       class:
+  //         "bg-transparent h-10 left-64 right-64 top-64 mt-5 absolute flex justify-center items-center font-black text-3xl text-teal-900 text-center",
+  //     },
+  //   },
   // });
 
   useEffect(() => {
@@ -134,9 +121,11 @@ export function CreateCertificatePage() {
   }, []);
 
   async function fetch() {
+    setLoading(true);
     const res = await templateServices.getAll();
 
     setTemplates(res);
+    setLoading(false);
   }
 
   function handleChange(event) {
@@ -188,15 +177,6 @@ export function CreateCertificatePage() {
   async function handleSubmit(event) {
     event.preventDefault();
     setLoading(true);
-
-
-
-    // await EventServices.addEvent(
-    //   `${time}-${user.email}`,
-    //   data,
-    //   user.email,
-    //   convertArrayToObject(values)
-    // );
 
     const res = await eventServices.add({
       title: data.title,

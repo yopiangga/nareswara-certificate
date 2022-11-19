@@ -8,11 +8,13 @@ import {
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { ModalInformationLittle } from "src/components/ModalInformationComponent";
+import { LoadingContext } from "src/context/LoadingContext";
 
 export function EditProfilePage() {
   const userServices = new UserServices();
   const navigate = useNavigate();
 
+  const { loading, setLoading } = useContext(LoadingContext);
   const { user, setUser } = useContext(UserContext);
   const [data, setData] = useState({
     name: "",
@@ -30,12 +32,14 @@ export function EditProfilePage() {
   }, []);
 
   function fetch() {
+    setLoading(true);
     setData({
       name: user.name,
       address: user.address,
       metaId: user.metaId,
       photoPath: user.photoPath,
     });
+    setLoading(false);
   }
 
   function handleChange(event) {
