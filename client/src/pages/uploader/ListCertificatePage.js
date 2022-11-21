@@ -8,7 +8,7 @@ import { jsPDF } from "jspdf";
 import templateCertificate from "src/assets/images/template-certificate.jpg";
 import { MetaServices } from "src/services/MetaServices";
 import { CertificateServices } from "src/services/CertificateServices";
-import { ModalInformationLittle } from "src/components/ModalInformationComponent";
+import { ModalConfirmationComponent, ModalInformationLittle } from "src/components/ModalInformationComponent";
 import { useNavigate } from "react-router-dom";
 import { Loading } from "src/components/Loader";
 import { LoadingContext } from "src/context/LoadingContext";
@@ -34,6 +34,9 @@ export function ListCertificatePage() {
     status: false,
     description: "",
   });
+  const [modalConfirmation, setModalConfirmation] = useState({
+    status: false
+  })
 
   const [ref, setRef] = useState([]);
 
@@ -73,6 +76,8 @@ export function ListCertificatePage() {
   }
 
   const loopDownload = async () => {
+    setModalConfirmation({status: false});
+    
     var temp = [];
     let i = 0;
     setLoading(true);
@@ -138,6 +143,10 @@ export function ListCertificatePage() {
     navigate("/");
   };
 
+  const handleCloseModalConfirm = () => {
+    setModalConfirmation({status: false});
+  }
+
   return (
     <>
       <Loading loading={loading} />
@@ -147,12 +156,24 @@ export function ListCertificatePage() {
         description={modalInformationLittle.description}
         handleClose={handleCloseModal}
       />
+
+      <ModalConfirmationComponent 
+        status={modalConfirmation.status}
+        title="Perhatikan!"
+        content1="Data yang sudah di kirim sudah tidak dapat dihapus atau diupdate, karena Blockchain bersifat immutable untuk tetap menjaga keunikan dari data"
+        content2="Maka dari itu perhatikan datanya terlebih dulu sebelum submit. Jika sudah benar lakukan klik kirimkan jika masih ada kesalahan klik batal dan silahkan ubah data terlebih dahulu"
+        handleSubmit={loopDownload}
+        handleClose={handleCloseModalConfirm}
+      />
+      
       <div className="flex flex-row justify-between items-center lg:my-5">
         <h1 className="text-lg font-bold my-3 mb-3">{event?.eventName}</h1>
         <button
           className="lg:block hidden py-2 pl-5 pr-5 transition-colors duration-700 transform bg-indigo-500 hover:bg-blue-400 text-gray-100 text-md border-indigo-300"
           onClick={() => {
-            loopDownload();
+            //loopDownload();
+
+            setModalConfirmation({status: true})
           }}
         >
           Kirim Sertifikat
