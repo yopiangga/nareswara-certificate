@@ -146,6 +146,7 @@ export const SmartContractProvider = ({ children }) => {
         console.log("No ethereum object");
       }
     } catch (error) {
+      connectWallet();
       console.log(error);
     }
   };

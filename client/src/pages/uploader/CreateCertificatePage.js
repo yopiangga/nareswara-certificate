@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { Loading } from "src/components/Loader";
 import { LoadingContext } from "src/context/LoadingContext";
 import { TemplateServices } from "src/services/TemplateServices";
+import { ModalConfirmationComponent } from "src/components/ModalInformationComponent";
 import { TemplateCertificateComponent } from "src/components/TemplateCertificateComponent";
 
 export function CreateCertificatePage() {
@@ -26,6 +27,10 @@ export function CreateCertificatePage() {
   const { loading, setLoading } = useContext(LoadingContext);
   const { user, setUser } = useContext(UserContext);
   const { addEvent } = useContext(SmartContractContext);
+
+  const [modalConfirmation, setModalConfirmation] = useState({
+    status: false
+  })
 
   const [modalInformationLittle, setModalInformationLittle] = useState({
     status: false,
@@ -176,6 +181,7 @@ export function CreateCertificatePage() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    setModalConfirmation({status: false});
     setLoading(true);
 
     const res = await eventServices.add({
@@ -203,6 +209,10 @@ export function CreateCertificatePage() {
     navigate("/acara");
   };
 
+  const handleCloseModalConfirm = () => {
+    setModalConfirmation({status: false});
+  }
+
   return (
     <>
       <Loading loading={loading} />
@@ -212,6 +222,15 @@ export function CreateCertificatePage() {
         description={modalInformationLittle.description}
         handleClose={handleCloseModal}
       />
+
+      <ModalConfirmationComponent 
+        status={modalConfirmation.status}
+        title="Perhatikan!"
+        content1="Silahkan cek terlebih dulu, Apakah data yang anda inputkan sudah benar ? Jika sudah benar lakukan klik kirimkan jika masih ada kesalahan klik batal dan silahkan ubah data terlebih dahulu"
+        handleSubmit={handleSubmit}
+        handleClose={handleCloseModalConfirm}
+      />
+
       <div className="lg:w-11/12 w-full lg:p-12 md:p-8 p-6 bg-white mt-5 rounded-lg shadow-lg">
         <h1 className="text-xl font-semibold">
           Hallo {user?.name} 👋<span className="font-normal"></span>
@@ -246,7 +265,10 @@ export function CreateCertificatePage() {
           />
         </div> */}
 
-        <form className="mt-6" onSubmit={handleSubmit}>
+        <form className="mt-6" onSubmit={(e) => {
+          e.preventDefault();
+          setModalConfirmation({status: true});
+        }}>
           <div className="form grid grid-cols-1">
             <div className="left">
               <InputComponentDefault
