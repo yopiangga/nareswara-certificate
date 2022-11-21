@@ -29,8 +29,8 @@ export function CreateCertificatePage() {
   const { addEvent } = useContext(SmartContractContext);
 
   const [modalConfirmation, setModalConfirmation] = useState({
-    status: false
-  })
+    status: false,
+  });
 
   const [modalInformationLittle, setModalInformationLittle] = useState({
     status: false,
@@ -181,7 +181,7 @@ export function CreateCertificatePage() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    setModalConfirmation({status: false});
+    setModalConfirmation({ status: false });
     setLoading(true);
 
     const res = await eventServices.add({
@@ -210,8 +210,8 @@ export function CreateCertificatePage() {
   };
 
   const handleCloseModalConfirm = () => {
-    setModalConfirmation({status: false});
-  }
+    setModalConfirmation({ status: false });
+  };
 
   return (
     <>
@@ -223,7 +223,7 @@ export function CreateCertificatePage() {
         handleClose={handleCloseModal}
       />
 
-      <ModalConfirmationComponent 
+      <ModalConfirmationComponent
         status={modalConfirmation.status}
         title="Perhatikan!"
         content1="Silahkan cek terlebih dulu, Apakah data yang anda inputkan sudah benar ? Jika sudah benar lakukan klik kirimkan jika masih ada kesalahan klik batal dan silahkan ubah data terlebih dahulu"
@@ -265,10 +265,13 @@ export function CreateCertificatePage() {
           />
         </div> */}
 
-        <form className="mt-6" onSubmit={(e) => {
-          e.preventDefault();
-          setModalConfirmation({status: true});
-        }}>
+        <form
+          className="mt-6"
+          onSubmit={(e) => {
+            e.preventDefault();
+            setModalConfirmation({ status: true });
+          }}
+        >
           <div className="form grid grid-cols-1">
             <div className="left">
               <InputComponentDefault
@@ -344,7 +347,7 @@ export function CreateCertificatePage() {
                 id="authorCertificate"
                 title="Penerbit"
                 type="text"
-                oonChange={(e) => {
+                onChange={(e) => {
                   setData({
                     ...data,
                     certificate: {
