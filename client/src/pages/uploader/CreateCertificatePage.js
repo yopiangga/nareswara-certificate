@@ -137,6 +137,39 @@ export function CreateCertificatePage() {
     setData({ ...data, [event.target.name]: event.target.value });
   }
 
+  function handleChangeCertificate(id) {
+    setData({
+      ...data,
+      certificate: {
+        image: templates[id].image,
+        title: {
+          ...data.certificate.title,
+          class: templates[id].title.class,
+        },
+        number: {
+          ...data.certificate.number,
+          class: templates[id].number.class,
+        },
+        author: {
+          ...data.certificate.author,
+          class: templates[id].author.class,
+        },
+        description: {
+          ...data.certificate.description,
+          class: templates[id].description.class,
+        },
+        date: {
+          ...data.certificate.date,
+          class: templates[id].date.class,
+        },
+        name: {
+          ...data.certificate.name,
+          class: templates[id].name.class,
+        },
+      },
+    });
+  }
+
   const changeHandler = (event) => {
     Papa.parse(event.target.files[0], {
       header: true,
@@ -181,6 +214,8 @@ export function CreateCertificatePage() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    console.log(data);
+    return;
     setModalConfirmation({ status: false });
     setLoading(true);
 
@@ -240,7 +275,10 @@ export function CreateCertificatePage() {
           {templates.map((el, idx) => {
             return (
               <img
-                onClick={() => setSelectedTemplate(idx)}
+                onClick={() => {
+                  setSelectedTemplate(idx);
+                  handleChangeCertificate(idx);
+                }}
                 className={`w-auto rounded-lg shadow-lg border-2 cursor-pointer ${
                   selectedTemplate == idx
                     ? "border-indigo-600"
@@ -305,6 +343,7 @@ export function CreateCertificatePage() {
                     certificate: {
                       ...data.certificate,
                       number: {
+                        ...data.certificate.number,
                         value: e.target.value,
                       },
                     },
@@ -334,6 +373,7 @@ export function CreateCertificatePage() {
                     certificate: {
                       ...data.certificate,
                       title: {
+                        ...data.certificate.title,
                         value: e.target.value,
                       },
                     },
@@ -353,6 +393,7 @@ export function CreateCertificatePage() {
                     certificate: {
                       ...data.certificate,
                       author: {
+                        ...data.certificate.author,
                         value: e.target.value,
                       },
                     },
@@ -372,6 +413,7 @@ export function CreateCertificatePage() {
                     certificate: {
                       ...data.certificate,
                       date: {
+                        ...data.certificate.date,
                         value: e.target.value,
                       },
                     },
@@ -390,6 +432,7 @@ export function CreateCertificatePage() {
                     certificate: {
                       ...data.certificate,
                       description: {
+                        ...data.certificate.description,
                         value: e.target.value,
                       },
                     },
@@ -416,6 +459,14 @@ export function CreateCertificatePage() {
             className="py-3 pl-5 pr-5 mr-2 mt-5 transition-colors duration-700 transform bg-indigo-500 hover:bg-blue-400 text-gray-100 text-md border-indigo-300"
           >
             Buat Sertifikat
+          </button>
+
+          <button
+            type="button"
+            onClick={handleSubmit}
+            className="py-3 pl-5 pr-5 mr-2 mt-5 transition-colors duration-700 transform bg-indigo-500 hover:bg-blue-400 text-gray-100 text-md border-indigo-300"
+          >
+            Test Submit
           </button>
         </form>
       </div>
