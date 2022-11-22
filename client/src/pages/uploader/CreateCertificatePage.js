@@ -214,8 +214,8 @@ export function CreateCertificatePage() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    console.log(data);
-    return;
+    // console.log(data);
+    // return;
     setModalConfirmation({ status: false });
     setLoading(true);
 

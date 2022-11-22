@@ -62,12 +62,14 @@ export function CertificateTemplatePage() {
   });
 
   useEffect(() => {
+    // console.log("sss")
     fetch();
   }, []);
 
   async function fetch() {
     setLoading(true);
     const res = await templateServices.getOne(location.pathname.split("/")[2]);
+    console.log(res);
     setData(res);
     setLoading(false);
   }
@@ -145,10 +147,10 @@ export function CertificateTemplatePage() {
         <form className="mt-6" onSubmit={handleSubmit}>
           <div className="form grid grid-cols-1">
             <div className="left">
-              {image == null && data.image.path == "" ? (
+              {(image == null && data.image.path == "") || loading == true ? (
                 ""
               ) : (
-                <div className="lg:block hidden">
+                <div className="">
                   <TemplateCertificateComponent
                     image_path={image == null ? data.image.path : image}
                     title={data.title}

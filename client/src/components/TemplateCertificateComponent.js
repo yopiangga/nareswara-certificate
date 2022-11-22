@@ -27,6 +27,7 @@
 // }
 
 export function TemplateCertificateComponent(data) {
+  // console.log(data);
   // data = {
   //   ...data,
   //   title: {
