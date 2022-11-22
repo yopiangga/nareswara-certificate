@@ -214,8 +214,6 @@ export function CreateCertificatePage() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    // console.log(data);
-    // return;
     setModalConfirmation({ status: false });
     setLoading(true);
 
@@ -461,13 +459,13 @@ export function CreateCertificatePage() {
             Buat Sertifikat
           </button>
 
-          <button
+          {/* <button
             type="button"
             onClick={handleSubmit}
             className="py-3 pl-5 pr-5 mr-2 mt-5 transition-colors duration-700 transform bg-indigo-500 hover:bg-blue-400 text-gray-100 text-md border-indigo-300"
           >
             Test Submit
-          </button>
+          </button> */}
         </form>
       </div>
     </>
