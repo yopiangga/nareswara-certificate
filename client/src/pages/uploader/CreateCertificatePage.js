@@ -243,7 +243,7 @@ export function CreateCertificatePage() {
                 onClick={() => setSelectedTemplate(idx)}
                 className={`w-auto rounded-lg shadow-lg border-2 cursor-pointer ${
                   selectedTemplate == idx
-                    ? "border-green-600"
+                    ? "border-indigo-600"
                     : "border-transparent"
                 }`}
                 src={el.image.path}

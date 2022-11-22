@@ -354,7 +354,7 @@ export function CreateCertificateTemplatePage() {
 
               <InputComponentDefault
                 id="number-class"
-                title="Style Nomor Surat"
+                title="Style Nama Penerima"
                 type="text"
                 onChange={(e) =>
                   setData({
